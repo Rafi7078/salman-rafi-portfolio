@@ -1,19 +1,19 @@
 
 @import "tailwindcss";
 
-/* ========================================
-   01. DESIGN TOKENS & GLOBAL RESET
-======================================== */
+/* =========================================
+   01 — DESIGN SYSTEM
+========================================= */
 
 :root {
   --ink: #171715;
   --paper: #eeece5;
   --ivory: #f7f5ef;
-  --muted: #77766e;
-  --line: rgba(23, 23, 21, 0.2);
   --yellow: #f5d547;
   --blue: #93bce0;
-  --mono: "Courier New", monospace;
+  --muted: #77766e;
+  --line: rgba(23, 23, 21, 0.2);
+  --mono: "Courier New", Courier, monospace;
 }
 
 * {
@@ -22,41 +22,37 @@
 
 html {
   scroll-behavior: smooth;
-  background: var(--ink);
   scroll-padding-top: 90px;
+  background: var(--ink);
 }
 
 body {
   margin: 0;
-  color: var(--ivory);
   background: var(--ink);
+  color: var(--ivory);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-body,
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
-}
-
-button,
 a {
   color: inherit;
-}
-
-button {
-  font: inherit;
-}
-
-a {
   text-decoration: none;
 }
 
-button:focus-visible,
-a:focus-visible {
+button {
+  color: inherit;
+  font: inherit;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a:focus-visible,
+button:focus-visible {
   outline: 2px solid var(--yellow);
-  outline-offset: 5px;
+  outline-offset: 4px;
 }
 
 ::selection {
@@ -75,9 +71,9 @@ a:focus-visible {
   padding-left: clamp(22px, 7.2vw, 112px);
 }
 
-/* ========================================
-   02. NAVIGATION
-======================================== */
+/* =========================================
+   02 — NAVIGATION
+========================================= */
 
 .topbar {
   position: absolute;
@@ -90,12 +86,12 @@ a:focus-visible {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding: 0 clamp(22px, 7.2vw, 112px);
+  padding-inline: clamp(22px, 7.2vw, 112px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.13);
 }
 
 .wordmark {
-  flex-shrink: 0;
+  flex: 0 0 auto;
   font-size: 25px;
   font-weight: 900;
   letter-spacing: -2px;
@@ -111,7 +107,7 @@ a:focus-visible {
 .desktop-nav {
   display: flex;
   align-items: center;
-  gap: clamp(18px, 3vw, 45px);
+  gap: clamp(14px, 2.3vw, 34px);
 }
 
 .desktop-nav a,
@@ -129,7 +125,6 @@ a:focus-visible {
 .project-art-number,
 .project-art-caption,
 .project-status,
-.certificate-row time,
 .certificate-number,
 .certificate-action,
 .contact-kicker,
@@ -144,6 +139,7 @@ a:focus-visible {
 
 .desktop-nav a {
   color: #c8c6bd;
+  white-space: nowrap;
   transition: color 180ms ease;
 }
 
@@ -153,7 +149,7 @@ a:focus-visible {
 
 .torch-toggle {
   display: inline-flex;
-  flex-shrink: 0;
+  flex: 0 0 auto;
   align-items: center;
   gap: 9px;
   padding: 10px 13px;
@@ -162,23 +158,24 @@ a:focus-visible {
   background: transparent;
   color: var(--ivory);
   cursor: pointer;
+  white-space: nowrap;
   transition:
     border-color 180ms ease,
-    background 180ms ease,
-    color 180ms ease;
+    color 180ms ease,
+    background 180ms ease;
 }
 
 .torch-toggle.is-active {
   border-color: var(--yellow);
-  background: var(--yellow);
   color: var(--ink);
+  background: var(--yellow);
 }
 
 .torch-dot,
 .status-dot {
   width: 7px;
   height: 7px;
-  flex-shrink: 0;
+  flex: 0 0 auto;
   border-radius: 50%;
   background: var(--yellow);
 }
@@ -187,9 +184,9 @@ a:focus-visible {
   background: var(--ink);
 }
 
-/* ========================================
-   03. HERO
-======================================== */
+/* =========================================
+   03 — HERO
+========================================= */
 
 .hero {
   position: relative;
@@ -323,7 +320,7 @@ a:focus-visible {
   background:
     radial-gradient(
       ellipse at 50% 38%,
-      #77766c 0,
+      #77766c,
       transparent 47%
     ),
     linear-gradient(
@@ -407,29 +404,27 @@ a:focus-visible {
   animation: cue-breathe 2.4s ease-in-out infinite;
 }
 
-/* ========================================
-   04. SHARED HEADERS
-======================================== */
+/* =========================================
+   04 — SHARED SECTIONS
+========================================= */
 
 .intro-section,
+.experience-section,
 .work-section,
 .certificate-section {
   padding-top: 110px;
   padding-bottom: 120px;
 }
 
-.intro-section {
-  color: var(--ink);
-  background: var(--paper);
-}
-
 .section-label {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
   padding-bottom: 18px;
   border-bottom: 1px solid var(--line);
   color: #68675f;
+  line-height: 1.7;
 }
 
 .intro-heading,
@@ -445,9 +440,14 @@ a:focus-visible {
   color: #a4a196;
 }
 
-/* ========================================
-   05. ABOUT
-======================================== */
+/* =========================================
+   05 — ABOUT
+========================================= */
+
+.intro-section {
+  color: var(--ink);
+  background: var(--paper);
+}
 
 .intro-grid {
   display: grid;
@@ -534,9 +534,309 @@ a:focus-visible {
   color: #9a8a48;
 }
 
-/* ========================================
-   06. SELECTED WORK
-======================================== */
+/* =========================================
+   06 — PROFESSIONAL EXPERIENCE
+========================================= */
+
+.experience-section {
+  position: relative;
+  display: block;
+  width: 100%;
+  color: var(--ivory);
+  background: #23231f;
+}
+
+.experience-section .section-label {
+  color: #b4b1a5;
+  border-bottom-color: rgba(255, 255, 255, 0.22);
+  align-items: baseline;
+  gap: 24px;
+}
+
+.experience-section .section-label > span:first-child {
+  display: block;
+  color: var(--ivory);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(24px, 2.8vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  line-height: 1.15;
+}
+
+.experience-section .section-label > span:last-child {
+  flex: 0 0 auto;
+  color: #b4b1a5;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  line-height: 1.6;
+  text-align: right;
+}
+
+.experience-heading-row {
+  display: grid;
+  width: 100%;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(200px, 310px);
+  align-items: end;
+  gap: clamp(25px, 5vw, 80px);
+  padding: 82px 0 75px;
+}
+
+.experience-heading-row > div {
+  min-width: 0;
+}
+
+.experience-eyebrow {
+  display: block;
+  margin: 0 0 27px;
+  color: var(--yellow);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  line-height: 1.6;
+}
+
+.experience-heading-row .section-heading {
+  display: block;
+  margin: 0;
+  color: var(--ivory);
+  font-size: clamp(52px, 6.3vw, 86px);
+  font-weight: 900;
+  letter-spacing: -0.085em;
+  line-height: 0.92;
+}
+
+.experience-heading-row .section-heading .accent-text {
+  color: var(--yellow);
+}
+
+.experience-heading-note {
+  display: block;
+  max-width: 310px;
+  margin: 0 0 8px;
+  color: #bcb9ae;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.85;
+}
+
+.experience-list {
+  display: block;
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.experience-row {
+  position: relative;
+  display: grid;
+  width: 100%;
+  grid-template-columns:
+    34px
+    minmax(170px, 0.46fr)
+    minmax(0, 1.5fr)
+    24px;
+  align-items: start;
+  column-gap: clamp(18px, 2.8vw, 44px);
+  row-gap: 16px;
+  padding: 48px 0 52px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.experience-number {
+  display: block;
+  grid-column: 1;
+  padding-top: 5px;
+  color: var(--yellow);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.09em;
+  line-height: 1.6;
+}
+
+.experience-date-column {
+  display: flex;
+  min-width: 0;
+  grid-column: 2;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 11px;
+  padding-top: 3px;
+}
+
+.experience-date-label {
+  display: block;
+  color: #918f83;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  line-height: 1.6;
+}
+
+.experience-period {
+  display: block;
+  max-width: 240px;
+  color: #f1eee4;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.75;
+}
+
+.experience-role-label {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 11px;
+  border: 1px solid #57564e;
+  border-radius: 999px;
+  color: #c2beb2;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+
+.experience-content {
+  display: block;
+  min-width: 0;
+  grid-column: 3;
+}
+
+.experience-company {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  margin: 0 0 18px;
+  color: #d4d0c3;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.65;
+}
+
+.experience-company-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--yellow);
+}
+
+.experience-role {
+  display: block;
+  max-width: 760px;
+  margin: 0 0 25px;
+  color: var(--ivory);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(24px, 3vw, 39px);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 1.2;
+  overflow-wrap: break-word;
+}
+
+.experience-responsibilities {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  max-width: 780px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.experience-responsibilities li {
+  position: relative;
+  display: block;
+  padding-left: 18px;
+  color: #b7b5ab;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.85;
+  overflow-wrap: break-word;
+}
+
+.experience-responsibilities li::before {
+  position: absolute;
+  top: 0.81em;
+  left: 0;
+  width: 7px;
+  height: 1px;
+  background: var(--yellow);
+  content: "";
+}
+
+.experience-end-mark {
+  display: block;
+  grid-column: 4;
+  justify-self: end;
+  padding-top: 2px;
+  color: #918e82;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 1;
+  transition:
+    color 200ms ease,
+    transform 200ms ease;
+}
+
+.experience-row:hover .experience-end-mark {
+  color: var(--yellow);
+  transform: translate(3px, -3px);
+}
+
+.experience-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 29px;
+  color: #99968a;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.7;
+}
+
+.experience-next-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 17px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(245, 213, 71, 0.5);
+  color: var(--ivory);
+  transition:
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+.experience-next-link span {
+  color: var(--yellow);
+  font-size: 17px;
+}
+
+.experience-next-link:hover {
+  color: var(--yellow);
+  border-color: var(--yellow);
+}
+
+/* =========================================
+   07 — PROJECTS
+========================================= */
 
 .work-section {
   background: var(--ink);
@@ -698,10 +998,6 @@ a:focus-visible {
   border-color: var(--yellow);
 }
 
-.project-link:focus-visible {
-  outline-color: var(--yellow);
-}
-
 .project-arrow {
   align-self: start;
   justify-self: end;
@@ -715,10 +1011,7 @@ a:focus-visible {
 
 @media (hover: hover) and (pointer: fine) {
   .project-row:hover .project-symbol {
-    transform:
-      translateY(-8px)
-      scale(1.045)
-      rotate(-3deg);
+    transform: translateY(-8px) scale(1.045) rotate(-3deg);
   }
 
   .project-row:hover .project-art::after {
@@ -726,9 +1019,9 @@ a:focus-visible {
   }
 }
 
-/* ========================================
-   07. CERTIFICATES
-======================================== */
+/* =========================================
+   08 — CERTIFICATES
+========================================= */
 
 .certificate-section {
   color: var(--ink);
@@ -770,7 +1063,6 @@ a:focus-visible {
   gap: clamp(14px, 2.2vw, 30px);
   padding: 27px 0;
   border-bottom: 1px solid var(--line);
-  transition: background 180ms ease;
 }
 
 .certificate-number {
@@ -834,6 +1126,7 @@ a:focus-visible {
   border: 1px solid #aaa79c;
   color: var(--ink);
   background: transparent;
+  font-family: var(--mono);
   font-size: 9px;
   letter-spacing: 0.035em;
   line-height: 1.5;
@@ -871,11 +1164,6 @@ a:focus-visible {
   background: #e2dfd5;
 }
 
-.certificate-action:focus-visible {
-  outline: 2px solid #a58b2d;
-  outline-offset: 4px;
-}
-
 .certificate-note {
   max-width: 700px;
   margin-top: 24px;
@@ -884,9 +1172,9 @@ a:focus-visible {
   line-height: 1.8;
 }
 
-/* ========================================
-   08. CONTACT — PHASE 4D
-======================================== */
+/* =========================================
+   09 — CONTACT
+========================================= */
 
 .contact-section {
   overflow: hidden;
@@ -959,8 +1247,6 @@ a:focus-visible {
   animation: hand-sway 4.5s ease-in-out infinite alternate;
 }
 
-/* Inner layer moves independently from the hand sway. */
-
 .hand-motion {
   transform-origin: 50% 85%;
   will-change: transform;
@@ -972,28 +1258,21 @@ a:focus-visible {
   height: auto;
 }
 
-/* Magnetic glossy CTA */
-
 .collaborate-button {
   position: relative;
   z-index: 2;
   isolation: isolate;
-  overflow: hidden;
   display: inline-flex;
   min-width: min(350px, 62vw);
   align-items: center;
   justify-content: space-between;
   gap: 30px;
+  overflow: hidden;
   padding: 25px 30px;
   border: 1px solid #393832;
   border-radius: 100px;
-  color: white;
-  background:
-    linear-gradient(
-      160deg,
-      #30302c,
-      #090908 68%
-    );
+  color: #fff;
+  background: linear-gradient(160deg, #30302c, #090908 68%);
   box-shadow:
     inset 0 1px 1px rgba(255, 255, 255, 0.25),
     0 14px 30px rgba(0, 0, 0, 0.16);
@@ -1002,43 +1281,36 @@ a:focus-visible {
   letter-spacing: 0.08em;
   cursor: pointer;
   touch-action: manipulation;
-  transform-origin: center;
   transition:
     box-shadow 220ms ease,
     border-color 220ms ease,
     filter 220ms ease;
 }
 
-/* Top surface highlight */
-
 .collaborate-button::before {
   position: absolute;
   inset: 2px 3px auto;
   height: 35%;
   border-radius: 100px;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.12),
-      transparent
-    );
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.12),
+    transparent
+  );
   content: "";
   pointer-events: none;
 }
-
-/* Moving glossy light sweep */
 
 .collaborate-button::after {
   position: absolute;
   z-index: 0;
   inset: -100% -45%;
-  background:
-    linear-gradient(
-      110deg,
-      transparent 42%,
-      rgba(255, 255, 255, 0.23) 50%,
-      transparent 58%
-    );
+  background: linear-gradient(
+    110deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.23) 50%,
+    transparent 58%
+  );
   content: "";
   pointer-events: none;
   transform: translateX(-90%) skewX(-12deg);
@@ -1077,8 +1349,7 @@ a:focus-visible {
   transition: transform 230ms ease;
 }
 
-.collaborate-button:hover .button-arrow,
-.collaborate-button:focus-visible .button-arrow {
+.collaborate-button:hover .button-arrow {
   transform: translate(3px, -3px);
 }
 
@@ -1099,9 +1370,9 @@ a:focus-visible {
   color: #8f7b2d;
 }
 
-/* ========================================
-   09. FOOTER
-======================================== */
+/* =========================================
+   10 — FOOTER
+========================================= */
 
 .site-footer {
   display: flex;
@@ -1112,9 +1383,9 @@ a:focus-visible {
   background: var(--ink);
 }
 
-/* ========================================
-   10. FLASHLIGHT 2.0
-======================================== */
+/* =========================================
+   11 — FLASHLIGHT 2.0
+========================================= */
 
 .torch-overlay {
   position: fixed;
@@ -1214,9 +1485,9 @@ a:focus-visible {
   }
 }
 
-/* ========================================
-   11. CONTACT DIALOG
-======================================== */
+/* =========================================
+   12 — CONTACT DIALOG
+========================================= */
 
 .contact-backdrop {
   position: fixed;
@@ -1255,7 +1526,7 @@ a:focus-visible {
   display: grid;
   width: 40px;
   height: 40px;
-  flex-shrink: 0;
+  flex: 0 0 auto;
   place-items: center;
   border: 1px solid var(--line);
   border-radius: 50%;
@@ -1263,10 +1534,6 @@ a:focus-visible {
   background: transparent;
   font-size: 25px;
   cursor: pointer;
-
-  transition:
-    color 180ms ease,
-    background 180ms ease;
 }
 
 .dialog-close:hover {
@@ -1317,7 +1584,6 @@ a:focus-visible {
   text-align: left;
   cursor: pointer;
   overflow-wrap: anywhere;
-  transition: color 180ms ease;
 }
 
 .dialog-return > span:last-child {
@@ -1336,28 +1602,16 @@ a:focus-visible {
   min-width: 0;
   font-family: var(--mono);
   font-size: 10px;
-  letter-spacing: 0.055em;
   overflow-wrap: anywhere;
-}
-
-.contact-link-list .dialog-return > span:last-child {
-  flex: 0 0 auto;
-  font-size: 20px;
 }
 
 .contact-link-list .dialog-return:hover {
   color: #8f7b2d;
 }
 
-.dialog-return:focus-visible,
-.dialog-close:focus-visible {
-  outline: 2px solid #9c8428;
-  outline-offset: 4px;
-}
-
-/* ========================================
-   12. KEYFRAME ANIMATIONS
-======================================== */
+/* =========================================
+   13 — ANIMATIONS
+========================================= */
 
 @keyframes cue-breathe {
   0%,
@@ -1382,9 +1636,9 @@ a:focus-visible {
   }
 }
 
-/* ========================================
-   13. LARGE SCREENS
-======================================== */
+/* =========================================
+   14 — LARGE SCREENS
+========================================= */
 
 @media (min-width: 1500px) {
   .hero-title {
@@ -1396,11 +1650,11 @@ a:focus-visible {
   }
 }
 
-/* ========================================
-   14. TABLETS
-======================================== */
+/* =========================================
+   15 — TABLET
+========================================= */
 
-@media (max-width: 850px) {
+@media (max-width: 900px) {
   .topbar {
     min-height: 74px;
   }
@@ -1430,10 +1684,6 @@ a:focus-visible {
     right: -17px;
   }
 
-  .scroll-cue {
-    bottom: 30px;
-  }
-
   .intro-grid {
     grid-template-columns: 1fr;
     gap: 45px;
@@ -1442,6 +1692,61 @@ a:focus-visible {
 
   .intro-copy {
     max-width: 560px;
+  }
+
+  .experience-heading-row {
+    grid-template-columns: 1fr;
+    gap: 27px;
+    padding: 66px 0 55px;
+  }
+
+  .experience-heading-note {
+    max-width: 550px;
+    margin: 0;
+  }
+
+  .experience-section .section-label > span:first-child {
+    font-size: clamp(22px, 3.6vw, 32px);
+  }
+
+  .experience-heading-row .section-heading {
+    font-size: clamp(48px, 7.4vw, 76px);
+  }
+
+  .experience-row {
+    grid-template-columns:
+      28px
+      minmax(0, 1fr)
+      22px;
+    column-gap: 17px;
+    row-gap: 20px;
+    padding: 38px 0 42px;
+  }
+
+  .experience-number {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .experience-date-column {
+    grid-column: 2;
+    grid-row: 1;
+    padding-top: 0;
+    gap: 8px;
+  }
+
+  .experience-role-label {
+    margin-top: 3px;
+  }
+
+  .experience-content {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .experience-end-mark {
+    grid-column: 3;
+    grid-row: 1;
   }
 
   .project-row {
@@ -1473,31 +1778,27 @@ a:focus-visible {
     grid-column: 3;
     grid-row: 1;
     align-self: start;
-    padding-top: 3px;
   }
 
   .certificate-actions {
     grid-column: 2 / -1;
     grid-row: 2;
     justify-content: flex-start;
-    margin-top: 2px;
   }
 }
 
-/* ========================================
-   15. MOBILE
-======================================== */
+/* =========================================
+   16 — MOBILE
+========================================= */
 
 @media (max-width: 600px) {
   .section-pad {
-    padding-right: 22px;
-    padding-left: 22px;
+    padding-inline: 22px;
   }
 
   .topbar {
     gap: 10px;
-    padding-right: 22px;
-    padding-left: 22px;
+    padding-inline: 22px;
   }
 
   .wordmark {
@@ -1512,7 +1813,8 @@ a:focus-visible {
     font-size: 8px;
   }
 
-  .desktop-nav a:last-child {
+  .desktop-nav a:nth-child(2),
+  .desktop-nav a:nth-child(4) {
     display: none;
   }
 
@@ -1523,8 +1825,8 @@ a:focus-visible {
   }
 
   .hero {
-    padding-top: 130px;
     gap: 45px;
+    padding-top: 130px;
   }
 
   .hero-title {
@@ -1553,12 +1855,13 @@ a:focus-visible {
     min-height: 290px;
   }
 
-  .portrait-bottomline,
-  .portrait-topline {
+  .portrait-topline,
+  .portrait-bottomline {
     font-size: 8px;
   }
 
   .intro-section,
+  .experience-section,
   .work-section,
   .certificate-section {
     padding-top: 75px;
@@ -1607,6 +1910,99 @@ a:focus-visible {
     font-size: 9px;
   }
 
+  .experience-heading-row {
+    gap: 25px;
+    padding: 55px 0 40px;
+  }
+
+  .experience-eyebrow {
+    margin-bottom: 20px;
+    font-size: 9px;
+  }
+
+  .experience-heading-row .section-heading {
+    font-size: clamp(41px, 10.3vw, 60px);
+    line-height: 1;
+  }
+
+  .experience-section .section-label {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .experience-section .section-label > span:first-child {
+    font-size: clamp(18px, 5vw, 25px);
+    line-height: 1.2;
+  }
+
+  .experience-section .section-label > span:last-child {
+    max-width: 105px;
+    font-size: 8px;
+  }
+
+  .experience-heading-note {
+    font-size: 12px;
+  }
+
+  .experience-heading-note br {
+    display: none;
+  }
+
+  .experience-row {
+    grid-template-columns:
+      22px
+      minmax(0, 1fr)
+      16px;
+    column-gap: 12px;
+    row-gap: 19px;
+    padding: 31px 0 37px;
+  }
+
+  .experience-number {
+    font-size: 9px;
+  }
+
+  .experience-date-label {
+    font-size: 8px;
+  }
+
+  .experience-period {
+    font-size: 11px;
+  }
+
+  .experience-role-label {
+    padding: 6px 9px;
+    font-size: 8px;
+  }
+
+  .experience-company {
+    margin-bottom: 13px;
+    font-size: 10px;
+  }
+
+  .experience-role {
+    margin-bottom: 20px;
+    font-size: clamp(23px, 6.2vw, 31px);
+    line-height: 1.3;
+  }
+
+  .experience-responsibilities {
+    gap: 10px;
+  }
+
+  .experience-responsibilities li {
+    padding-left: 15px;
+    font-size: 12px;
+    line-height: 1.75;
+  }
+
+  .experience-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    font-size: 9px;
+  }
+
   .work-heading-row,
   .certificate-heading-row {
     flex-direction: column;
@@ -1649,18 +2045,11 @@ a:focus-visible {
 
   .project-category {
     font-size: 9px;
-    line-height: 1.7;
   }
 
   .project-arrow {
     grid-column: 2;
     grid-row: 2;
-  }
-
-  /* Mobile certificate layout */
-
-  .certificate-heading-actions {
-    max-width: 100%;
   }
 
   .certificate-row {
@@ -1675,7 +2064,6 @@ a:focus-visible {
   .certificate-number {
     grid-column: 1;
     grid-row: 1 / span 3;
-    padding-top: 3px;
     font-size: 9px;
   }
 
@@ -1686,11 +2074,9 @@ a:focus-visible {
 
   .certificate-main h3 {
     font-size: 17px;
-    line-height: 1.45;
   }
 
   .certificate-issuer {
-    margin-top: 6px;
     font-size: 11px;
   }
 
@@ -1715,22 +2101,13 @@ a:focus-visible {
 
   .certificate-action {
     min-height: 34px;
-    gap: 7px;
     padding: 8px 10px;
     font-size: 8px;
-    letter-spacing: 0.025em;
-  }
-
-  .certificate-action span {
-    font-size: 13px;
   }
 
   .certificate-note {
-    margin-top: 20px;
     font-size: 11px;
   }
-
-  /* Mobile contact */
 
   .contact-inner {
     padding-top: 70px;
@@ -1801,18 +2178,13 @@ a:focus-visible {
   }
 
   .contact-link-list .dialog-return {
-    gap: 12px;
-    font-size: 9px;
-  }
-
-  .contact-link-list .dialog-return > span:first-child {
     font-size: 9px;
   }
 }
 
-/* ========================================
-   16. SHORT VIEWPORTS
-======================================== */
+/* =========================================
+   17 — SHORT VIEWPORTS
+========================================= */
 
 @media (max-height: 700px) and (min-width: 601px) {
   .contact-backdrop {
@@ -1824,9 +2196,9 @@ a:focus-visible {
   }
 }
 
-/* ========================================
-   17. REDUCED MOTION
-======================================== */
+/* =========================================
+   18 — REDUCED MOTION
+========================================= */
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -1844,8 +2216,8 @@ a:focus-visible {
 
   .torch-overlay,
   .torch-glow {
-    transition: none !important;
     animation: none !important;
+    transition: none !important;
   }
 
   .torch-glow {
@@ -1861,7 +2233,434 @@ a:focus-visible {
   .project-symbol,
   .collaborate-button,
   .collaborate-button::after,
-  .button-arrow {
+  .button-arrow,
+  .experience-end-mark {
+    transition: none !important;
+  }
+}
+
+/* =========================================
+   19 — EDUCATION
+   PHASE 5B
+========================================= */
+
+.education-section {
+  position: relative;
+  width: 100%;
+  padding-top: 110px;
+  padding-bottom: 120px;
+  color: var(--ivory);
+  background: #1c1c18;
+}
+
+.education-section .section-label {
+  align-items: baseline;
+  gap: 24px;
+  color: #b4b1a5;
+  border-bottom-color: rgba(255, 255, 255, 0.22);
+}
+
+.education-section .section-label > span:first-child {
+  display: block;
+  color: var(--ivory);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(24px, 2.8vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  line-height: 1.15;
+}
+
+.education-section .section-label > span:last-child {
+  flex: 0 0 auto;
+  color: #b4b1a5;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  line-height: 1.6;
+  text-align: right;
+}
+
+.education-heading-row {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(200px, 310px);
+  align-items: end;
+  gap: clamp(25px, 5vw, 80px);
+  padding: 82px 0 75px;
+}
+
+.education-heading-row > div {
+  min-width: 0;
+}
+
+.education-eyebrow {
+  margin: 0 0 27px;
+  color: var(--yellow);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  line-height: 1.6;
+}
+
+.education-heading-row .section-heading {
+  color: var(--ivory);
+  font-size: clamp(52px, 6.3vw, 86px);
+  font-weight: 900;
+  letter-spacing: -0.085em;
+  line-height: 0.92;
+  overflow-wrap: anywhere;
+}
+
+.education-heading-note {
+  max-width: 310px;
+  margin: 0 0 8px;
+  color: #bcb9ae;
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+.education-list {
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.education-row {
+  display: grid;
+  grid-template-columns:
+    34px
+    minmax(170px, 0.46fr)
+    minmax(0, 1.5fr)
+    24px;
+  align-items: start;
+  column-gap: clamp(18px, 2.8vw, 44px);
+  row-gap: 16px;
+  padding: 43px 0 47px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.education-number {
+  grid-column: 1;
+  padding-top: 5px;
+  color: var(--yellow);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  line-height: 1.6;
+}
+
+.education-year-column {
+  grid-column: 2;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 11px;
+  padding-top: 3px;
+}
+
+.education-date-label {
+  color: #918f83;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  line-height: 1.6;
+}
+
+.education-year {
+  color: #f1eee4;
+  font-family: var(--mono);
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+}
+
+.education-level-label {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 8px 11px;
+  border: 1px solid #57564e;
+  border-radius: 999px;
+  color: #c2beb2;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+
+.education-content {
+  grid-column: 3;
+  min-width: 0;
+}
+
+.education-institution {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  margin: 0 0 18px;
+  color: #d4d0c3;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+}
+
+.education-institution-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  margin-top: 7px;
+  border-radius: 50%;
+  background: var(--yellow);
+}
+
+.education-degree {
+  margin: 0;
+  max-width: 760px;
+  color: var(--ivory);
+  font-size: clamp(24px, 3vw, 39px);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.education-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 23px;
+}
+
+.education-result {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 8px 12px;
+  border: 1px solid rgba(245, 213, 71, 0.45);
+  border-radius: 999px;
+  color: var(--yellow);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.035em;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.education-end-mark {
+  grid-column: 4;
+  justify-self: end;
+  padding-top: 2px;
+  color: #918e82;
+  font-size: 23px;
+  line-height: 1;
+  transition:
+    color 200ms ease,
+    transform 200ms ease;
+}
+
+.education-row:hover .education-end-mark {
+  color: var(--yellow);
+  transform: translate(3px, -3px);
+}
+
+.education-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 29px;
+  color: #99968a;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  line-height: 1.7;
+}
+
+.education-next-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 17px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(245, 213, 71, 0.5);
+  color: var(--ivory);
+  transition:
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+.education-next-link span {
+  color: var(--yellow);
+  font-size: 17px;
+}
+
+.education-next-link:hover {
+  color: var(--yellow);
+  border-color: var(--yellow);
+}
+
+/* =========================================
+   20 — EDUCATION / TABLET
+========================================= */
+
+@media (max-width: 900px) {
+  .education-heading-row {
+    grid-template-columns: 1fr;
+    gap: 27px;
+    padding: 66px 0 55px;
+  }
+
+  .education-heading-note {
+    max-width: 550px;
+    margin: 0;
+  }
+
+  .education-heading-row .section-heading {
+    font-size: clamp(48px, 7.4vw, 76px);
+  }
+
+  .education-section .section-label > span:first-child {
+    font-size: clamp(22px, 3.6vw, 32px);
+  }
+
+  .education-row {
+    grid-template-columns:
+      28px
+      minmax(0, 1fr)
+      22px;
+    gap: 20px 17px;
+    padding: 38px 0 42px;
+  }
+
+  .education-number {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .education-year-column {
+    grid-column: 2;
+    grid-row: 1;
+    padding-top: 0;
+    gap: 8px;
+  }
+
+  .education-content {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .education-end-mark {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}
+
+/* =========================================
+   21 — EDUCATION / MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+  .education-section {
+    padding-top: 75px;
+    padding-bottom: 80px;
+  }
+
+  .education-section .section-label {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .education-section .section-label > span:first-child {
+    font-size: clamp(18px, 5vw, 25px);
+    line-height: 1.2;
+  }
+
+  .education-section .section-label > span:last-child {
+    max-width: 105px;
+    font-size: 8px;
+  }
+
+  .education-heading-row {
+    gap: 25px;
+    padding: 55px 0 40px;
+  }
+
+  .education-eyebrow {
+    margin-bottom: 20px;
+    font-size: 9px;
+  }
+
+  .education-heading-row .section-heading {
+    font-size: clamp(41px, 10.3vw, 60px);
+    line-height: 1;
+  }
+
+  .education-heading-note {
+    font-size: 12px;
+  }
+
+  .education-row {
+    grid-template-columns:
+      22px
+      minmax(0, 1fr)
+      16px;
+    gap: 19px 12px;
+    padding: 31px 0 37px;
+  }
+
+  .education-number,
+  .education-result {
+    font-size: 9px;
+  }
+
+  .education-date-label,
+  .education-level-label {
+    font-size: 8px;
+  }
+
+  .education-year {
+    font-size: 12px;
+  }
+
+  .education-level-label {
+    padding: 6px 9px;
+  }
+
+  .education-institution {
+    margin-bottom: 13px;
+    font-size: 10px;
+  }
+
+  .education-degree {
+    font-size: clamp(23px, 6.2vw, 31px);
+    line-height: 1.3;
+  }
+
+  .education-result {
+    padding: 7px 9px;
+  }
+
+  .education-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    font-size: 9px;
+  }
+
+  .desktop-nav a:nth-child(5) {
+    display: none;
+  }
+}
+
+/* =========================================
+   22 — EDUCATION / REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .education-end-mark,
+  .education-next-link {
     transition: none !important;
   }
 }

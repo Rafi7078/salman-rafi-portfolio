@@ -12,6 +12,10 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const GITHUB_PROFILE = "https://github.com/Rafi7078";
 
+/* ========================================
+   ABOUT DISCIPLINES
+======================================== */
+
 const disciplines = [
   {
     number: "01",
@@ -32,6 +36,87 @@ const disciplines = [
     mark: "QA",
   },
 ];
+
+/* ========================================
+   PROFESSIONAL EXPERIENCE
+   Source: Salman_Rafi_D_S_CV2.pdf
+======================================== */
+
+const experiences = [
+  {
+    number: "01",
+    title: "Data Analyst – Data Engineer Team",
+    company: "Rooya Bangladesh",
+    period: "July 2026 – Present",
+    label: "CURRENT ROLE",
+    bullets: [
+      "Used Python (Pandas, NumPy) and Excel for data cleaning, analysis, automation, and preparing analytical reports.",
+      "Used SQL to extract, filter, join, and analyze data from databases for reporting and decision-making.",
+      "Built interactive Power BI dashboards and reports to visualize KPIs, trends, and business performance.",
+      "Collaborated with technical and business teams to understand reporting requirements, investigate data issues, and deliver analytical support.",
+      "Annotate and label image and text datasets according to project-specific guidelines to support AI and machine-learning model development.",
+    ],
+  },
+  {
+    number: "02",
+    title: "QA Engineer – Quality Assurance Team",
+    company: "Dream71 Bangladesh Limited",
+    period: "May 2026 – July 2026",
+    label: "QUALITY ASSURANCE",
+    bullets: [
+      "Performed manual and automated testing for web-based applications, including functional, regression, smoke, and usability testing to ensure product quality.",
+      "Developed and maintained automated test scripts using Playwright with TypeScript, covering critical user flows and reducing repetitive manual testing efforts.",
+      "Conducted API testing using Postman and participated in requirement analysis, test case preparation, execution, and regression testing before production releases.",
+    ],
+  },
+  {
+    number: "03",
+    title: "Intern – In-House Software Development Team",
+    company: "IT Division, Trust Bank PLC",
+    period: "December 2024 – February 2025",
+    label: "SOFTWARE DEVELOPMENT",
+    bullets: [
+      "Worked with WordPress to develop and customize website functionality, including banking-service and customer-support features.",
+      "Gained hands-on experience in front-end development using WordPress and backend development using PHP.",
+    ],
+  },
+];
+
+/* ========================================
+   EDUCATION
+   Source: Salman_Rafi_D_S_CV2.pdf
+======================================== */
+
+const education = [
+  {
+    number: "01",
+    year: "2025",
+    level: "UNDERGRADUATE",
+    institution: "Bangladesh University of Professionals, Dhaka",
+    degree: "B.Sc. in Information and Communication Engineering",
+    result: "CGPA: 3.59 / 4.00",
+  },
+  {
+    number: "02",
+    year: "2020",
+    level: "HIGHER SECONDARY",
+    institution: "BAF Shaheen College, Paharkanchanpur",
+    degree: "Higher Secondary Certificate (HSC)",
+    result: "Science — GPA: 5.00 / 5.00",
+  },
+  {
+    number: "03",
+    year: "2018",
+    level: "SECONDARY",
+    institution: "BAF Shaheen School, Paharkanchanpur",
+    degree: "Secondary School Certificate (SSC)",
+    result: "Science — GPA: 5.00 / 5.00",
+  },
+];
+
+/* ========================================
+   PROJECTS
+======================================== */
 
 const projects = [
   {
@@ -87,7 +172,8 @@ const projects = [
     title: "Online Course Engagement",
     detail:
       "An analytics project studying learner engagement, participation duration, and course completion using data analysis and machine-learning tools.",
-    stack: "Python · Pandas · NumPy · Scikit-learn · Visualization",
+    stack:
+      "Python · Pandas · NumPy · Scikit-learn · Visualization",
     accent: "project-ivory",
     symbol: "EDA",
     href:
@@ -99,7 +185,8 @@ const projects = [
     title: "VerifyREST",
     detail:
       "A REST API automation framework covering authentication, CRUD workflows, response validation, data integrity, update and deletion behavior, and response-time checks.",
-    stack: "Postman · JavaScript · Newman · npm · GitHub Actions",
+    stack:
+      "Postman · JavaScript · Newman · npm · GitHub Actions",
     accent: "project-blue",
     symbol: "API",
     href:
@@ -130,6 +217,10 @@ const projects = [
       "https://github.com/Rafi7078/End-to-End-Testing-with-Cypress",
   },
 ];
+
+/* ========================================
+   CERTIFICATES
+======================================== */
 
 const certificates = [
   {
@@ -205,6 +296,19 @@ const contactLinks = [
   },
 ];
 
+/* ========================================
+   INTERACTION HELPERS
+======================================== */
+
+function allowsMagneticMotion() {
+  return (
+    typeof window !== "undefined" &&
+    window.matchMedia(
+      "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
+    ).matches
+  );
+}
+
 function HandIllustration() {
   return (
     <svg
@@ -235,19 +339,20 @@ function HandIllustration() {
   );
 }
 
+/* ========================================
+   MAIN PORTFOLIO
+======================================== */
+
 export default function Home() {
   const rootRef = useRef<HTMLDivElement>(null);
 
-  // Flashlight 2.0
   const torchRef = useRef<HTMLDivElement>(null);
   const torchGlowRef = useRef<HTMLDivElement>(null);
 
-  // Phase 4D
   const collaborateButtonRef = useRef<HTMLButtonElement>(null);
   const handMotionRef = useRef<HTMLDivElement>(null);
   const stringArtRef = useRef<SVGSVGElement>(null);
 
-  // Contact dialog
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
@@ -268,17 +373,12 @@ export default function Home() {
     setContactOpen(false);
   }, []);
 
-  // ========================================
-  // PHASE 4D — MAGNETIC COLLABORATE BUTTON
-  // ========================================
-
-  const canMagnetize = () =>
-    window.matchMedia(
-      "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
-    ).matches;
+  /* ========================================
+     MAGNETIC COLLABORATE BUTTON
+  ======================================== */
 
   const handleCollaborateEnter = useCallback(() => {
-    if (!canMagnetize()) return;
+    if (!allowsMagneticMotion()) return;
 
     gsap.to(handMotionRef.current, {
       x: 10,
@@ -311,7 +411,7 @@ export default function Home() {
 
   const handleCollaborateMove = useCallback(
     (event: ReactPointerEvent<HTMLButtonElement>) => {
-      if (!canMagnetize()) return;
+      if (!allowsMagneticMotion()) return;
 
       const button = event.currentTarget;
       const rect = button.getBoundingClientRect();
@@ -321,13 +421,13 @@ export default function Home() {
 
       const dx =
         (event.clientX - centerX) / (rect.width / 2);
+
       const dy =
         (event.clientY - centerY) / (rect.height / 2);
 
       const x = gsap.utils.clamp(-12, 12, dx * 12);
       const y = gsap.utils.clamp(-7, 7, dy * 7);
 
-      // Small magnetic pull toward the pointer.
       gsap.to(button, {
         x,
         y,
@@ -336,7 +436,6 @@ export default function Home() {
         overwrite: "auto",
       });
 
-      // The hand responds to button movement.
       gsap.to(handMotionRef.current, {
         x: 10 + x * 0.32,
         y: -6 + y * 0.28,
@@ -346,7 +445,6 @@ export default function Home() {
         overwrite: "auto",
       });
 
-      // Strings stretch gently with the movement.
       gsap.to(stringArtRef.current, {
         x: 3 + x * 0.18,
         y: y * 0.12,
@@ -361,7 +459,7 @@ export default function Home() {
   );
 
   const handleCollaborateLeave = useCallback(() => {
-    if (!canMagnetize()) return;
+    if (!allowsMagneticMotion()) return;
 
     gsap.to(collaborateButtonRef.current, {
       x: 0,
@@ -400,9 +498,9 @@ export default function Home() {
     );
   }, []);
 
-  // ========================================
-  // PHASE 4A + 4B — CINEMATIC SCROLL
-  // ========================================
+  /* ========================================
+     GSAP CINEMATIC SCROLL ANIMATIONS
+  ======================================== */
 
   useGSAP(
     () => {
@@ -483,12 +581,11 @@ export default function Home() {
               "-=0.5",
             );
 
-          // Section reveals.
-          const reveals =
-            gsap.utils.toArray<HTMLElement>(
-              ".reveal:not(.project-row)",
-              rootRef.current ?? undefined,
-            );
+          // Includes experience and education timeline rows.
+          const reveals = gsap.utils.toArray<HTMLElement>(
+            ".reveal:not(.project-row)",
+            rootRef.current ?? undefined,
+          );
 
           reveals.forEach((element) => {
             const distance = element.classList.contains(
@@ -518,7 +615,6 @@ export default function Home() {
             );
           });
 
-          // Project art and content storytelling.
           gsap.utils
             .toArray<HTMLElement>(
               ".project-row",
@@ -526,14 +622,11 @@ export default function Home() {
             )
             .forEach((row) => {
               const art =
-                row.querySelector<HTMLElement>(
-                  ".project-art",
-                );
+                row.querySelector<HTMLElement>(".project-art");
 
-              const copy =
-                row.querySelectorAll<HTMLElement>(
-                  ".project-category, .project-copy h3, .project-copy > p, .project-link",
-                );
+              const copy = row.querySelectorAll<HTMLElement>(
+                ".project-category, .project-copy h3, .project-copy > p, .project-link",
+              );
 
               const story = gsap.timeline({
                 scrollTrigger: {
@@ -579,12 +672,10 @@ export default function Home() {
               );
             });
 
-          // Draw SVG strings by their actual length.
-          const strings =
-            gsap.utils.toArray<SVGPathElement>(
-              ".string-path",
-              rootRef.current ?? undefined,
-            );
+          const strings = gsap.utils.toArray<SVGPathElement>(
+            ".string-path",
+            rootRef.current ?? undefined,
+          );
 
           strings.forEach((path) => {
             const length = path.getTotalLength();
@@ -630,9 +721,9 @@ export default function Home() {
     { scope: rootRef },
   );
 
-  // ========================================
-  // PHASE 4C — FLASHLIGHT 2.0
-  // ========================================
+  /* ========================================
+     FLASHLIGHT 2.0
+  ======================================== */
 
   useEffect(() => {
     let targetX = window.innerWidth / 2;
@@ -654,14 +745,8 @@ export default function Home() {
       ]) {
         if (!element) continue;
 
-        element.style.setProperty(
-          "--torch-x",
-          `${x}px`,
-        );
-        element.style.setProperty(
-          "--torch-y",
-          `${y}px`,
-        );
+        element.style.setProperty("--torch-x", `${x}px`);
+        element.style.setProperty("--torch-y", `${y}px`);
       }
     };
 
@@ -692,35 +777,23 @@ export default function Home() {
       targetY = event.clientY;
 
       if (frame === 0) {
-        frame =
-          window.requestAnimationFrame(tick);
+        frame = window.requestAnimationFrame(tick);
       }
     };
 
     applyPosition(currentX, currentY);
 
-    window.addEventListener(
-      "pointermove",
-      handlePointer,
-      { passive: true },
-    );
+    window.addEventListener("pointermove", handlePointer, {
+      passive: true,
+    });
 
-    window.addEventListener(
-      "pointerdown",
-      handlePointer,
-      { passive: true },
-    );
+    window.addEventListener("pointerdown", handlePointer, {
+      passive: true,
+    });
 
     return () => {
-      window.removeEventListener(
-        "pointermove",
-        handlePointer,
-      );
-
-      window.removeEventListener(
-        "pointerdown",
-        handlePointer,
-      );
+      window.removeEventListener("pointermove", handlePointer);
+      window.removeEventListener("pointerdown", handlePointer);
 
       if (frame) {
         window.cancelAnimationFrame(frame);
@@ -728,22 +801,19 @@ export default function Home() {
     };
   }, []);
 
-  // ========================================
-  // ACCESSIBLE CONTACT DIALOG
-  // ========================================
+  /* ========================================
+     CONTACT DIALOG ACCESSIBILITY
+  ======================================== */
 
   useEffect(() => {
     if (!contactOpen) return;
 
-    const previousOverflow =
-      document.body.style.overflow;
-
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    const focusFrame =
-      window.requestAnimationFrame(() => {
-        closeButtonRef.current?.focus();
-      });
+    const focusFrame = window.requestAnimationFrame(() => {
+      closeButtonRef.current?.focus();
+    });
 
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -757,10 +827,9 @@ export default function Home() {
       const dialog = dialogRef.current;
       if (!dialog) return;
 
-      const focusable =
-        dialog.querySelectorAll<HTMLElement>(
-          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
-        );
+      const focusable = dialog.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
 
       if (focusable.length === 0) {
         event.preventDefault();
@@ -768,54 +837,33 @@ export default function Home() {
       }
 
       const first = focusable[0];
-      const last = focusable[
-        focusable.length - 1
-      ];
-
+      const last = focusable[focusable.length - 1];
       const active = document.activeElement;
 
       if (!dialog.contains(active)) {
         event.preventDefault();
         first.focus();
-      } else if (
-        event.shiftKey &&
-        active === first
-      ) {
+      } else if (event.shiftKey && active === first) {
         event.preventDefault();
         last.focus();
-      } else if (
-        !event.shiftKey &&
-        active === last
-      ) {
+      } else if (!event.shiftKey && active === last) {
         event.preventDefault();
         first.focus();
       }
     };
 
-    window.addEventListener(
-      "keydown",
-      handleKey,
-    );
+    window.addEventListener("keydown", handleKey);
 
     return () => {
       window.cancelAnimationFrame(focusFrame);
-      document.body.style.overflow =
-        previousOverflow;
-
-      window.removeEventListener(
-        "keydown",
-        handleKey,
-      );
-
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKey);
       previousFocusRef.current?.focus();
     };
   }, [contactOpen]);
 
   return (
-    <div
-      ref={rootRef}
-      className="site-shell"
-    >
+    <div ref={rootRef} className="site-shell">
       {/* NAVIGATION */}
       <header className="topbar">
         <a
@@ -831,10 +879,10 @@ export default function Home() {
           aria-label="Main navigation"
         >
           <a href="#about">ABOUT</a>
+          <a href="#experience">EXPERIENCE</a>
+          <a href="#education">EDUCATION</a>
           <a href="#work">WORK</a>
-          <a href="#certificates">
-            CERTIFICATES
-          </a>
+          <a href="#certificates">CERTIFICATES</a>
         </nav>
 
         <button
@@ -842,9 +890,7 @@ export default function Home() {
           className={`torch-toggle ${
             torchOn ? "is-active" : ""
           }`}
-          onClick={() =>
-            setTorchOn((value) => !value)
-          }
+          onClick={() => setTorchOn((value) => !value)}
           aria-pressed={torchOn}
           aria-label={
             torchOn
@@ -859,10 +905,7 @@ export default function Home() {
 
       <main>
         {/* HERO */}
-        <section
-          className="hero section-pad"
-          id="home"
-        >
+        <section className="hero section-pad" id="home">
           <div className="hero-copy">
             <p className="eyebrow hero-kicker">
               <span className="status-dot" />
@@ -914,9 +957,8 @@ export default function Home() {
                 aria-label="Personal monogram"
               >
                 <div className="portrait-grid" />
-                <div className="portrait-monogram">
-                  SR
-                </div>
+                <div className="portrait-monogram">SR</div>
+
                 <span className="portrait-caption">
                   SALMAN JAHAN RAFI
                 </span>
@@ -938,10 +980,7 @@ export default function Home() {
             </span>
           </div>
 
-          <a
-            href="#about"
-            className="scroll-cue"
-          >
+          <a href="#about" className="scroll-cue">
             <span className="scroll-cue-line" />
             SCROLL TO EXPLORE
           </a>
@@ -963,9 +1002,7 @@ export default function Home() {
               <br />
               nature.
               <br />
-              <span className="muted-text">
-                Technical
-              </span>
+              <span className="muted-text">Technical</span>
               <br />
               by practice.
             </h2>
@@ -980,25 +1017,20 @@ export default function Home() {
 
               <p>
                 I am an Information and Communication
-                Engineering graduate working across
-                applied AI, data analytics, and software
-                quality assurance.
+                Engineering graduate working across applied AI,
+                data analytics, and software quality assurance.
               </p>
 
               <p className="small-copy">
                 My experience spans AI data annotation,
                 software testing, and web development.
-                I enjoy turning technical problems
-                into practical solutions and building
-                reliable, data-informed experiences.
+                I enjoy turning technical problems into
+                practical solutions and building reliable,
+                data-informed experiences.
               </p>
 
-              <a
-                className="text-link"
-                href="#work"
-              >
-                EXPLORE SELECTED WORK
-                <span>↘</span>
+              <a className="text-link" href="#experience">
+                EXPLORE MY EXPERIENCE <span>↘</span>
               </a>
             </div>
           </div>
@@ -1027,13 +1059,215 @@ export default function Home() {
           </div>
         </section>
 
+        {/* PROFESSIONAL EXPERIENCE */}
+        <section
+          className="experience-section section-pad"
+          id="experience"
+        >
+          <div className="section-label reveal">
+            <span>02 / PROFESSIONAL EXPERIENCE</span>
+            <span>THE JOURNEY SO FAR</span>
+          </div>
+
+          <div className="experience-heading-row reveal">
+            <div>
+              <p className="experience-eyebrow">
+                EXPERIENCE / 2024 — PRESENT
+              </p>
+
+              <h2 className="section-heading">
+                Learning
+                <br />
+                <span className="accent-text">
+                  by doing.
+                </span>
+              </h2>
+            </div>
+
+            <p className="experience-heading-note">
+              Three professional roles across
+              <br />
+              data, quality assurance,
+              <br />
+              and software development.
+            </p>
+          </div>
+
+          <div className="experience-list">
+            {experiences.map((experience) => (
+              <article
+                className="experience-row reveal"
+                key={experience.number}
+              >
+                <span className="experience-number">
+                  {experience.number}
+                </span>
+
+                <div className="experience-date-column">
+                  <span className="experience-date-label">
+                    DURATION
+                  </span>
+
+                  <time className="experience-period">
+                    {experience.period}
+                  </time>
+
+                  <span className="experience-role-label">
+                    {experience.label}
+                  </span>
+                </div>
+
+                <div className="experience-content">
+                  <p className="experience-company">
+                    <span
+                      className="experience-company-dot"
+                      aria-hidden="true"
+                    />
+                    {experience.company}
+                  </p>
+
+                  <h3 className="experience-role">
+                    {experience.title}
+                  </h3>
+
+                  <ul className="experience-responsibilities">
+                    {experience.bullets.map((bullet) => (
+                      <li key={bullet}>{bullet}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <span
+                  className="experience-end-mark"
+                  aria-hidden="true"
+                >
+                  ↗
+                </span>
+              </article>
+            ))}
+          </div>
+
+          <div className="experience-footer reveal">
+            <span>BUILT THROUGH PRACTICE.</span>
+
+            <a
+              href="#education"
+              className="experience-next-link"
+            >
+              EXPLORE EDUCATION <span aria-hidden="true">↘</span>
+            </a>
+          </div>
+        </section>
+
+        {/* EDUCATION */}
+        <section
+          className="education-section section-pad"
+          id="education"
+        >
+          <div className="section-label reveal">
+            <span>03 / EDUCATION</span>
+            <span>ACADEMIC FOUNDATION</span>
+          </div>
+
+          <div className="education-heading-row reveal">
+            <div>
+              <p className="education-eyebrow">
+                EDUCATION / FOUNDATIONS
+              </p>
+
+              <h2 className="section-heading">
+                Built on
+                <br />
+                <span className="accent-text">
+                  foundations.
+                </span>
+              </h2>
+            </div>
+
+            <p className="education-heading-note">
+              An engineering education, supported by a strong
+              science background and a continued interest in
+              technology, data, and software quality.
+            </p>
+          </div>
+
+          <div className="education-list">
+            {education.map((item) => (
+              <article
+                className="education-row reveal"
+                key={item.number}
+              >
+                <span className="education-number">
+                  {item.number}
+                </span>
+
+                <div className="education-year-column">
+                  <span className="education-date-label">
+                    YEAR
+                  </span>
+
+                  <time
+                    className="education-year"
+                    dateTime={item.year}
+                  >
+                    {item.year}
+                  </time>
+
+                  <span className="education-level-label">
+                    {item.level}
+                  </span>
+                </div>
+
+                <div className="education-content">
+                  <p className="education-institution">
+                    <span
+                      className="education-institution-dot"
+                      aria-hidden="true"
+                    />
+                    {item.institution}
+                  </p>
+
+                  <h3 className="education-degree">
+                    {item.degree}
+                  </h3>
+
+                  <div className="education-meta">
+                    <span className="education-result">
+                      {item.result}
+                    </span>
+                  </div>
+                </div>
+
+                <span
+                  className="education-end-mark"
+                  aria-hidden="true"
+                >
+                  ↗
+                </span>
+              </article>
+            ))}
+          </div>
+
+          <div className="education-footer reveal">
+            <span>FOUNDATIONS FOR WHAT COMES NEXT.</span>
+
+            <a
+              href="#work"
+              className="education-next-link"
+            >
+              EXPLORE PROJECTS
+              <span aria-hidden="true">↘</span>
+            </a>
+          </div>
+        </section>
+
         {/* SELECTED WORK */}
         <section
           className="work-section section-pad"
           id="work"
         >
           <div className="section-label reveal">
-            <span>02 / SELECTED WORK</span>
+            <span>04 / SELECTED WORK</span>
             <span>PROJECT STORIES</span>
           </div>
 
@@ -1047,11 +1281,9 @@ export default function Home() {
             </h2>
 
             <p className="work-heading-note">
-              A selection of AI, analytics,
-              and QA work.
+              A selection of AI, analytics, and QA work.
               <br />
-              Explore the repositories for
-              implementation details.
+              Explore the repositories for implementation details.
             </p>
           </div>
 
@@ -1119,7 +1351,7 @@ export default function Home() {
           id="certificates"
         >
           <div className="section-label reveal">
-            <span>03 / CONTINUOUS LEARNING</span>
+            <span>05 / CONTINUOUS LEARNING</span>
             <span>PROFESSIONAL CREDENTIALS</span>
           </div>
 
@@ -1136,8 +1368,7 @@ export default function Home() {
               <p className="work-heading-note">
                 Learning through practice.
                 <br />
-                Building knowledge across AI,
-                data, and quality.
+                Building knowledge across AI, data, and quality.
               </p>
 
               <a
@@ -1210,19 +1441,15 @@ export default function Home() {
 
           <p className="certificate-note">
             Original certificates open separately.
-            Related repositories are linked
-            where available.
+            Related repositories are linked where available.
           </p>
         </section>
 
-        {/* CONTACT — PHASE 4D */}
-        <section
-          className="contact-section"
-          id="contact"
-        >
+        {/* CONTACT */}
+        <section className="contact-section" id="contact">
           <div className="contact-inner section-pad">
             <div className="section-label reveal">
-              <span>04 / THE NEXT CHAPTER</span>
+              <span>06 / THE NEXT CHAPTER</span>
               <span>OPEN TO CONVERSATION</span>
             </div>
 
@@ -1241,7 +1468,6 @@ export default function Home() {
             </div>
 
             <div className="hand-stage reveal">
-              {/* ANIMATED STRINGS */}
               <svg
                 ref={stringArtRef}
                 className="string-art"
@@ -1253,17 +1479,18 @@ export default function Home() {
                   className="string-path"
                   d="M90 240 C180 160 270 270 385 190 S560 90 740 145"
                 />
+
                 <path
                   className="string-path"
                   d="M110 250 C215 200 285 280 400 205 S570 120 745 158"
                 />
+
                 <path
                   className="string-path"
                   d="M125 260 C225 225 300 280 415 220 S585 145 750 170"
                 />
               </svg>
 
-              {/* HAND ANIMATION */}
               <div className="hand-wrap">
                 <div
                   ref={handMotionRef}
@@ -1273,7 +1500,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* MAGNETIC CTA */}
               <button
                 ref={collaborateButtonRef}
                 type="button"
@@ -1368,9 +1594,7 @@ export default function Home() {
                 damping: 25,
                 stiffness: 240,
               }}
-              onClick={(event) =>
-                event.stopPropagation()
-              }
+              onClick={(event) => event.stopPropagation()}
             >
               <div className="dialog-topline">
                 <span>START A CONVERSATION</span>
@@ -1395,9 +1619,8 @@ export default function Home() {
               </h2>
 
               <p>
-                Interested in AI, data analytics,
-                or quality engineering?
-                Have a project or problem in mind?
+                Interested in AI, data analytics, or quality
+                engineering? Have a project or problem in mind?
                 Let&apos;s connect.
               </p>
 
@@ -1424,9 +1647,7 @@ export default function Home() {
                       {item.value}
                     </span>
 
-                    <span aria-hidden="true">
-                      ↗
-                    </span>
+                    <span aria-hidden="true">↗</span>
                   </a>
                 ))}
               </div>
@@ -1437,9 +1658,7 @@ export default function Home() {
                 onClick={closeContact}
               >
                 BACK TO THE PORTFOLIO
-                <span aria-hidden="true">
-                  ↗
-                </span>
+                <span aria-hidden="true">↗</span>
               </button>
             </motion.div>
           </motion.div>
