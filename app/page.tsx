@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -130,7 +131,8 @@ const certificates = [
     issuer: "Microsoft · Coursera",
     date: "14 JUL 2026",
     file: "/certificates/sql-foundations.png",
-    githubUrl: "https://github.com/Rafi7078/Microsoft_SQL_Foundations_Certificate",
+    githubUrl:
+      "https://github.com/Rafi7078/Microsoft_SQL_Foundations_Certificate",
   },
   {
     number: "02",
@@ -138,7 +140,8 @@ const certificates = [
     issuer: "Passport to Earning Bangladesh",
     date: "16 JUL 2026",
     file: "/certificates/art-of-problem-definition.pdf",
-    githubUrl: "https://github.com/Rafi7078/Art_of_Problem_Definition_Certification",
+    githubUrl:
+      "https://github.com/Rafi7078/Art_of_Problem_Definition_Certification",
   },
   {
     number: "03",
@@ -154,7 +157,8 @@ const certificates = [
     issuer: "Deloitte · Forage",
     date: "16 JUL 2026",
     file: "/certificates/deloitte-data-analytics-job-simulation.pdf",
-    githubUrl: "https://github.com/Rafi7078/Deloitte-Data-Analytics-Simulation-Program",
+    githubUrl:
+      "https://github.com/Rafi7078/Deloitte-Data-Analytics-Simulation-Program",
   },
   {
     number: "05",
@@ -162,7 +166,8 @@ const certificates = [
     issuer: "Simplilearn SkillUp",
     date: "18 OCT 2026",
     file: "/certificates/playwright-typescript.pdf",
-    githubUrl: "https://github.com/Rafi7078/playwright-typescript-certification",
+    githubUrl:
+      "https://github.com/Rafi7078/playwright-typescript-certification",
   },
   {
     number: "06",
@@ -170,7 +175,8 @@ const certificates = [
     issuer: "Passport to Earning Bangladesh",
     date: "15 JUL 2026",
     file: "/certificates/excel-essentials-workplace-productivity.pdf",
-    githubUrl: "https://github.com/Rafi7078/Excel-Productivity-Certificates",
+    githubUrl:
+      "https://github.com/Rafi7078/Excel-Productivity-Certificates",
   },
 ];
 
@@ -245,74 +251,108 @@ export default function Home() {
     setContactOpen(false);
   }, []);
 
+  // CINEMATIC MOTION UPGRADE
   useGSAP(
     () => {
-      const reducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
+      const mm = gsap.matchMedia();
 
-      if (reducedMotion) return;
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        // First-screen cinematic entrance.
+        const intro = gsap.timeline({
+          defaults: { ease: "power3.out" },
+          delay: 0.1,
+        });
 
-      const intro = gsap.timeline({
-        defaults: { ease: "power3.out" },
-      });
-
-      intro
-        .from(".topbar", {
-          y: -25,
-          opacity: 0,
-          duration: 0.7,
-        })
-        .from(
-          ".hero-kicker",
-          {
-            y: 20,
-            opacity: 0,
-            duration: 0.6,
-          },
-          "-=.25",
-        )
-        .from(
-          ".hero-line-inner",
-          {
-            yPercent: 110,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.12,
-          },
-          "-=.15",
-        )
-        .from(
-          ".hero-description, .hero-meta",
-          {
-            y: 20,
-            opacity: 0,
+        intro
+          .from(".topbar", {
+            y: -24,
+            autoAlpha: 0,
             duration: 0.7,
-            stagger: 0.12,
-          },
-          "-=.4",
-        )
-        .from(
-          ".portrait-frame",
-          {
-            scale: 0.94,
-            opacity: 0,
-            duration: 1.1,
-          },
-          "-=.75",
+          })
+          .from(
+            ".hero-kicker",
+            {
+              y: 18,
+              autoAlpha: 0,
+              duration: 0.65,
+            },
+            "-=0.25",
+          )
+          .from(
+            ".hero-line-inner",
+            {
+              yPercent: 110,
+              rotate: 2,
+              transformOrigin: "left bottom",
+              duration: 1.15,
+              stagger: 0.13,
+              ease: "power4.out",
+            },
+            "-=0.35",
+          )
+          .from(
+            ".hero-description",
+            {
+              y: 24,
+              autoAlpha: 0,
+              duration: 0.8,
+            },
+            "-=0.65",
+          )
+          .from(
+            ".hero-meta span",
+            {
+              y: 14,
+              autoAlpha: 0,
+              duration: 0.55,
+              stagger: 0.1,
+            },
+            "-=0.42",
+          )
+          .from(
+            ".portrait-frame",
+            {
+              y: 45,
+              scale: 0.94,
+              autoAlpha: 0,
+              duration: 1.3,
+            },
+            "-=1.35",
+          )
+          .from(
+            ".hero-side-note, .hero-index, .scroll-cue",
+            {
+              y: 12,
+              autoAlpha: 0,
+              duration: 0.7,
+              stagger: 0.12,
+            },
+            "-=0.5",
+          );
+
+        // Regular section reveals.
+        const reveals = gsap.utils.toArray<HTMLElement>(
+          ".reveal:not(.project-row)",
+          rootRef.current ?? undefined,
         );
 
-      gsap.utils
-        .toArray<HTMLElement>(".reveal", rootRef.current ?? undefined)
-        .forEach((element) => {
+        reveals.forEach((element) => {
+          const distance = element.classList.contains("section-label")
+            ? 20
+            : 42;
+
           gsap.fromTo(
             element,
-            { y: 45, opacity: 0 },
+            {
+              y: distance,
+              autoAlpha: 0,
+            },
             {
               y: 0,
-              opacity: 1,
-              duration: 0.85,
+              autoAlpha: 1,
+              duration: 0.95,
               ease: "power3.out",
+              immediateRender: false,
               scrollTrigger: {
                 trigger: element,
                 start: "top 88%",
@@ -322,37 +362,114 @@ export default function Home() {
           );
         });
 
-      gsap.to(".portrait-frame", {
-        y: -28,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".hero",
-          start: "top top",
-          end: "bottom top",
-          scrub: 1,
-        },
-      });
+        // Each project reveals its artwork and then its story.
+        gsap.utils
+          .toArray<HTMLElement>(
+            ".project-row",
+            rootRef.current ?? undefined,
+          )
+          .forEach((row) => {
+            const art = row.querySelector<HTMLElement>(".project-art");
 
-      gsap.fromTo(
-        ".string-path",
-        { strokeDashoffset: 420 },
-        {
+            const copy = row.querySelectorAll<HTMLElement>(
+              ".project-category, .project-copy h3, .project-copy > p, .project-link",
+            );
+
+            const story = gsap.timeline({
+              scrollTrigger: {
+                trigger: row,
+                start: "top 86%",
+                once: true,
+              },
+            });
+
+            story.from(row, {
+              y: 55,
+              autoAlpha: 0,
+              duration: 0.9,
+              ease: "power3.out",
+            });
+
+            if (art) {
+              story.fromTo(
+                art,
+                {
+                  clipPath: "inset(0 100% 0 0)",
+                },
+                {
+                  clipPath: "inset(0 0% 0 0)",
+                  duration: 1,
+                  ease: "power3.inOut",
+                  clearProps: "clipPath",
+                },
+                "-=0.65",
+              );
+            }
+
+            story.from(
+              copy,
+              {
+                y: 16,
+                autoAlpha: 0,
+                duration: 0.58,
+                stagger: 0.075,
+                ease: "power2.out",
+              },
+              "-=0.75",
+            );
+          });
+
+        // Animate strings using actual SVG lengths.
+        const strings = gsap.utils.toArray<SVGPathElement>(
+          ".string-path",
+          rootRef.current ?? undefined,
+        );
+
+        strings.forEach((path) => {
+          const length = path.getTotalLength();
+
+          gsap.set(path, {
+            strokeDasharray: length,
+            strokeDashoffset: length,
+          });
+        });
+
+        gsap.to(strings, {
           strokeDashoffset: 0,
-          duration: 1.6,
-          stagger: 0.15,
+          duration: 1.8,
+          stagger: 0.17,
           ease: "power2.out",
           scrollTrigger: {
             trigger: ".contact-section",
             start: "top 78%",
             once: true,
           },
+        });
+      });
+
+      // Desktop-only scroll parallax.
+      mm.add(
+        "(min-width: 851px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          gsap.to(".hero-visual", {
+            y: -36,
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".hero",
+              start: "top top",
+              end: "bottom top",
+              scrub: 1.1,
+            },
+          });
         },
       );
+
+      return () => mm.revert();
     },
     { scope: rootRef },
   );
 
-  // Track flashlight position without React re-renders.
+  // FLASHLIGHT POINTER TRACKING
   useEffect(() => {
     let frame = 0;
     let x = window.innerWidth / 2;
@@ -394,7 +511,7 @@ export default function Home() {
     };
   }, []);
 
-  // Lock background scrolling, support Escape, trap focus, and restore focus.
+  // CONTACT MODAL ACCESSIBILITY
   useEffect(() => {
     if (!contactOpen) return;
 
@@ -415,6 +532,7 @@ export default function Home() {
       if (event.key !== "Tab") return;
 
       const dialog = dialogRef.current;
+
       if (!dialog) return;
 
       const focusable = dialog.querySelectorAll<HTMLElement>(
@@ -454,17 +572,7 @@ export default function Home() {
 
   return (
     <div ref={rootRef} className="site-shell">
-      <style>{`
-        .certificate-main::before,
-        .certificate-main::after,
-        .certificate-format,
-        .certificate-type,
-        .certificate-file-type {
-          content: none !important;
-          display: none !important;
-        }
-      `}</style>
-
+      {/* NAVIGATION */}
       <header className="topbar">
         <a
           className="wordmark"
@@ -474,7 +582,10 @@ export default function Home() {
           SR<span>®</span>
         </a>
 
-        <nav className="desktop-nav" aria-label="Main navigation">
+        <nav
+          className="desktop-nav"
+          aria-label="Main navigation"
+        >
           <a href="#about">ABOUT</a>
           <a href="#work">WORK</a>
           <a href="#certificates">CERTIFICATES</a>
@@ -507,15 +618,21 @@ export default function Home() {
 
             <h1 className="hero-title">
               <span className="hero-line">
-                <span className="hero-line-inner">SALMAN</span>
+                <span className="hero-line-inner">
+                  SALMAN
+                </span>
               </span>
 
               <span className="hero-line hero-outline-line">
-                <span className="hero-line-inner">JAHAN</span>
+                <span className="hero-line-inner">
+                  JAHAN
+                </span>
               </span>
 
               <span className="hero-line">
-                <span className="hero-line-inner accent-text">RAFI.</span>
+                <span className="hero-line-inner accent-text">
+                  RAFI.
+                </span>
               </span>
             </h1>
 
@@ -539,9 +656,14 @@ export default function Home() {
                 <span>THE BUILDER</span>
               </div>
 
-              <div className="portrait-art" aria-label="Personal monogram">
+              <div
+                className="portrait-art"
+                aria-label="Personal monogram"
+              >
                 <div className="portrait-grid" />
-                <div className="portrait-monogram">SR</div>
+                <div className="portrait-monogram">
+                  SR
+                </div>
 
                 <span className="portrait-caption">
                   SALMAN JAHAN RAFI
@@ -555,8 +677,13 @@ export default function Home() {
               </div>
             </div>
 
-            <span className="hero-side-note">DHAKA · BANGLADESH</span>
-            <span className="hero-index">PORTFOLIO / 2026</span>
+            <span className="hero-side-note">
+              DHAKA · BANGLADESH
+            </span>
+
+            <span className="hero-index">
+              PORTFOLIO / 2026
+            </span>
           </div>
 
           <a href="#about" className="scroll-cue">
@@ -566,7 +693,10 @@ export default function Home() {
         </section>
 
         {/* ABOUT */}
-        <section className="intro-section section-pad" id="about">
+        <section
+          className="intro-section section-pad"
+          id="about"
+        >
           <div className="section-label reveal">
             <span>01 / THE PERSON</span>
             <span>ABOUT & APPROACH</span>
@@ -578,27 +708,33 @@ export default function Home() {
               <br />
               nature.
               <br />
-              <span className="muted-text">Technical</span>
+              <span className="muted-text">
+                Technical
+              </span>
               <br />
               by practice.
             </h2>
 
             <div className="intro-copy reveal">
-              <span className="big-asterisk" aria-hidden="true">
+              <span
+                className="big-asterisk"
+                aria-hidden="true"
+              >
                 ✳
               </span>
 
               <p>
-                I am an Information and Communication Engineering graduate
-                working across applied AI, data analytics, and software
-                quality assurance.
+                I am an Information and Communication
+                Engineering graduate working across applied AI,
+                data analytics, and software quality assurance.
               </p>
 
               <p className="small-copy">
-                My experience spans AI data annotation, software testing,
-                and web development. I enjoy turning technical problems
-                into practical solutions and building reliable,
-                data-informed experiences.
+                My experience spans AI data annotation,
+                software testing, and web development. I enjoy
+                turning technical problems into practical
+                solutions and building reliable, data-informed
+                experiences.
               </p>
 
               <a className="text-link" href="#work">
@@ -613,17 +749,29 @@ export default function Home() {
                 className="discipline-row reveal"
                 key={item.number}
               >
-                <span className="row-number">{item.number}</span>
+                <span className="row-number">
+                  {item.number}
+                </span>
+
                 <h3>{item.title}</h3>
-                <span className="discipline-detail">{item.detail}</span>
-                <span className="discipline-mark">{item.mark}</span>
+
+                <span className="discipline-detail">
+                  {item.detail}
+                </span>
+
+                <span className="discipline-mark">
+                  {item.mark}
+                </span>
               </article>
             ))}
           </div>
         </section>
 
         {/* SELECTED WORK */}
-        <section className="work-section section-pad" id="work">
+        <section
+          className="work-section section-pad"
+          id="work"
+        >
           <div className="section-label reveal">
             <span>02 / SELECTED WORK</span>
             <span>PROJECT STORIES</span>
@@ -633,13 +781,16 @@ export default function Home() {
             <h2 className="section-heading">
               Work in
               <br />
-              <span className="accent-text">progress.</span>
+              <span className="accent-text">
+                progress.
+              </span>
             </h2>
 
             <p className="work-heading-note">
               A selection of AI, analytics, and QA work.
               <br />
-              Explore the repositories for implementation details.
+              Explore the repositories for implementation
+              details.
             </p>
           </div>
 
@@ -669,8 +820,12 @@ export default function Home() {
                   </span>
 
                   <h3>{project.title}</h3>
+
                   <p>{project.detail}</p>
-                  <p className="project-stack">{project.stack}</p>
+
+                  <p className="project-stack">
+                    {project.stack}
+                  </p>
 
                   <a
                     className="project-status project-link"
@@ -711,7 +866,9 @@ export default function Home() {
             <h2 className="section-heading">
               Proof of
               <br />
-              <span className="muted-text">curiosity.</span>
+              <span className="muted-text">
+                curiosity.
+              </span>
             </h2>
 
             <div className="certificate-heading-actions">
@@ -728,7 +885,8 @@ export default function Home() {
                 rel="noopener noreferrer"
                 aria-label="Explore Salman Rafi's GitHub profile"
               >
-                EXPLORE GITHUB <span aria-hidden="true">↗</span>
+                EXPLORE GITHUB
+                <span aria-hidden="true">↗</span>
               </a>
             </div>
           </div>
@@ -745,6 +903,7 @@ export default function Home() {
 
                 <div className="certificate-main">
                   <h3>{certificate.title}</h3>
+
                   <p className="certificate-issuer">
                     {certificate.issuer}
                   </p>
@@ -762,7 +921,8 @@ export default function Home() {
                     rel="noopener noreferrer"
                     aria-label={`View ${certificate.title} certificate`}
                   >
-                    VIEW CERTIFICATE <span aria-hidden="true">↗</span>
+                    VIEW CERTIFICATE
+                    <span aria-hidden="true">↗</span>
                   </a>
 
                   <a
@@ -770,9 +930,16 @@ export default function Home() {
                     href={certificate.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="Open Salman Rafi's GitHub profile"
+                    aria-label={
+                      certificate.githubUrl === GITHUB_PROFILE
+                        ? "Open Salman Rafi's GitHub profile"
+                        : `Open ${certificate.title} repository on GitHub`
+                    }
                   >
-                    GITHUB PROFILE <span aria-hidden="true">↗</span>
+                    {certificate.githubUrl === GITHUB_PROFILE
+                      ? "GITHUB PROFILE"
+                      : "GITHUB REPOSITORY"}
+                    <span aria-hidden="true">↗</span>
                   </a>
                 </div>
               </article>
@@ -780,8 +947,8 @@ export default function Home() {
           </div>
 
           <p className="certificate-note">
-            Original certificates open separately. Visit GitHub to explore
-            projects and code.
+            Original certificates open separately. Related
+            repositories are linked where available.
           </p>
         </section>
 
@@ -794,7 +961,9 @@ export default function Home() {
             </div>
 
             <div className="contact-title-wrap reveal">
-              <p className="contact-kicker">HAVE SOMETHING IN MIND?</p>
+              <p className="contact-kicker">
+                HAVE SOMETHING IN MIND?
+              </p>
 
               <h2>
                 LET&apos;S
@@ -841,7 +1010,10 @@ export default function Home() {
               >
                 <span>LET&apos;S COLLABORATE</span>
 
-                <span className="button-arrow" aria-hidden="true">
+                <span
+                  className="button-arrow"
+                  aria-hidden="true"
+                >
                   ↗
                 </span>
               </button>
@@ -856,15 +1028,18 @@ export default function Home() {
         </section>
       </main>
 
+      {/* FOOTER */}
       <footer className="site-footer">
         <span>SR® — SALMAN JAHAN RAFI</span>
         <span>INDEPENDENT PORTFOLIO · 2026</span>
       </footer>
 
-      {/* FLASHLIGHT OVERLAY */}
+      {/* FLASHLIGHT */}
       <div
         ref={torchRef}
-        className={`torch-overlay ${torchOn ? "torch-visible" : ""}`}
+        className={`torch-overlay ${
+          torchOn ? "torch-visible" : ""
+        }`}
         aria-hidden="true"
       />
 
@@ -885,9 +1060,21 @@ export default function Home() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="contact-dialog-title"
-              initial={{ y: 30, scale: 0.97, opacity: 0 }}
-              animate={{ y: 0, scale: 1, opacity: 1 }}
-              exit={{ y: 20, scale: 0.98, opacity: 0 }}
+              initial={{
+                y: 30,
+                scale: 0.97,
+                opacity: 0,
+              }}
+              animate={{
+                y: 0,
+                scale: 1,
+                opacity: 1,
+              }}
+              exit={{
+                y: 20,
+                scale: 0.98,
+                opacity: 0,
+              }}
               transition={{
                 type: "spring",
                 damping: 25,
@@ -918,8 +1105,9 @@ export default function Home() {
               </h2>
 
               <p>
-                Interested in AI, data analytics, or quality engineering?
-                Have a project or problem in mind? Let&apos;s connect.
+                Interested in AI, data analytics, or quality
+                engineering? Have a project or problem in mind?
+                Let&apos;s connect.
               </p>
 
               <div className="contact-link-list">
@@ -929,7 +1117,9 @@ export default function Home() {
                     href={item.href}
                     key={item.label}
                     target={
-                      item.label === "EMAIL" ? undefined : "_blank"
+                      item.label === "EMAIL"
+                        ? undefined
+                        : "_blank"
                     }
                     rel={
                       item.label === "EMAIL"
@@ -953,7 +1143,8 @@ export default function Home() {
                 className="dialog-return"
                 onClick={closeContact}
               >
-                BACK TO THE PORTFOLIO <span>↗</span>
+                BACK TO THE PORTFOLIO
+                <span aria-hidden="true">↗</span>
               </button>
             </motion.div>
           </motion.div>

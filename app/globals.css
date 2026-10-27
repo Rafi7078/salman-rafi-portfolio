@@ -131,7 +131,6 @@ a:focus-visible {
 .project-status,
 .certificate-row time,
 .certificate-number,
-.certificate-format,
 .certificate-action,
 .contact-kicker,
 .contact-bottom,
@@ -189,18 +188,35 @@ a:focus-visible {
 }
 
 /* ========================================
-   03. HERO
+   03. HERO & CINEMATIC ENTRANCE
 ======================================== */
 
 .hero {
   position: relative;
   display: grid;
   min-height: min(920px, 100svh);
-  grid-template-columns: minmax(0, 1.12fr) minmax(270px, 0.88fr);
+  grid-template-columns:
+    minmax(0, 1.12fr)
+    minmax(270px, 0.88fr);
   align-items: center;
   gap: 4vw;
   padding-top: 125px;
   padding-bottom: 105px;
+}
+
+.hero::before {
+  position: absolute;
+  top: 9%;
+  right: 0;
+  width: min(65vw, 850px);
+  height: 78%;
+  background: radial-gradient(
+    ellipse at 55% 45%,
+    rgba(245, 213, 71, 0.065),
+    transparent 66%
+  );
+  content: "";
+  pointer-events: none;
 }
 
 .hero-copy {
@@ -232,6 +248,7 @@ a:focus-visible {
 
 .hero-line-inner {
   display: block;
+  transform-origin: left bottom;
 }
 
 .hero-outline-line {
@@ -304,8 +321,17 @@ a:focus-visible {
   overflow: hidden;
   place-items: center;
   background:
-    radial-gradient(ellipse at 50% 38%, #77766c 0, transparent 47%),
-    linear-gradient(155deg, #44443c, #252520 62%, #151512);
+    radial-gradient(
+      ellipse at 50% 38%,
+      #77766c 0,
+      transparent 47%
+    ),
+    linear-gradient(
+      155deg,
+      #44443c,
+      #252520 62%,
+      #151512
+    );
 }
 
 .portrait-grid {
@@ -313,10 +339,21 @@ a:focus-visible {
   inset: 0;
   opacity: 0.25;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    linear-gradient(
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px
+    );
   background-size: 36px 36px;
-  mask-image: linear-gradient(to bottom, black, transparent);
+  mask-image: linear-gradient(
+    to bottom,
+    black,
+    transparent
+  );
 }
 
 .portrait-monogram {
@@ -366,10 +403,12 @@ a:focus-visible {
   width: 35px;
   height: 1px;
   background: var(--yellow);
+  transform-origin: left center;
+  animation: cue-breathe 2.4s ease-in-out infinite;
 }
 
 /* ========================================
-   04. SECTION HEADERS
+   04. SHARED SECTION HEADERS
 ======================================== */
 
 .intro-section,
@@ -393,17 +432,6 @@ a:focus-visible {
   color: #68675f;
 }
 
-/* ========================================
-   05. ABOUT
-======================================== */
-
-.intro-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.6fr);
-  gap: 8vw;
-  padding: 90px 0 110px;
-}
-
 .intro-heading,
 .section-heading {
   margin: 0;
@@ -415,6 +443,19 @@ a:focus-visible {
 
 .muted-text {
   color: #a4a196;
+}
+
+/* ========================================
+   05. ABOUT
+======================================== */
+
+.intro-grid {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.2fr)
+    minmax(240px, 0.6fr);
+  gap: 8vw;
+  padding: 90px 0 110px;
 }
 
 .intro-copy {
@@ -458,7 +499,11 @@ a:focus-visible {
 .discipline-row {
   display: grid;
   min-height: 95px;
-  grid-template-columns: 40px minmax(0, 1fr) minmax(140px, 0.8fr) 65px;
+  grid-template-columns:
+    40px
+    minmax(0, 1fr)
+    minmax(140px, 0.8fr)
+    65px;
   align-items: center;
   gap: 18px;
   border-top: 1px solid var(--line);
@@ -490,7 +535,7 @@ a:focus-visible {
 }
 
 /* ========================================
-   06. PROJECTS
+   06. SELECTED WORK & PROJECT ANIMATIONS
 ======================================== */
 
 .work-section {
@@ -500,7 +545,7 @@ a:focus-visible {
 .work-heading-row,
 .certificate-heading-row {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 30px;
   padding: 70px 0 60px;
@@ -520,7 +565,10 @@ a:focus-visible {
 .project-row {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(210px, 0.78fr) minmax(0, 1fr) 25px;
+  grid-template-columns:
+    minmax(210px, 0.78fr)
+    minmax(0, 1fr)
+    25px;
   align-items: center;
   gap: clamp(25px, 5vw, 75px);
   padding: 36px 0;
@@ -529,6 +577,7 @@ a:focus-visible {
 
 .project-art {
   position: relative;
+  isolation: isolate;
   display: grid;
   min-height: 260px;
   overflow: hidden;
@@ -561,9 +610,30 @@ a:focus-visible {
 }
 
 .project-symbol {
+  position: relative;
+  z-index: 1;
   font-size: clamp(70px, 10vw, 120px);
   font-weight: 900;
   letter-spacing: -0.1em;
+  transition:
+    transform 500ms cubic-bezier(0.2, 0.75, 0.2, 1);
+}
+
+.project-art::after {
+  position: absolute;
+  inset: -50%;
+  z-index: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.24) 50%,
+    transparent 62%
+  );
+  content: "";
+  pointer-events: none;
+  transform: translateX(-120%) rotate(-8deg);
+  transition:
+    transform 900ms cubic-bezier(0.2, 0.75, 0.2, 1);
 }
 
 .project-copy {
@@ -643,9 +713,21 @@ a:focus-visible {
   transform: translate(4px, -4px);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .project-row:hover .project-symbol {
+    transform:
+      translateY(-8px)
+      scale(1.045)
+      rotate(-3deg);
+  }
+
+  .project-row:hover .project-art::after {
+    transform: translateX(120%) rotate(-8deg);
+  }
+}
+
 /* ========================================
    07. CERTIFICATES
-   Clean editorial layout — no image previews
 ======================================== */
 
 .certificate-section {
@@ -659,6 +741,18 @@ a:focus-visible {
 
 .certificate-heading-row .work-heading-note {
   color: #77756c;
+}
+
+.certificate-heading-actions {
+  display: flex;
+  max-width: 350px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 19px;
+}
+
+.certificate-heading-actions .certificate-action {
+  width: fit-content;
 }
 
 .certificate-list {
@@ -687,15 +781,6 @@ a:focus-visible {
 
 .certificate-main {
   min-width: 0;
-}
-
-.certificate-format {
-  display: block;
-  margin-bottom: 9px;
-  color: #94802d;
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  line-height: 1.6;
 }
 
 .certificate-main h3 {
@@ -859,8 +944,6 @@ a:focus-visible {
   fill: none;
   stroke: #24231f;
   stroke-width: 1.3;
-  stroke-dasharray: 420;
-  stroke-dashoffset: 420;
 }
 
 .hand-wrap {
@@ -893,7 +976,12 @@ a:focus-visible {
   border: 1px solid #393832;
   border-radius: 100px;
   color: white;
-  background: linear-gradient(160deg, #30302c, #090908 68%);
+  background:
+    linear-gradient(
+      160deg,
+      #30302c,
+      #090908 68%
+    );
   box-shadow:
     inset 0 1px 1px rgba(255, 255, 255, 0.25),
     0 14px 30px rgba(0, 0, 0, 0.16);
@@ -911,11 +999,12 @@ a:focus-visible {
   inset: 2px 3px auto;
   height: 35%;
   border-radius: 100px;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.12),
-    transparent
-  );
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.12),
+      transparent
+    );
   content: "";
   pointer-events: none;
 }
@@ -973,14 +1062,20 @@ a:focus-visible {
   display: none;
   pointer-events: none;
   background: rgba(5, 5, 5, 0.91);
+
   -webkit-mask-image: radial-gradient(
-    circle 155px at var(--torch-x, 50vw) var(--torch-y, 50vh),
+    circle 155px at
+    var(--torch-x, 50vw)
+    var(--torch-y, 50vh),
     transparent 0,
     rgba(0, 0, 0, 0.15) 100px,
     black 185px
   );
+
   mask-image: radial-gradient(
-    circle 155px at var(--torch-x, 50vw) var(--torch-y, 50vh),
+    circle 155px at
+    var(--torch-x, 50vw)
+    var(--torch-y, 50vh),
     transparent 0,
     rgba(0, 0, 0, 0.15) 100px,
     black 185px
@@ -1135,6 +1230,19 @@ a:focus-visible {
    12. ANIMATIONS
 ======================================== */
 
+@keyframes cue-breathe {
+  0%,
+  100% {
+    transform: scaleX(0.72);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scaleX(1.08);
+    opacity: 1;
+  }
+}
+
 @keyframes hand-sway {
   from {
     transform: rotate(-7deg) translateY(0);
@@ -1160,7 +1268,7 @@ a:focus-visible {
 }
 
 /* ========================================
-   14. TABLETS
+   14. TABLET
 ======================================== */
 
 @media (max-width: 850px) {
@@ -1208,7 +1316,10 @@ a:focus-visible {
   }
 
   .project-row {
-    grid-template-columns: minmax(180px, 0.75fr) minmax(0, 1fr) 15px;
+    grid-template-columns:
+      minmax(180px, 0.75fr)
+      minmax(0, 1fr)
+      15px;
     gap: 24px;
   }
 
@@ -1218,7 +1329,7 @@ a:focus-visible {
 
   .work-heading-row,
   .certificate-heading-row {
-    align-items: start;
+    align-items: flex-start;
   }
 
   .certificate-row {
@@ -1343,7 +1454,10 @@ a:focus-visible {
   }
 
   .discipline-row {
-    grid-template-columns: 24px minmax(0, 1fr) 38px;
+    grid-template-columns:
+      24px
+      minmax(0, 1fr)
+      38px;
     gap: 10px;
     padding: 18px 0;
   }
@@ -1376,7 +1490,9 @@ a:focus-visible {
   }
 
   .project-row {
-    grid-template-columns: minmax(0, 1fr) 20px;
+    grid-template-columns:
+      minmax(0, 1fr)
+      20px;
     gap: 18px;
     padding: 25px 0;
   }
@@ -1412,10 +1528,16 @@ a:focus-visible {
     grid-row: 2;
   }
 
-  /* Mobile certificate layout */
+  /* MOBILE CERTIFICATES */
+
+  .certificate-heading-actions {
+    max-width: 100%;
+  }
 
   .certificate-row {
-    grid-template-columns: 23px minmax(0, 1fr);
+    grid-template-columns:
+      23px
+      minmax(0, 1fr);
     align-items: start;
     gap: 0 12px;
     padding: 23px 0;
@@ -1431,11 +1553,6 @@ a:focus-visible {
   .certificate-main {
     grid-column: 2;
     grid-row: 1;
-  }
-
-  .certificate-format {
-    margin-bottom: 7px;
-    font-size: 8px;
   }
 
   .certificate-main h3 {
@@ -1484,6 +1601,8 @@ a:focus-visible {
     font-size: 11px;
   }
 
+  /* MOBILE CONTACT */
+
   .contact-inner {
     padding-top: 70px;
   }
@@ -1498,7 +1617,7 @@ a:focus-visible {
 
   .hand-stage {
     min-height: 250px;
-    align-items: end;
+    align-items: flex-end;
     padding-bottom: 45px;
   }
 
@@ -1598,7 +1717,13 @@ a:focus-visible {
     display: none !important;
   }
 
-  .hand-wrap {
+  .hand-wrap,
+  .scroll-cue-line {
     animation: none !important;
+  }
+
+  .project-art::after,
+  .project-symbol {
+    transition: none !important;
   }
 }
