@@ -2,6 +2,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { PointerEvent as ReactPointerEvent } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -65,7 +66,8 @@ const projects = [
     stack: "Power BI · Data Visualization · KPI Analysis",
     accent: "project-blue",
     symbol: "BI",
-    href: "https://github.com/Rafi7078/amazon-sales-analysis-powerbi-dashboard",
+    href:
+      "https://github.com/Rafi7078/amazon-sales-analysis-powerbi-dashboard",
   },
   {
     number: "04",
@@ -76,7 +78,8 @@ const projects = [
     stack: "Python · Pandas · Matplotlib · Seaborn",
     accent: "project-yellow",
     symbol: "DATA",
-    href: "https://github.com/Rafi7078/telecom-customer-churn-analysis",
+    href:
+      "https://github.com/Rafi7078/telecom-customer-churn-analysis",
   },
   {
     number: "05",
@@ -87,7 +90,8 @@ const projects = [
     stack: "Python · Pandas · NumPy · Scikit-learn · Visualization",
     accent: "project-ivory",
     symbol: "EDA",
-    href: "https://github.com/Rafi7078/Online-Course-Engagement-Analysis",
+    href:
+      "https://github.com/Rafi7078/Online-Course-Engagement-Analysis",
   },
   {
     number: "06",
@@ -98,7 +102,8 @@ const projects = [
     stack: "Postman · JavaScript · Newman · npm · GitHub Actions",
     accent: "project-blue",
     symbol: "API",
-    href: "https://github.com/Rafi7078/verifyrest-automation-framework",
+    href:
+      "https://github.com/Rafi7078/verifyrest-automation-framework",
   },
   {
     number: "07",
@@ -109,7 +114,8 @@ const projects = [
     stack: "Playwright · TypeScript · Page Object Model",
     accent: "project-yellow",
     symbol: "QA",
-    href: "https://github.com/Rafi7078/ecommerce-playwright-automation",
+    href:
+      "https://github.com/Rafi7078/ecommerce-playwright-automation",
   },
   {
     number: "08",
@@ -120,7 +126,8 @@ const projects = [
     stack: "Cypress · JavaScript · End-to-End Testing",
     accent: "project-ivory",
     symbol: "{ }",
-    href: "https://github.com/Rafi7078/End-to-End-Testing-with-Cypress",
+    href:
+      "https://github.com/Rafi7078/End-to-End-Testing-with-Cypress",
   },
 ];
 
@@ -230,7 +237,17 @@ function HandIllustration() {
 
 export default function Home() {
   const rootRef = useRef<HTMLDivElement>(null);
+
+  // Flashlight 2.0
   const torchRef = useRef<HTMLDivElement>(null);
+  const torchGlowRef = useRef<HTMLDivElement>(null);
+
+  // Phase 4D
+  const collaborateButtonRef = useRef<HTMLButtonElement>(null);
+  const handMotionRef = useRef<HTMLDivElement>(null);
+  const stringArtRef = useRef<SVGSVGElement>(null);
+
+  // Contact dialog
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
@@ -251,203 +268,347 @@ export default function Home() {
     setContactOpen(false);
   }, []);
 
-  // CINEMATIC MOTION UPGRADE
+  // ========================================
+  // PHASE 4D — MAGNETIC COLLABORATE BUTTON
+  // ========================================
+
+  const canMagnetize = () =>
+    window.matchMedia(
+      "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
+    ).matches;
+
+  const handleCollaborateEnter = useCallback(() => {
+    if (!canMagnetize()) return;
+
+    gsap.to(handMotionRef.current, {
+      x: 10,
+      y: -6,
+      rotation: 2,
+      duration: 0.55,
+      ease: "power3.out",
+      overwrite: "auto",
+    });
+
+    gsap.to(stringArtRef.current, {
+      x: 3,
+      scaleX: 1.012,
+      transformOrigin: "left center",
+      duration: 0.55,
+      ease: "power3.out",
+      overwrite: "auto",
+    });
+
+    gsap.to(
+      stringArtRef.current?.querySelectorAll(".string-path") ?? [],
+      {
+        stroke: "#9c8428",
+        strokeWidth: 1.75,
+        duration: 0.4,
+        overwrite: "auto",
+      },
+    );
+  }, []);
+
+  const handleCollaborateMove = useCallback(
+    (event: ReactPointerEvent<HTMLButtonElement>) => {
+      if (!canMagnetize()) return;
+
+      const button = event.currentTarget;
+      const rect = button.getBoundingClientRect();
+
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      const dx =
+        (event.clientX - centerX) / (rect.width / 2);
+      const dy =
+        (event.clientY - centerY) / (rect.height / 2);
+
+      const x = gsap.utils.clamp(-12, 12, dx * 12);
+      const y = gsap.utils.clamp(-7, 7, dy * 7);
+
+      // Small magnetic pull toward the pointer.
+      gsap.to(button, {
+        x,
+        y,
+        duration: 0.35,
+        ease: "power3.out",
+        overwrite: "auto",
+      });
+
+      // The hand responds to button movement.
+      gsap.to(handMotionRef.current, {
+        x: 10 + x * 0.32,
+        y: -6 + y * 0.28,
+        rotation: 2 + x * 0.08,
+        duration: 0.5,
+        ease: "power3.out",
+        overwrite: "auto",
+      });
+
+      // Strings stretch gently with the movement.
+      gsap.to(stringArtRef.current, {
+        x: 3 + x * 0.18,
+        y: y * 0.12,
+        scaleX: 1.012,
+        transformOrigin: "left center",
+        duration: 0.5,
+        ease: "power3.out",
+        overwrite: "auto",
+      });
+    },
+    [],
+  );
+
+  const handleCollaborateLeave = useCallback(() => {
+    if (!canMagnetize()) return;
+
+    gsap.to(collaborateButtonRef.current, {
+      x: 0,
+      y: 0,
+      duration: 0.7,
+      ease: "elastic.out(1, 0.65)",
+      overwrite: "auto",
+    });
+
+    gsap.to(handMotionRef.current, {
+      x: 0,
+      y: 0,
+      rotation: 0,
+      duration: 0.7,
+      ease: "power3.out",
+      overwrite: "auto",
+    });
+
+    gsap.to(stringArtRef.current, {
+      x: 0,
+      y: 0,
+      scaleX: 1,
+      duration: 0.7,
+      ease: "power3.out",
+      overwrite: "auto",
+    });
+
+    gsap.to(
+      stringArtRef.current?.querySelectorAll(".string-path") ?? [],
+      {
+        stroke: "#24231f",
+        strokeWidth: 1.3,
+        duration: 0.5,
+        overwrite: "auto",
+      },
+    );
+  }, []);
+
+  // ========================================
+  // PHASE 4A + 4B — CINEMATIC SCROLL
+  // ========================================
+
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
 
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        // First-screen cinematic entrance.
-        const intro = gsap.timeline({
-          defaults: { ease: "power3.out" },
-          delay: 0.1,
-        });
+      mm.add(
+        "(prefers-reduced-motion: no-preference)",
+        () => {
+          const intro = gsap.timeline({
+            defaults: { ease: "power3.out" },
+            delay: 0.1,
+          });
 
-        intro
-          .from(".topbar", {
-            y: -24,
-            autoAlpha: 0,
-            duration: 0.7,
-          })
-          .from(
-            ".hero-kicker",
-            {
-              y: 18,
-              autoAlpha: 0,
-              duration: 0.65,
-            },
-            "-=0.25",
-          )
-          .from(
-            ".hero-line-inner",
-            {
-              yPercent: 110,
-              rotate: 2,
-              transformOrigin: "left bottom",
-              duration: 1.15,
-              stagger: 0.13,
-              ease: "power4.out",
-            },
-            "-=0.35",
-          )
-          .from(
-            ".hero-description",
-            {
-              y: 24,
-              autoAlpha: 0,
-              duration: 0.8,
-            },
-            "-=0.65",
-          )
-          .from(
-            ".hero-meta span",
-            {
-              y: 14,
-              autoAlpha: 0,
-              duration: 0.55,
-              stagger: 0.1,
-            },
-            "-=0.42",
-          )
-          .from(
-            ".portrait-frame",
-            {
-              y: 45,
-              scale: 0.94,
-              autoAlpha: 0,
-              duration: 1.3,
-            },
-            "-=1.35",
-          )
-          .from(
-            ".hero-side-note, .hero-index, .scroll-cue",
-            {
-              y: 12,
+          intro
+            .from(".topbar", {
+              y: -24,
               autoAlpha: 0,
               duration: 0.7,
-              stagger: 0.12,
-            },
-            "-=0.5",
-          );
-
-        // Regular section reveals.
-        const reveals = gsap.utils.toArray<HTMLElement>(
-          ".reveal:not(.project-row)",
-          rootRef.current ?? undefined,
-        );
-
-        reveals.forEach((element) => {
-          const distance = element.classList.contains("section-label")
-            ? 20
-            : 42;
-
-          gsap.fromTo(
-            element,
-            {
-              y: distance,
-              autoAlpha: 0,
-            },
-            {
-              y: 0,
-              autoAlpha: 1,
-              duration: 0.95,
-              ease: "power3.out",
-              immediateRender: false,
-              scrollTrigger: {
-                trigger: element,
-                start: "top 88%",
-                once: true,
-              },
-            },
-          );
-        });
-
-        // Each project reveals its artwork and then its story.
-        gsap.utils
-          .toArray<HTMLElement>(
-            ".project-row",
-            rootRef.current ?? undefined,
-          )
-          .forEach((row) => {
-            const art = row.querySelector<HTMLElement>(".project-art");
-
-            const copy = row.querySelectorAll<HTMLElement>(
-              ".project-category, .project-copy h3, .project-copy > p, .project-link",
-            );
-
-            const story = gsap.timeline({
-              scrollTrigger: {
-                trigger: row,
-                start: "top 86%",
-                once: true,
-              },
-            });
-
-            story.from(row, {
-              y: 55,
-              autoAlpha: 0,
-              duration: 0.9,
-              ease: "power3.out",
-            });
-
-            if (art) {
-              story.fromTo(
-                art,
-                {
-                  clipPath: "inset(0 100% 0 0)",
-                },
-                {
-                  clipPath: "inset(0 0% 0 0)",
-                  duration: 1,
-                  ease: "power3.inOut",
-                  clearProps: "clipPath",
-                },
-                "-=0.65",
-              );
-            }
-
-            story.from(
-              copy,
+            })
+            .from(
+              ".hero-kicker",
               {
-                y: 16,
+                y: 18,
                 autoAlpha: 0,
-                duration: 0.58,
-                stagger: 0.075,
-                ease: "power2.out",
+                duration: 0.65,
               },
-              "-=0.75",
+              "-=0.25",
+            )
+            .from(
+              ".hero-line-inner",
+              {
+                yPercent: 110,
+                rotate: 2,
+                transformOrigin: "left bottom",
+                duration: 1.15,
+                stagger: 0.13,
+                ease: "power4.out",
+              },
+              "-=0.35",
+            )
+            .from(
+              ".hero-description",
+              {
+                y: 24,
+                autoAlpha: 0,
+                duration: 0.8,
+              },
+              "-=0.65",
+            )
+            .from(
+              ".hero-meta span",
+              {
+                y: 14,
+                autoAlpha: 0,
+                duration: 0.55,
+                stagger: 0.1,
+              },
+              "-=0.42",
+            )
+            .from(
+              ".portrait-frame",
+              {
+                y: 45,
+                scale: 0.94,
+                autoAlpha: 0,
+                duration: 1.3,
+              },
+              "-=1.35",
+            )
+            .from(
+              ".hero-side-note, .hero-index, .scroll-cue",
+              {
+                y: 12,
+                autoAlpha: 0,
+                duration: 0.7,
+                stagger: 0.12,
+              },
+              "-=0.5",
+            );
+
+          // Section reveals.
+          const reveals =
+            gsap.utils.toArray<HTMLElement>(
+              ".reveal:not(.project-row)",
+              rootRef.current ?? undefined,
+            );
+
+          reveals.forEach((element) => {
+            const distance = element.classList.contains(
+              "section-label",
+            )
+              ? 20
+              : 42;
+
+            gsap.fromTo(
+              element,
+              {
+                y: distance,
+                autoAlpha: 0,
+              },
+              {
+                y: 0,
+                autoAlpha: 1,
+                duration: 0.95,
+                ease: "power3.out",
+                immediateRender: false,
+                scrollTrigger: {
+                  trigger: element,
+                  start: "top 88%",
+                  once: true,
+                },
+              },
             );
           });
 
-        // Animate strings using actual SVG lengths.
-        const strings = gsap.utils.toArray<SVGPathElement>(
-          ".string-path",
-          rootRef.current ?? undefined,
-        );
+          // Project art and content storytelling.
+          gsap.utils
+            .toArray<HTMLElement>(
+              ".project-row",
+              rootRef.current ?? undefined,
+            )
+            .forEach((row) => {
+              const art =
+                row.querySelector<HTMLElement>(
+                  ".project-art",
+                );
 
-        strings.forEach((path) => {
-          const length = path.getTotalLength();
+              const copy =
+                row.querySelectorAll<HTMLElement>(
+                  ".project-category, .project-copy h3, .project-copy > p, .project-link",
+                );
 
-          gsap.set(path, {
-            strokeDasharray: length,
-            strokeDashoffset: length,
+              const story = gsap.timeline({
+                scrollTrigger: {
+                  trigger: row,
+                  start: "top 86%",
+                  once: true,
+                },
+              });
+
+              story.from(row, {
+                y: 55,
+                autoAlpha: 0,
+                duration: 0.9,
+                ease: "power3.out",
+              });
+
+              if (art) {
+                story.fromTo(
+                  art,
+                  {
+                    clipPath: "inset(0 100% 0 0)",
+                  },
+                  {
+                    clipPath: "inset(0 0% 0 0)",
+                    duration: 1,
+                    ease: "power3.inOut",
+                    clearProps: "clipPath",
+                  },
+                  "-=0.65",
+                );
+              }
+
+              story.from(
+                copy,
+                {
+                  y: 16,
+                  autoAlpha: 0,
+                  duration: 0.58,
+                  stagger: 0.075,
+                  ease: "power2.out",
+                },
+                "-=0.75",
+              );
+            });
+
+          // Draw SVG strings by their actual length.
+          const strings =
+            gsap.utils.toArray<SVGPathElement>(
+              ".string-path",
+              rootRef.current ?? undefined,
+            );
+
+          strings.forEach((path) => {
+            const length = path.getTotalLength();
+
+            gsap.set(path, {
+              strokeDasharray: length,
+              strokeDashoffset: length,
+            });
           });
-        });
 
-        gsap.to(strings, {
-          strokeDashoffset: 0,
-          duration: 1.8,
-          stagger: 0.17,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".contact-section",
-            start: "top 78%",
-            once: true,
-          },
-        });
-      });
+          gsap.to(strings, {
+            strokeDashoffset: 0,
+            duration: 1.8,
+            stagger: 0.17,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: ".contact-section",
+              start: "top 78%",
+              once: true,
+            },
+          });
+        },
+      );
 
-      // Desktop-only scroll parallax.
       mm.add(
         "(min-width: 851px) and (prefers-reduced-motion: no-preference)",
         () => {
@@ -469,41 +630,97 @@ export default function Home() {
     { scope: rootRef },
   );
 
-  // FLASHLIGHT POINTER TRACKING
+  // ========================================
+  // PHASE 4C — FLASHLIGHT 2.0
+  // ========================================
+
   useEffect(() => {
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+
+    let currentX = targetX;
+    let currentY = targetY;
+
     let frame = 0;
-    let x = window.innerWidth / 2;
-    let y = window.innerHeight / 2;
 
-    const handlePointer = (event: PointerEvent) => {
-      x = event.clientX;
-      y = event.clientY;
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
-      if (frame) return;
+    const applyPosition = (x: number, y: number) => {
+      for (const element of [
+        torchRef.current,
+        torchGlowRef.current,
+      ]) {
+        if (!element) continue;
 
-      frame = window.requestAnimationFrame(() => {
-        const overlay = torchRef.current;
-
-        if (overlay) {
-          overlay.style.setProperty("--torch-x", `${x}px`);
-          overlay.style.setProperty("--torch-y", `${y}px`);
-        }
-
-        frame = 0;
-      });
+        element.style.setProperty(
+          "--torch-x",
+          `${x}px`,
+        );
+        element.style.setProperty(
+          "--torch-y",
+          `${y}px`,
+        );
+      }
     };
 
-    window.addEventListener("pointermove", handlePointer, {
-      passive: true,
-    });
+    const tick = () => {
+      if (reducedMotion) {
+        currentX = targetX;
+        currentY = targetY;
+      } else {
+        currentX += (targetX - currentX) * 0.24;
+        currentY += (targetY - currentY) * 0.24;
+      }
 
-    window.addEventListener("pointerdown", handlePointer, {
-      passive: true,
-    });
+      applyPosition(currentX, currentY);
+
+      const stillMoving =
+        Math.abs(targetX - currentX) > 0.5 ||
+        Math.abs(targetY - currentY) > 0.5;
+
+      if (!reducedMotion && stillMoving) {
+        frame = window.requestAnimationFrame(tick);
+      } else {
+        frame = 0;
+      }
+    };
+
+    const handlePointer = (event: PointerEvent) => {
+      targetX = event.clientX;
+      targetY = event.clientY;
+
+      if (frame === 0) {
+        frame =
+          window.requestAnimationFrame(tick);
+      }
+    };
+
+    applyPosition(currentX, currentY);
+
+    window.addEventListener(
+      "pointermove",
+      handlePointer,
+      { passive: true },
+    );
+
+    window.addEventListener(
+      "pointerdown",
+      handlePointer,
+      { passive: true },
+    );
 
     return () => {
-      window.removeEventListener("pointermove", handlePointer);
-      window.removeEventListener("pointerdown", handlePointer);
+      window.removeEventListener(
+        "pointermove",
+        handlePointer,
+      );
+
+      window.removeEventListener(
+        "pointerdown",
+        handlePointer,
+      );
 
       if (frame) {
         window.cancelAnimationFrame(frame);
@@ -511,16 +728,22 @@ export default function Home() {
     };
   }, []);
 
-  // CONTACT MODAL ACCESSIBILITY
+  // ========================================
+  // ACCESSIBLE CONTACT DIALOG
+  // ========================================
+
   useEffect(() => {
     if (!contactOpen) return;
 
-    const previousOverflow = document.body.style.overflow;
+    const previousOverflow =
+      document.body.style.overflow;
+
     document.body.style.overflow = "hidden";
 
-    const focusFrame = window.requestAnimationFrame(() => {
-      closeButtonRef.current?.focus();
-    });
+    const focusFrame =
+      window.requestAnimationFrame(() => {
+        closeButtonRef.current?.focus();
+      });
 
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -532,12 +755,12 @@ export default function Home() {
       if (event.key !== "Tab") return;
 
       const dialog = dialogRef.current;
-
       if (!dialog) return;
 
-      const focusable = dialog.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      );
+      const focusable =
+        dialog.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        );
 
       if (focusable.length === 0) {
         event.preventDefault();
@@ -545,33 +768,54 @@ export default function Home() {
       }
 
       const first = focusable[0];
-      const last = focusable[focusable.length - 1];
+      const last = focusable[
+        focusable.length - 1
+      ];
+
       const active = document.activeElement;
 
       if (!dialog.contains(active)) {
         event.preventDefault();
         first.focus();
-      } else if (event.shiftKey && active === first) {
+      } else if (
+        event.shiftKey &&
+        active === first
+      ) {
         event.preventDefault();
         last.focus();
-      } else if (!event.shiftKey && active === last) {
+      } else if (
+        !event.shiftKey &&
+        active === last
+      ) {
         event.preventDefault();
         first.focus();
       }
     };
 
-    window.addEventListener("keydown", handleKey);
+    window.addEventListener(
+      "keydown",
+      handleKey,
+    );
 
     return () => {
       window.cancelAnimationFrame(focusFrame);
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKey);
+      document.body.style.overflow =
+        previousOverflow;
+
+      window.removeEventListener(
+        "keydown",
+        handleKey,
+      );
+
       previousFocusRef.current?.focus();
     };
   }, [contactOpen]);
 
   return (
-    <div ref={rootRef} className="site-shell">
+    <div
+      ref={rootRef}
+      className="site-shell"
+    >
       {/* NAVIGATION */}
       <header className="topbar">
         <a
@@ -588,13 +832,19 @@ export default function Home() {
         >
           <a href="#about">ABOUT</a>
           <a href="#work">WORK</a>
-          <a href="#certificates">CERTIFICATES</a>
+          <a href="#certificates">
+            CERTIFICATES
+          </a>
         </nav>
 
         <button
           type="button"
-          className={`torch-toggle ${torchOn ? "is-active" : ""}`}
-          onClick={() => setTorchOn((value) => !value)}
+          className={`torch-toggle ${
+            torchOn ? "is-active" : ""
+          }`}
+          onClick={() =>
+            setTorchOn((value) => !value)
+          }
           aria-pressed={torchOn}
           aria-label={
             torchOn
@@ -609,7 +859,10 @@ export default function Home() {
 
       <main>
         {/* HERO */}
-        <section className="hero section-pad" id="home">
+        <section
+          className="hero section-pad"
+          id="home"
+        >
           <div className="hero-copy">
             <p className="eyebrow hero-kicker">
               <span className="status-dot" />
@@ -664,7 +917,6 @@ export default function Home() {
                 <div className="portrait-monogram">
                   SR
                 </div>
-
                 <span className="portrait-caption">
                   SALMAN JAHAN RAFI
                 </span>
@@ -686,7 +938,10 @@ export default function Home() {
             </span>
           </div>
 
-          <a href="#about" className="scroll-cue">
+          <a
+            href="#about"
+            className="scroll-cue"
+          >
             <span className="scroll-cue-line" />
             SCROLL TO EXPLORE
           </a>
@@ -725,20 +980,25 @@ export default function Home() {
 
               <p>
                 I am an Information and Communication
-                Engineering graduate working across applied AI,
-                data analytics, and software quality assurance.
+                Engineering graduate working across
+                applied AI, data analytics, and software
+                quality assurance.
               </p>
 
               <p className="small-copy">
                 My experience spans AI data annotation,
-                software testing, and web development. I enjoy
-                turning technical problems into practical
-                solutions and building reliable, data-informed
-                experiences.
+                software testing, and web development.
+                I enjoy turning technical problems
+                into practical solutions and building
+                reliable, data-informed experiences.
               </p>
 
-              <a className="text-link" href="#work">
-                EXPLORE SELECTED WORK <span>↘</span>
+              <a
+                className="text-link"
+                href="#work"
+              >
+                EXPLORE SELECTED WORK
+                <span>↘</span>
               </a>
             </div>
           </div>
@@ -787,10 +1047,11 @@ export default function Home() {
             </h2>
 
             <p className="work-heading-note">
-              A selection of AI, analytics, and QA work.
+              A selection of AI, analytics,
+              and QA work.
               <br />
-              Explore the repositories for implementation
-              details.
+              Explore the repositories for
+              implementation details.
             </p>
           </div>
 
@@ -875,7 +1136,8 @@ export default function Home() {
               <p className="work-heading-note">
                 Learning through practice.
                 <br />
-                Building knowledge across AI, data, and quality.
+                Building knowledge across AI,
+                data, and quality.
               </p>
 
               <a
@@ -947,13 +1209,17 @@ export default function Home() {
           </div>
 
           <p className="certificate-note">
-            Original certificates open separately. Related
-            repositories are linked where available.
+            Original certificates open separately.
+            Related repositories are linked
+            where available.
           </p>
         </section>
 
-        {/* CONTACT */}
-        <section className="contact-section" id="contact">
+        {/* CONTACT — PHASE 4D */}
+        <section
+          className="contact-section"
+          id="contact"
+        >
           <div className="contact-inner section-pad">
             <div className="section-label reveal">
               <span>04 / THE NEXT CHAPTER</span>
@@ -975,7 +1241,9 @@ export default function Home() {
             </div>
 
             <div className="hand-stage reveal">
+              {/* ANIMATED STRINGS */}
               <svg
+                ref={stringArtRef}
                 className="string-art"
                 viewBox="0 0 900 290"
                 preserveAspectRatio="none"
@@ -985,30 +1253,42 @@ export default function Home() {
                   className="string-path"
                   d="M90 240 C180 160 270 270 385 190 S560 90 740 145"
                 />
-
                 <path
                   className="string-path"
                   d="M110 250 C215 200 285 280 400 205 S570 120 745 158"
                 />
-
                 <path
                   className="string-path"
                   d="M125 260 C225 225 300 280 415 220 S585 145 750 170"
                 />
               </svg>
 
+              {/* HAND ANIMATION */}
               <div className="hand-wrap">
-                <HandIllustration />
+                <div
+                  ref={handMotionRef}
+                  className="hand-motion"
+                >
+                  <HandIllustration />
+                </div>
               </div>
 
+              {/* MAGNETIC CTA */}
               <button
+                ref={collaborateButtonRef}
                 type="button"
                 className="collaborate-button"
+                onPointerEnter={handleCollaborateEnter}
+                onPointerMove={handleCollaborateMove}
+                onPointerLeave={handleCollaborateLeave}
+                onPointerCancel={handleCollaborateLeave}
                 onClick={openContact}
                 aria-haspopup="dialog"
                 aria-expanded={contactOpen}
               >
-                <span>LET&apos;S COLLABORATE</span>
+                <span className="collaborate-label">
+                  LET&apos;S COLLABORATE
+                </span>
 
                 <span
                   className="button-arrow"
@@ -1034,11 +1314,19 @@ export default function Home() {
         <span>INDEPENDENT PORTFOLIO · 2026</span>
       </footer>
 
-      {/* FLASHLIGHT */}
+      {/* FLASHLIGHT 2.0 */}
       <div
         ref={torchRef}
         className={`torch-overlay ${
           torchOn ? "torch-visible" : ""
+        }`}
+        aria-hidden="true"
+      />
+
+      <div
+        ref={torchGlowRef}
+        className={`torch-glow ${
+          torchOn ? "torch-glow-visible" : ""
         }`}
         aria-hidden="true"
       />
@@ -1080,7 +1368,9 @@ export default function Home() {
                 damping: 25,
                 stiffness: 240,
               }}
-              onClick={(event) => event.stopPropagation()}
+              onClick={(event) =>
+                event.stopPropagation()
+              }
             >
               <div className="dialog-topline">
                 <span>START A CONVERSATION</span>
@@ -1105,8 +1395,9 @@ export default function Home() {
               </h2>
 
               <p>
-                Interested in AI, data analytics, or quality
-                engineering? Have a project or problem in mind?
+                Interested in AI, data analytics,
+                or quality engineering?
+                Have a project or problem in mind?
                 Let&apos;s connect.
               </p>
 
@@ -1133,7 +1424,9 @@ export default function Home() {
                       {item.value}
                     </span>
 
-                    <span aria-hidden="true">↗</span>
+                    <span aria-hidden="true">
+                      ↗
+                    </span>
                   </a>
                 ))}
               </div>
@@ -1144,7 +1437,9 @@ export default function Home() {
                 onClick={closeContact}
               >
                 BACK TO THE PORTFOLIO
-                <span aria-hidden="true">↗</span>
+                <span aria-hidden="true">
+                  ↗
+                </span>
               </button>
             </motion.div>
           </motion.div>

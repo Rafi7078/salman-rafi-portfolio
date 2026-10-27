@@ -81,7 +81,7 @@ a:focus-visible {
 
 .topbar {
   position: absolute;
-  z-index: 20;
+  z-index: 40;
   top: 0;
   left: 0;
   display: flex;
@@ -188,7 +188,7 @@ a:focus-visible {
 }
 
 /* ========================================
-   03. HERO & CINEMATIC ENTRANCE
+   03. HERO
 ======================================== */
 
 .hero {
@@ -408,7 +408,7 @@ a:focus-visible {
 }
 
 /* ========================================
-   04. SHARED SECTION HEADERS
+   04. SHARED HEADERS
 ======================================== */
 
 .intro-section,
@@ -535,7 +535,7 @@ a:focus-visible {
 }
 
 /* ========================================
-   06. SELECTED WORK & PROJECT ANIMATIONS
+   06. SELECTED WORK
 ======================================== */
 
 .work-section {
@@ -885,7 +885,7 @@ a:focus-visible {
 }
 
 /* ========================================
-   08. CONTACT / LET'S COLLABORATE
+   08. CONTACT — PHASE 4D
 ======================================== */
 
 .contact-section {
@@ -955,7 +955,15 @@ a:focus-visible {
   color: var(--ink);
   transform: rotate(-7deg);
   transform-origin: 50% 90%;
+  pointer-events: none;
   animation: hand-sway 4.5s ease-in-out infinite alternate;
+}
+
+/* Inner layer moves independently from the hand sway. */
+
+.hand-motion {
+  transform-origin: 50% 85%;
+  will-change: transform;
 }
 
 .hand-illustration {
@@ -964,9 +972,13 @@ a:focus-visible {
   height: auto;
 }
 
+/* Magnetic glossy CTA */
+
 .collaborate-button {
   position: relative;
   z-index: 2;
+  isolation: isolate;
+  overflow: hidden;
   display: inline-flex;
   min-width: min(350px, 62vw);
   align-items: center;
@@ -989,10 +1001,15 @@ a:focus-visible {
   font-weight: 700;
   letter-spacing: 0.08em;
   cursor: pointer;
+  touch-action: manipulation;
+  transform-origin: center;
   transition:
-    transform 220ms ease,
-    box-shadow 220ms ease;
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    filter 220ms ease;
 }
+
+/* Top surface highlight */
 
 .collaborate-button::before {
   position: absolute;
@@ -1009,16 +1026,60 @@ a:focus-visible {
   pointer-events: none;
 }
 
-.collaborate-button:hover {
-  transform: translateY(-4px) scale(1.015);
+/* Moving glossy light sweep */
+
+.collaborate-button::after {
+  position: absolute;
+  z-index: 0;
+  inset: -100% -45%;
+  background:
+    linear-gradient(
+      110deg,
+      transparent 42%,
+      rgba(255, 255, 255, 0.23) 50%,
+      transparent 58%
+    );
+  content: "";
+  pointer-events: none;
+  transform: translateX(-90%) skewX(-12deg);
+  transition:
+    transform 850ms cubic-bezier(0.2, 0.72, 0.18, 1);
+}
+
+.collaborate-label,
+.button-arrow {
+  position: relative;
+  z-index: 1;
+}
+
+.collaborate-button:hover,
+.collaborate-button:focus-visible {
+  border-color: #a5a190;
   box-shadow:
     inset 0 1px 1px rgba(255, 255, 255, 0.3),
-    0 20px 38px rgba(0, 0, 0, 0.23);
+    0 20px 38px rgba(0, 0, 0, 0.23),
+    0 0 0 1px rgba(245, 213, 71, 0.12);
+}
+
+.collaborate-button:hover::after,
+.collaborate-button:focus-visible::after {
+  transform: translateX(90%) skewX(-12deg);
+}
+
+.collaborate-button:active {
+  filter: brightness(1.18);
 }
 
 .button-arrow {
+  display: inline-block;
   font-size: 23px;
   font-weight: 400;
+  transition: transform 230ms ease;
+}
+
+.collaborate-button:hover .button-arrow,
+.collaborate-button:focus-visible .button-arrow {
+  transform: translate(3px, -3px);
 }
 
 .contact-bottom {
@@ -1052,38 +1113,105 @@ a:focus-visible {
 }
 
 /* ========================================
-   10. FLASHLIGHT REVEAL
+   10. FLASHLIGHT 2.0
 ======================================== */
 
 .torch-overlay {
   position: fixed;
   z-index: 30;
   inset: 0;
-  display: none;
   pointer-events: none;
-  background: rgba(5, 5, 5, 0.91);
+  background: rgba(5, 5, 5, 0.88);
+  opacity: 0;
+  visibility: hidden;
 
   -webkit-mask-image: radial-gradient(
-    circle 155px at
-    var(--torch-x, 50vw)
-    var(--torch-y, 50vh),
+    circle at var(--torch-x, 50vw) var(--torch-y, 50vh),
     transparent 0,
-    rgba(0, 0, 0, 0.15) 100px,
-    black 185px
+    transparent 52px,
+    rgba(0, 0, 0, 0.08) 82px,
+    rgba(0, 0, 0, 0.42) 132px,
+    black 205px
   );
 
   mask-image: radial-gradient(
-    circle 155px at
-    var(--torch-x, 50vw)
-    var(--torch-y, 50vh),
+    circle at var(--torch-x, 50vw) var(--torch-y, 50vh),
     transparent 0,
-    rgba(0, 0, 0, 0.15) 100px,
-    black 185px
+    transparent 52px,
+    rgba(0, 0, 0, 0.08) 82px,
+    rgba(0, 0, 0, 0.42) 132px,
+    black 205px
   );
+
+  transition:
+    opacity 180ms ease,
+    visibility 180ms ease;
 }
 
 .torch-overlay.torch-visible {
-  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+.torch-glow {
+  position: fixed;
+  z-index: 31;
+  top: var(--torch-y, 50vh);
+  left: var(--torch-x, 50vw);
+  width: clamp(230px, 29vw, 420px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+
+  background: radial-gradient(
+    circle,
+    rgba(255, 249, 218, 0.13) 0%,
+    rgba(245, 213, 71, 0.075) 20%,
+    rgba(245, 213, 71, 0.025) 48%,
+    transparent 72%
+  );
+
+  filter: blur(3px);
+  mix-blend-mode: screen;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(-50%, -50%, 0);
+
+  transition:
+    opacity 220ms ease,
+    visibility 220ms ease;
+}
+
+.torch-glow.torch-glow-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (pointer: coarse) {
+  .torch-overlay {
+    -webkit-mask-image: radial-gradient(
+      circle at var(--torch-x, 50vw) var(--torch-y, 50vh),
+      transparent 0,
+      transparent 75px,
+      rgba(0, 0, 0, 0.1) 115px,
+      rgba(0, 0, 0, 0.45) 175px,
+      black 250px
+    );
+
+    mask-image: radial-gradient(
+      circle at var(--torch-x, 50vw) var(--torch-y, 50vh),
+      transparent 0,
+      transparent 75px,
+      rgba(0, 0, 0, 0.1) 115px,
+      rgba(0, 0, 0, 0.45) 175px,
+      black 250px
+    );
+  }
+
+  .torch-glow {
+    width: 310px;
+    filter: blur(5px);
+  }
 }
 
 /* ========================================
@@ -1135,6 +1263,7 @@ a:focus-visible {
   background: transparent;
   font-size: 25px;
   cursor: pointer;
+
   transition:
     color 180ms ease,
     background 180ms ease;
@@ -1227,7 +1356,7 @@ a:focus-visible {
 }
 
 /* ========================================
-   12. ANIMATIONS
+   12. KEYFRAME ANIMATIONS
 ======================================== */
 
 @keyframes cue-breathe {
@@ -1268,7 +1397,7 @@ a:focus-visible {
 }
 
 /* ========================================
-   14. TABLET
+   14. TABLETS
 ======================================== */
 
 @media (max-width: 850px) {
@@ -1528,7 +1657,7 @@ a:focus-visible {
     grid-row: 2;
   }
 
-  /* MOBILE CERTIFICATES */
+  /* Mobile certificate layout */
 
   .certificate-heading-actions {
     max-width: 100%;
@@ -1601,7 +1730,7 @@ a:focus-visible {
     font-size: 11px;
   }
 
-  /* MOBILE CONTACT */
+  /* Mobile contact */
 
   .contact-inner {
     padding-top: 70px;
@@ -1696,7 +1825,7 @@ a:focus-visible {
 }
 
 /* ========================================
-   17. REDUCED MOTION & ACCESSIBILITY
+   17. REDUCED MOTION
 ======================================== */
 
 @media (prefers-reduced-motion: reduce) {
@@ -1713,8 +1842,14 @@ a:focus-visible {
     scroll-behavior: auto !important;
   }
 
-  .torch-overlay {
-    display: none !important;
+  .torch-overlay,
+  .torch-glow {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .torch-glow {
+    filter: none;
   }
 
   .hand-wrap,
@@ -1723,7 +1858,10 @@ a:focus-visible {
   }
 
   .project-art::after,
-  .project-symbol {
+  .project-symbol,
+  .collaborate-button,
+  .collaborate-button::after,
+  .button-arrow {
     transition: none !important;
   }
 }
