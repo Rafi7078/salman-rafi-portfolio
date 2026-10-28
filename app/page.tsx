@@ -545,6 +545,93 @@ export default function Home() {
   const activeSkillGroup = skillGroups[activeSkill];
 
   /* ==================================================
+     CLEAN URL — INTERNAL SECTION NAVIGATION
+
+     - Scroll without adding #section to URL
+     - Preserve existing semantic anchor elements
+     - Support keyboard and mouse navigation
+     - Respect reduced-motion settings
+     - Leave external links untouched
+  ================================================== */
+
+  useEffect(() => {
+    const root = rootRef.current;
+
+    if (!root) return;
+
+    const handleSectionClick = (event: MouseEvent) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
+
+      const clicked = event.target;
+
+      if (!(clicked instanceof Element)) return;
+
+      const anchor = clicked.closest<HTMLAnchorElement>(
+        'a[href^="#"]'
+      );
+
+      if (!anchor || !root.contains(anchor)) return;
+
+      if (
+        anchor.hasAttribute("download") ||
+        (anchor.target && anchor.target !== "_self")
+      ) {
+        return;
+      }
+
+      const hash = anchor.getAttribute("href");
+
+      if (!hash || hash === "#") return;
+
+      let sectionId: string;
+
+      try {
+        sectionId = decodeURIComponent(hash.slice(1));
+      } catch {
+        return;
+      }
+
+      const section = document.getElementById(sectionId);
+
+      if (!section || !root.contains(section)) return;
+
+      event.preventDefault();
+
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      section.scrollIntoView({
+        behavior: reducedMotion ? "instant" : "smooth",
+        block: "start",
+      });
+
+      if (window.location.hash) {
+        window.history.replaceState(
+          window.history.state,
+          "",
+          window.location.pathname + window.location.search
+        );
+      }
+    };
+
+    root.addEventListener("click", handleSectionClick);
+
+    return () => {
+      root.removeEventListener("click", handleSectionClick);
+    };
+  }, []);
+
+  /* ==================================================
      CONTACT DIALOG ACTIONS
   ================================================== */
 
@@ -755,8 +842,6 @@ export default function Home() {
   /* ==================================================
      GSAP ANIMATIONS — RUNTIME SAFE
 
-     HOTFIX:
-
      template.tsx initially mounts the portfolio
      inside a display:none wrapper.
 
@@ -765,20 +850,12 @@ export default function Home() {
      and target positions are invalid.
 
      On portfolio reveal the template remounts
-     the visible page, so GSAP initializes
-     normally and plays the Hero animation.
+     the visible page, so GSAP initializes normally.
   ================================================== */
 
   useGSAP(
     () => {
       const root = rootRef.current;
-
-      /*
-        CRITICAL GUARD:
-
-        Do not initialize any ScrollTrigger
-        for the hidden/preloaded portfolio.
-      */
 
       if (
         !root ||
@@ -786,12 +863,6 @@ export default function Home() {
       ) {
         return;
       }
-
-      /*
-        Use real DOM elements within the
-        Home component instead of relying
-        on global string selector scopes.
-      */
 
       const one = (selector: string) =>
         root.querySelector<HTMLElement>(selector);
@@ -803,17 +874,13 @@ export default function Home() {
 
       const mm = gsap.matchMedia();
 
-      /* ==================================================
+      /* ==========================================
          MAIN ANIMATIONS
-      ================================================== */
+      ========================================== */
 
       mm.add(
         "(prefers-reduced-motion: no-preference)",
         () => {
-          /* ==========================================
-             HERO ELEMENTS
-          ========================================== */
-
           const topbar = one(".topbar");
           const kicker = one(".hero-kicker");
 
@@ -835,8 +902,6 @@ export default function Home() {
 
           /* ==========================================
              HERO ENTRANCE TIMELINE
-
-             Original timing and easing preserved.
           ========================================== */
 
           const intro = gsap.timeline({
@@ -1040,12 +1105,8 @@ export default function Home() {
           /* ==========================================
              CONTACT STRING DRAWING
 
-             This was the visible runtime
-             error at line 890.
-
-             Only create the animation when
-             the contact section and SVG paths
-             actually exist.
+             Only animate when contact section
+             and SVG paths actually exist.
           ========================================== */
 
           const contactSection =
@@ -1087,18 +1148,13 @@ export default function Home() {
         }
       );
 
-      /* ==================================================
+      /* ==========================================
          DESKTOP PARALLAX
-
-         Fine pointer only.
-         Disabled for reduced motion.
-      ================================================== */
+      ========================================== */
 
       mm.add(
         "(min-width: 851px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
         () => {
-          /* HERO PARALLAX */
-
           const hero =
             one(".hero");
 
@@ -1118,8 +1174,6 @@ export default function Home() {
               },
             });
           }
-
-          /* ABOUT PORTRAIT PARALLAX */
 
           const aboutPortrait =
             one(".about-portrait-image");
@@ -1154,8 +1208,6 @@ export default function Home() {
         }
       );
 
-      /* GSAP MATCH MEDIA CLEANUP */
-
       return () => {
         mm.revert();
       };
@@ -1167,9 +1219,6 @@ export default function Home() {
 
   /* ==================================================
      FLASHLIGHT 2.0 — PERFORMANCE OPTIMIZED
-
-     No listener while light is off.
-     No active animation loop in hidden tabs.
   ================================================== */
 
   useEffect(() => {
@@ -1337,14 +1386,6 @@ export default function Home() {
 
   /* ==================================================
      MAGNETIC ANIMATION CLEANUP
-
-     Only cancel pending pointer frames.
-
-     GSAP scroll animations are already
-     reverted through useGSAP.
-
-     Avoid manually killing multiple targets
-     during the hidden page's React unmount.
   ================================================== */
 
   useEffect(() => {
