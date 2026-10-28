@@ -1,0 +1,979 @@
+
+/* ================================================
+   SR® CINEMATIC INTRO
+   MAGNETIC HOVER + INTERACTIVE PULL
+
+   - Entrance plays automatically once
+   - Mouse hover moves the button and ropes
+   - Moving cursor right can release
+   - Click / touch / drag also supported
+   - No automatic page transition
+================================================ */
+
+/* ================================================
+   01 — INTRO ROOT
+================================================ */
+
+.sr-intro {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+
+  isolation: isolate;
+
+  width: 100%;
+  height: 100dvh;
+  min-height: 530px;
+
+  overflow: hidden;
+
+  background: #eeece5;
+  color: #171715;
+
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sr-intro *,
+.sr-intro *::before,
+.sr-intro *::after {
+  box-sizing: border-box;
+}
+
+.sr-intro button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.sr-intro button:focus-visible {
+  outline: 3px solid #f5d547;
+  outline-offset: 5px;
+}
+
+/* ================================================
+   02 — FIRST PAINT GLITCH PREVENTION
+================================================ */
+
+.sr-intro__top,
+.sr-intro__eyebrow,
+.sr-intro__headline,
+.sr-intro__hand,
+.sr-intro__pill-wrap,
+.sr-intro__word,
+.sr-intro__release-flash {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Strings remain invisible before GSAP starts. */
+
+.sr-intro__string {
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+}
+
+.sr-intro__pill-wrap {
+  pointer-events: none;
+}
+
+/* ================================================
+   03 — PAGE FRAME
+================================================ */
+
+.sr-intro__page {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+
+  flex-direction: column;
+
+  padding:
+    clamp(18px, 3.1vw, 40px)
+    clamp(22px, 6vw, 92px);
+
+  overflow: hidden;
+}
+
+/* ================================================
+   04 — TOP AND BOTTOM BARS
+================================================ */
+
+.sr-intro__top,
+.sr-intro__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  gap: 20px;
+
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
+  font-size: 10px;
+  letter-spacing: 0.085em;
+  line-height: 1.5;
+}
+
+.sr-intro__top {
+  flex: 0 0 auto;
+  min-height: 49px;
+
+  padding-bottom: 15px;
+  border-bottom: 1px solid #c7c3b8;
+}
+
+/* ================================================
+   05 — BRAND
+================================================ */
+
+.sr-intro__brand {
+  flex: 0 0 auto;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.09em;
+}
+
+.sr-intro__brand span {
+  margin-left: 3px;
+
+  color: #a38b20;
+
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
+  font-size: 10px;
+  letter-spacing: 0;
+  vertical-align: top;
+}
+
+.sr-intro__top-center {
+  color: #68665e;
+}
+
+/* ================================================
+   06 — SKIP BUTTON
+================================================ */
+
+.sr-intro__skip {
+  display: inline-flex;
+  flex: 0 0 auto;
+
+  align-items: center;
+  gap: 12px;
+
+  padding: 8px 0;
+
+  border: 0;
+  border-bottom: 1px solid #171715;
+
+  color: #171715;
+  background: transparent;
+
+  font-family:
+    "Courier New",
+    Courier,
+    monospace !important;
+
+  font-size: 10px !important;
+  letter-spacing: 0.09em;
+
+  transition:
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+.sr-intro__skip span {
+  font-size: 17px;
+}
+
+.sr-intro__skip:hover {
+  color: #9b8123;
+  border-color: #9b8123;
+}
+
+/* ================================================
+   07 — MAIN CONTENT
+================================================ */
+
+.sr-intro__content {
+  display: flex;
+  flex: 1 1 auto;
+
+  min-height: 0;
+
+  flex-direction: column;
+}
+
+.sr-intro__heading-wrap {
+  position: relative;
+  z-index: 2;
+
+  flex: 0 0 auto;
+
+  padding-top:
+    clamp(25px, 6.2vh, 72px);
+}
+
+.sr-intro__eyebrow {
+  margin: 0 0 15px;
+
+  color: #7d795e;
+
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+/* HEADLINE */
+
+.sr-intro__headline {
+  margin: 0;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size:
+    clamp(54px, 8.1vw, 136px);
+
+  font-weight: 900;
+  letter-spacing: -0.085em;
+  line-height: 0.91;
+}
+
+.sr-intro__headline em {
+  color: #33312d;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 0.73em;
+  font-weight: 400;
+  letter-spacing: -0.07em;
+  line-height: 1.14;
+}
+
+/* ================================================
+   08 — INTERACTIVE STAGE
+================================================ */
+
+.sr-intro__stage {
+  position: relative;
+  isolation: isolate;
+
+  flex: 1 1 auto;
+
+  width: 100%;
+  min-height: 250px;
+
+  transform-origin: 70% 48%;
+}
+
+.sr-intro__stage--ready {
+  cursor: default;
+}
+
+.sr-intro__stage--dragging {
+  cursor: grabbing;
+}
+
+/* ================================================
+   09 — ROPE SVG
+================================================ */
+
+.sr-intro__tethers {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: visible;
+  pointer-events: none;
+}
+
+.sr-intro__string {
+  fill: none;
+
+  stroke: #292824;
+  stroke-width: 1.15;
+  stroke-linecap: round;
+
+  vector-effect: non-scaling-stroke;
+
+  pointer-events: none;
+
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+
+  will-change: stroke;
+}
+
+/* ================================================
+   10 — INVISIBLE ROPE DRAG TARGETS
+================================================ */
+
+.sr-intro__rope-hit {
+  fill: none;
+
+  stroke: transparent;
+  stroke-width: 30;
+  stroke-linecap: round;
+
+  vector-effect: non-scaling-stroke;
+
+  pointer-events: stroke;
+
+  cursor: grab;
+  touch-action: none;
+}
+
+.sr-intro__stage--dragging .sr-intro__rope-hit {
+  cursor: grabbing;
+}
+
+/* ================================================
+   11 — HAND
+================================================ */
+
+.sr-intro__hand-container {
+  position: absolute;
+  z-index: 2;
+
+  top: 14%;
+  left: -5%;
+
+  width: 42%;
+  height: 78%;
+
+  pointer-events: none;
+}
+
+.sr-intro__hand {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: visible;
+
+  transform-origin: 16% 56%;
+
+  pointer-events: none;
+
+  opacity: 0;
+  visibility: hidden;
+
+  will-change:
+    transform,
+    opacity;
+}
+
+/* ================================================
+   12 — HIRE ME WRAPPER
+================================================ */
+
+.sr-intro__pill-wrap {
+  position: absolute;
+  z-index: 5;
+
+  top: 43%;
+  left: 68.8%;
+
+  width:
+    clamp(165px, 19.5vw, 290px);
+
+  /*
+    This keeps the pill centred
+    while GSAP translates it.
+  */
+
+  translate: -50% -50%;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  gap: 18px;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  touch-action: none;
+
+  will-change:
+    transform,
+    opacity;
+}
+
+/* ================================================
+   13 — MAGNETIC HIRE ME BUTTON
+================================================ */
+
+.sr-intro__pill {
+  position: relative;
+  isolation: isolate;
+
+  display: flex;
+
+  width: 100%;
+  min-height:
+    clamp(72px, 7vw, 105px);
+
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 6px;
+
+  padding: 15px 24px;
+
+  overflow: hidden;
+
+  border: 2px solid #c89967;
+  border-radius: 999px;
+
+  color: #f7f5ef;
+
+  background: linear-gradient(
+    165deg,
+    #32322f 0%,
+    #171715 46%,
+    #080808 100%
+  );
+
+  box-shadow:
+    0 0 0 4px rgba(23, 23, 21, 0.11),
+    0 12px 28px rgba(0, 0, 0, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
+
+  text-align: center;
+
+  cursor: grab;
+
+  user-select: none;
+  -webkit-user-select: none;
+
+  touch-action: none;
+
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    filter 220ms ease;
+}
+
+/* Soft glass reflection */
+
+.sr-intro__pill::before {
+  position: absolute;
+  z-index: -1;
+
+  top: 3px;
+  left: 7%;
+  right: 7%;
+
+  height: 46%;
+
+  border-radius: 999px;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+
+  content: "";
+  pointer-events: none;
+}
+
+/* Moving shine */
+
+.sr-intro__pill-shine {
+  position: absolute;
+  z-index: 0;
+
+  inset: -100% -60%;
+
+  background: linear-gradient(
+    110deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.23) 50%,
+    transparent 60%
+  );
+
+  transform: translateX(-90%) skewX(-12deg);
+
+  pointer-events: none;
+
+  transition:
+    transform 850ms cubic-bezier(
+      0.2,
+      0.72,
+      0.18,
+      1
+    );
+}
+
+/* Magnetic hover state */
+
+.sr-intro__pill:hover,
+.sr-intro__pill:focus-visible,
+.sr-intro__stage--hovering .sr-intro__pill {
+  border-color: #f5d547;
+
+  box-shadow:
+    0 0 0 5px rgba(245, 213, 71, 0.14),
+    0 18px 42px rgba(0, 0, 0, 0.22),
+    inset 0 1px 1px rgba(255, 255, 255, 0.26);
+}
+
+.sr-intro__pill:hover .sr-intro__pill-shine,
+.sr-intro__pill:focus-visible .sr-intro__pill-shine,
+.sr-intro__stage--hovering .sr-intro__pill-shine {
+  transform: translateX(90%) skewX(-12deg);
+}
+
+.sr-intro__stage--dragging .sr-intro__pill {
+  cursor: grabbing;
+
+  border-color: #f5d547;
+
+  box-shadow:
+    0 0 0 7px rgba(245, 213, 71, 0.15),
+    0 20px 44px rgba(0, 0, 0, 0.25);
+}
+
+.sr-intro__pill:disabled {
+  cursor: default;
+}
+
+/* ================================================
+   14 — BUTTON TYPOGRAPHY
+================================================ */
+
+.sr-intro__pill-title {
+  position: relative;
+  z-index: 1;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size:
+    clamp(25px, 3.2vw, 47px);
+
+  font-weight: 900;
+
+  letter-spacing: -0.06em;
+  line-height: 0.96;
+
+  pointer-events: none;
+}
+
+.sr-intro__pill-subtitle {
+  position: relative;
+  z-index: 1;
+
+  color: #d5d1c8;
+
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
+  font-size:
+    clamp(6px, 0.64vw, 9px);
+
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+
+  pointer-events: none;
+}
+
+/* ================================================
+   15 — INTERACTION HINT
+================================================ */
+
+.sr-intro__pill-hint {
+  color: #747165;
+
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+
+  text-align: center;
+  white-space: nowrap;
+
+  pointer-events: none;
+
+  transition: color 200ms ease;
+}
+
+.sr-intro__stage--hovering .sr-intro__pill-hint,
+.sr-intro__stage--dragging .sr-intro__pill-hint {
+  color: #967b26;
+}
+
+/* ================================================
+   16 — WORD BURST
+================================================ */
+
+.sr-intro__words {
+  position: absolute;
+  z-index: 4;
+
+  inset: 0;
+
+  pointer-events: none;
+}
+
+.sr-intro__word {
+  position: absolute;
+
+  display: block;
+
+  color: #171715;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size:
+    clamp(20px, 3.1vw, 52px);
+
+  font-weight: 950;
+
+  letter-spacing: -0.085em;
+  line-height: 1;
+
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  translate: -50% -50%;
+
+  opacity: 0;
+  visibility: hidden;
+
+  pointer-events: none;
+
+  will-change:
+    transform,
+    opacity;
+}
+
+/* BUILD */
+
+.sr-intro__word--build {
+  top: 75%;
+  left: 58%;
+}
+
+/* SHIP */
+
+.sr-intro__word--ship {
+  top: 40%;
+  left: 50%;
+}
+
+/* TOGETHER */
+
+.sr-intro__word--together {
+  top: 12%;
+  left: 77%;
+
+  font-size:
+    clamp(18px, 2.3vw, 37px);
+}
+
+/* HELLO */
+
+.sr-intro__word--hello {
+  top: 26%;
+  left: 91%;
+
+  font-size:
+    clamp(20px, 2.6vw, 40px);
+}
+
+/* LET'S */
+
+.sr-intro__word--lets {
+  top: 63%;
+  left: 93%;
+}
+
+/* TALK */
+
+.sr-intro__word--talk {
+  top: 84%;
+  left: 78%;
+
+  color: #ac343b;
+
+  font-size:
+    clamp(24px, 3.2vw, 53px);
+}
+
+/* ================================================
+   17 — FOOTER
+================================================ */
+
+.sr-intro__bottom {
+  flex: 0 0 auto;
+
+  padding-top: 17px;
+
+  border-top: 1px solid #c7c3b8;
+
+  color: #78766e;
+
+  font-size: 9px;
+}
+
+/* ================================================
+   18 — TRANSITION FLASH
+================================================ */
+
+.sr-intro__release-flash {
+  position: absolute;
+  z-index: 7;
+
+  inset: 0;
+
+  background: #f5d547;
+
+  opacity: 0;
+  visibility: hidden;
+
+  pointer-events: none;
+}
+
+/* ================================================
+   19 — TABLET
+================================================ */
+
+@media (max-width: 950px) {
+  .sr-intro__headline {
+    font-size:
+      clamp(50px, 8vw, 84px);
+  }
+
+  .sr-intro__hand-container {
+    left: -9%;
+    width: 49%;
+  }
+
+  .sr-intro__pill-wrap {
+    left: 72%;
+
+    width:
+      clamp(160px, 27vw, 240px);
+  }
+
+  .sr-intro__word--hello {
+    left: 93%;
+  }
+
+  .sr-intro__word--lets {
+    left: 93%;
+  }
+}
+
+/* ================================================
+   20 — MOBILE
+================================================ */
+
+@media (max-width: 650px) {
+  .sr-intro {
+    min-height: 480px;
+  }
+
+  .sr-intro__page {
+    padding: 17px 18px 21px;
+  }
+
+  .sr-intro__top-center {
+    display: none;
+  }
+
+  .sr-intro__brand {
+    font-size: 22px;
+  }
+
+  .sr-intro__skip {
+    font-size: 9px !important;
+  }
+
+  .sr-intro__heading-wrap {
+    padding-top:
+      clamp(25px, 9vh, 75px);
+  }
+
+  .sr-intro__eyebrow {
+    margin-bottom: 17px;
+    font-size: 8px;
+  }
+
+  .sr-intro__headline {
+    font-size:
+      clamp(47px, 12vw, 76px);
+
+    letter-spacing: -0.08em;
+    line-height: 0.94;
+  }
+
+  .sr-intro__headline em {
+    font-size: 0.76em;
+  }
+
+  .sr-intro__stage {
+    min-height: 270px;
+  }
+
+  .sr-intro__hand-container {
+    top: 18%;
+    left: -15%;
+
+    width: 60%;
+    height: 65%;
+  }
+
+  .sr-intro__pill-wrap {
+    top: 42%;
+    left: 72%;
+
+    width:
+      clamp(145px, 40vw, 205px);
+
+    gap: 14px;
+  }
+
+  .sr-intro__pill {
+    min-height: 72px;
+    padding: 12px 13px;
+  }
+
+  .sr-intro__pill-title {
+    font-size:
+      clamp(26px, 7vw, 35px);
+  }
+
+  .sr-intro__pill-subtitle {
+    font-size: 6px;
+  }
+
+  .sr-intro__pill-hint {
+    font-size: 8px;
+    white-space: normal;
+  }
+
+  .sr-intro__word {
+    font-size:
+      clamp(17px, 5vw, 27px);
+  }
+
+  .sr-intro__word--ship {
+    top: 25%;
+    left: 46%;
+  }
+
+  .sr-intro__word--together {
+    top: 8%;
+    left: 75%;
+
+    font-size:
+      clamp(17px, 4.3vw, 25px);
+  }
+
+  .sr-intro__word--hello {
+    top: 61%;
+    left: 87%;
+
+    font-size:
+      clamp(17px, 4.3vw, 26px);
+  }
+
+  .sr-intro__word--lets {
+    top: 72%;
+    left: 66%;
+  }
+
+  .sr-intro__word--build {
+    top: 83%;
+    left: 38%;
+  }
+
+  .sr-intro__word--talk {
+    top: 92%;
+    left: 80%;
+
+    font-size:
+      clamp(20px, 5.2vw, 30px);
+  }
+
+  .sr-intro__bottom {
+    gap: 10px;
+    font-size: 8px;
+  }
+
+  .sr-intro__bottom span:nth-child(2) {
+    display: none;
+  }
+
+  .sr-intro__rope-hit {
+    stroke-width: 40;
+  }
+}
+
+/* ================================================
+   21 — VERY SMALL MOBILE
+================================================ */
+
+@media (max-width: 360px) {
+  .sr-intro__headline {
+    font-size: 43px;
+  }
+
+  .sr-intro__pill-wrap {
+    width: 145px;
+    left: 70%;
+  }
+
+  .sr-intro__pill-hint {
+    font-size: 7px;
+  }
+}
+
+/* ================================================
+   22 — REDUCED MOTION
+================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .sr-intro *,
+  .sr-intro *::before,
+  .sr-intro *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .sr-intro__pill-shine {
+    display: none;
+  }
+}
