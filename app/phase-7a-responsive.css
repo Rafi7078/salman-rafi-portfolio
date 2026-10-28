@@ -1,0 +1,449 @@
+
+/* =====================================================
+   PHASE 7A — RESPONSIVE & UI POLISH
+
+   PURPOSE:
+   - Preserve existing desktop design
+   - Improve narrow phone layouts
+   - Improve mobile touch targets
+   - Protect long text from overflow
+   - Fix cinematic intro on short screens
+
+   No animation logic is changed.
+===================================================== */
+
+
+/* =====================================================
+   01 — GRID CONTENT SAFETY
+===================================================== */
+
+.site-shell .hero-copy,
+.site-shell .hero-visual,
+.site-shell .intro-copy,
+.site-shell .experience-content,
+.site-shell .education-content,
+.site-shell .skills-display,
+.site-shell .project-copy,
+.site-shell .certificate-main,
+.site-shell .certificate-actions {
+  min-width: 0;
+}
+
+/*
+   Long titles should wrap instead of pushing
+   their parent grid wider than the viewport.
+*/
+
+.site-shell .project-copy h3,
+.site-shell .experience-role,
+.site-shell .education-degree,
+.site-shell .certificate-main h3 {
+  overflow-wrap: break-word;
+}
+
+
+/* =====================================================
+   02 — MOBILE TOUCH TARGETS
+===================================================== */
+
+@media (max-width: 600px) {
+
+  /*
+    Keep the existing mobile navigation,
+    but make visible links easier to tap.
+  */
+
+  .topbar .desktop-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  /*
+    Preserve the original mobile nav choices.
+  */
+
+  .topbar .desktop-nav a:not(
+    [href="#about"]
+  ):not(
+    [href="#skills"]
+  ) {
+    display: none;
+  }
+
+  /*
+    Flashlight toggle
+  */
+
+  .topbar .torch-toggle {
+    min-height: 44px;
+  }
+
+  /*
+    Certificate buttons
+  */
+
+  .certificate-section .certificate-action {
+    min-height: 44px;
+    padding-block: 11px;
+  }
+
+  /*
+    Contact dialog close button
+  */
+
+  .contact-dialog .dialog-close {
+    width: 44px;
+    height: 44px;
+  }
+
+  /*
+    Prevent long contact addresses
+    from overflowing the dialog.
+  */
+
+  .contact-dialog,
+  .contact-link-list,
+  .contact-link-list .dialog-return {
+    min-width: 0;
+  }
+
+  .contact-link-list
+  .dialog-return > span:first-child {
+    overflow-wrap: anywhere;
+  }
+}
+
+
+/* =====================================================
+   03 — NARROW PHONE TYPOGRAPHY
+===================================================== */
+
+@media (max-width: 420px) {
+
+  /*
+    The original contact title is very large.
+    Preserve the editorial typography but
+    prevent "IT MATTER." from clipping.
+  */
+
+  .contact-title-wrap h2 {
+    font-size: clamp(
+      44px,
+      13vw,
+      57px
+    );
+
+    line-height: 0.87;
+    overflow-wrap: normal;
+  }
+
+  /*
+    Keep Work and Certificates large,
+    with a safer scale for small phones.
+  */
+
+  .work-heading-row .section-heading,
+  .certificate-heading-row .section-heading {
+    font-size: clamp(
+      49px,
+      12.5vw,
+      62px
+    );
+  }
+
+  /*
+    Allow certificate actions to wrap
+    naturally if space becomes limited.
+  */
+
+  .certificate-section .certificate-actions {
+    align-items: flex-start;
+  }
+}
+
+
+/* =====================================================
+   04 — VERY SMALL PHONES
+===================================================== */
+
+@media (max-width: 360px) {
+
+  /*
+    Slightly tighter page gutters.
+    Other screen sizes are unchanged.
+  */
+
+  .site-shell .section-pad {
+    padding-inline: 18px;
+  }
+
+  .site-shell .skills-section {
+    padding-inline: 18px;
+  }
+
+  /*
+    Navigation spacing
+  */
+
+  .topbar {
+    gap: 7px;
+    padding-inline: 18px;
+  }
+
+  .desktop-nav {
+    gap: 8px;
+  }
+
+  .topbar .torch-toggle {
+    gap: 4px;
+    padding-inline: 7px;
+    letter-spacing: 0;
+  }
+
+  /*
+    Hero name should remain visible
+    without being cut off.
+  */
+
+  .hero-title {
+    font-size: clamp(
+      57px,
+      16vw,
+      64px
+    );
+  }
+
+  /*
+    Allow section labels to use two
+    lines instead of getting squeezed.
+  */
+
+  .experience-section .section-label,
+  .education-section .section-label,
+  .skills-section .section-label,
+  .work-section .section-label,
+  .certificate-section .section-label,
+  .contact-section .section-label {
+    flex-wrap: wrap;
+    row-gap: 5px;
+  }
+
+  .experience-section
+  .section-label > span:last-child,
+
+  .education-section
+  .section-label > span:last-child,
+
+  .skills-section
+  .section-label > span:last-child,
+
+  .work-section
+  .section-label > span:last-child,
+
+  .certificate-section
+  .section-label > span:last-child,
+
+  .contact-section
+  .section-label > span:last-child {
+    margin-left: auto;
+  }
+
+  /*
+    Certificate button text
+  */
+
+  .certificate-section .certificate-action {
+    font-size: 8px;
+    letter-spacing: 0.01em;
+  }
+}
+
+
+/* =====================================================
+   05 — CINEMATIC INTRO TOUCH ACCESSIBILITY
+===================================================== */
+
+.sr-intro__skip {
+  min-height: 44px;
+}
+
+
+/* =====================================================
+   06 — NARROW CINEMATIC INTRO
+===================================================== */
+
+@media (max-width: 380px) {
+
+  /*
+    Keep the "PULL ME INTO" heading
+    inside narrow phone screens.
+  */
+
+  .sr-intro__headline {
+    font-size: clamp(
+      35px,
+      9.8vw,
+      41px
+    );
+  }
+
+  /*
+    Preserve button and rope interaction.
+    Slightly adjust the pill position.
+  */
+
+  .sr-intro__pill-wrap {
+    left: 69%;
+
+    width: min(
+      145px,
+      44vw
+    );
+  }
+
+  /*
+    Make the interaction hint wrap.
+  */
+
+  .sr-intro__pill-hint {
+    max-width: 100%;
+    line-height: 1.45;
+    white-space: normal;
+  }
+}
+
+
+/* =====================================================
+   07 — SHORT VIEWPORT / LANDSCAPE INTRO FIX
+
+   The original cinematic intro uses a
+   530px minimum height.
+
+   On short screens this can clip the
+   bottom controls and the animated stage.
+
+   These rules remove that restriction
+   only for short viewports.
+===================================================== */
+
+@media (max-height: 560px) {
+
+  .sr-intro {
+    min-height: 0;
+  }
+
+  .sr-intro__page {
+    min-height: 0;
+
+    padding-top: 10px;
+    padding-bottom: 12px;
+  }
+
+  /*
+    Compact the header.
+  */
+
+  .sr-intro__top {
+    min-height: 38px;
+    padding-bottom: 7px;
+  }
+
+  /*
+    Reduce empty space above the intro.
+  */
+
+  .sr-intro__heading-wrap {
+    padding-top: 12px;
+  }
+
+  .sr-intro__eyebrow {
+    margin-bottom: 8px;
+  }
+
+  /*
+    Adapt headline to available height.
+  */
+
+  .sr-intro__headline {
+    font-size: clamp(
+      39px,
+      6.3vw,
+      75px
+    );
+
+    line-height: 0.92;
+  }
+
+  /*
+    Retain the rope animation stage.
+  */
+
+  .sr-intro__stage {
+    min-height: 100px;
+  }
+
+  /*
+    Hand illustration positioning.
+  */
+
+  .sr-intro__hand-container {
+    top: 3%;
+    height: 91%;
+  }
+
+  /*
+    HIRE ME position and size.
+  */
+
+  .sr-intro__pill-wrap {
+    top: 45%;
+    gap: 6px;
+  }
+
+  .sr-intro__pill {
+    min-height: 60px;
+    padding-block: 8px;
+  }
+
+  .sr-intro__pill-title {
+    font-size: clamp(
+      23px,
+      3vw,
+      36px
+    );
+  }
+
+  /*
+    Keep the footer readable.
+  */
+
+  .sr-intro__bottom {
+    padding-top: 8px;
+    font-size: 8px;
+  }
+
+  .sr-intro__bottom span:nth-child(2) {
+    display: none;
+  }
+}
+
+
+/* =====================================================
+   08 — TOUCH DEVICE DETAIL
+===================================================== */
+
+@media (hover: none) and (pointer: coarse) {
+
+  .sr-intro__pill {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+
+/* =====================================================
+   END — PHASE 7A
+
+   No project animation, portrait,
+   GSAP timeline or content changes.
+===================================================== */

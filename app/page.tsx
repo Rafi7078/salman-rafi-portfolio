@@ -303,6 +303,39 @@ const projects = [
   },
   {
     number: "03",
+    category: "QA / REST API AUTOMATION",
+    title: "VerifyREST",
+    detail:
+      "A REST API automation framework covering authentication, CRUD workflows, response validation, data integrity, update and deletion behavior, and response-time checks.",
+    stack: "Postman · JavaScript · Newman · npm · GitHub Actions",
+    accent: "project-blue",
+    symbol: "API",
+    href: "https://github.com/Rafi7078/verifyrest-automation-framework",
+  },
+  {
+    number: "04",
+    category: "QA / END-TO-END AUTOMATION",
+    title: "E-Commerce Test Framework",
+    detail:
+      "A Playwright UI automation framework using Page Object Model to test login, product search, cart, checkout, payment, and order placement.",
+    stack: "Playwright · TypeScript · Page Object Model",
+    accent: "project-yellow",
+    symbol: "QA",
+    href: "https://github.com/Rafi7078/ecommerce-playwright-automation",
+  },
+  {
+    number: "05",
+    category: "QA / CYPRESS AUTOMATION",
+    title: "End-to-End Web Testing",
+    detail:
+      "Automated web application tests for login behavior, including positive, negative, and edge-case scenarios to validate authentication and application behavior.",
+    stack: "Cypress · JavaScript · End-to-End Testing",
+    accent: "project-ivory",
+    symbol: "{ }",
+    href: "https://github.com/Rafi7078/End-to-End-Testing-with-Cypress",
+  },
+  {
+    number: "06",
     category: "DATA ANALYTICS / BUSINESS INTELLIGENCE",
     title: "Amazon Sales Dashboard",
     detail:
@@ -314,7 +347,7 @@ const projects = [
       "https://github.com/Rafi7078/amazon-sales-analysis-powerbi-dashboard",
   },
   {
-    number: "04",
+    number: "07",
     category: "DATA ANALYTICS / PYTHON",
     title: "Customer Churn Analysis",
     detail:
@@ -325,7 +358,7 @@ const projects = [
     href: "https://github.com/Rafi7078/telecom-customer-churn-analysis",
   },
   {
-    number: "05",
+    number: "08",
     category: "DATA ANALYTICS / MACHINE LEARNING",
     title: "Online Course Engagement",
     detail:
@@ -334,39 +367,6 @@ const projects = [
     accent: "project-ivory",
     symbol: "EDA",
     href: "https://github.com/Rafi7078/Online-Course-Engagement-Analysis",
-  },
-  {
-    number: "06",
-    category: "QA / REST API AUTOMATION",
-    title: "VerifyREST",
-    detail:
-      "A REST API automation framework covering authentication, CRUD workflows, response validation, data integrity, update and deletion behavior, and response-time checks.",
-    stack: "Postman · JavaScript · Newman · npm · GitHub Actions",
-    accent: "project-blue",
-    symbol: "API",
-    href: "https://github.com/Rafi7078/verifyrest-automation-framework",
-  },
-  {
-    number: "07",
-    category: "QA / END-TO-END AUTOMATION",
-    title: "E-Commerce Test Framework",
-    detail:
-      "A Playwright UI automation framework using Page Object Model to test login, product search, cart, checkout, payment, and order placement.",
-    stack: "Playwright · TypeScript · Page Object Model",
-    accent: "project-yellow",
-    symbol: "QA",
-    href: "https://github.com/Rafi7078/ecommerce-playwright-automation",
-  },
-  {
-    number: "08",
-    category: "QA / CYPRESS AUTOMATION",
-    title: "End-to-End Web Testing",
-    detail:
-      "Automated web application tests for login behavior, including positive, negative, and edge-case scenarios to validate authentication and application behavior.",
-    stack: "Cypress · JavaScript · End-to-End Testing",
-    accent: "project-ivory",
-    symbol: "{ }",
-    href: "https://github.com/Rafi7078/End-to-End-Testing-with-Cypress",
   },
 ];
 
@@ -425,9 +425,14 @@ const certificates = [
     issuer: "Passport to Earning Bangladesh",
     date: "15 JUL 2026",
     file: "/certificates/excel-essentials-workplace-productivity.pdf",
-    githubUrl: "https://github.com/Rafi7078/Excel-Productivity-Certificates",
+    githubUrl:
+      "https://github.com/Rafi7078/Excel-Productivity-Certificates",
   },
 ];
+
+/* ==================================================
+   CONTACT LINKS
+================================================== */
 
 const contactLinks = [
   {
@@ -480,6 +485,7 @@ function HandIllustration() {
         <path d="M106 169 L114 193" />
         <path d="M133 160 L139 183" />
       </g>
+
       <g stroke="currentColor" strokeWidth="1" opacity=".35">
         <path d="M202 64 L265 27" />
         <path d="M215 80 L281 57" />
@@ -495,22 +501,52 @@ function HandIllustration() {
 
 export default function Home() {
   const rootRef = useRef<HTMLDivElement>(null);
+
   const torchRef = useRef<HTMLDivElement>(null);
   const torchGlowRef = useRef<HTMLDivElement>(null);
-  const collaborateButtonRef = useRef<HTMLButtonElement>(null);
-  const handMotionRef = useRef<HTMLDivElement>(null);
-  const stringArtRef = useRef<SVGSVGElement>(null);
-  const dialogRef = useRef<HTMLDivElement>(null);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  const collaborateButtonRef =
+    useRef<HTMLButtonElement>(null);
+
+  const handMotionRef =
+    useRef<HTMLDivElement>(null);
+
+  const stringArtRef =
+    useRef<SVGSVGElement>(null);
+
+  const dialogRef =
+    useRef<HTMLDivElement>(null);
+
+  const closeButtonRef =
+    useRef<HTMLButtonElement>(null);
+
+  const previousFocusRef =
+    useRef<HTMLElement | null>(null);
+
+  /* MAGNETIC POINTER REFS */
+
+  const magneticFrameRef = useRef<number>(0);
+
+  const magneticPointerRef = useRef({
+    clientX: 0,
+    clientY: 0,
+  });
+
+  /* REACT STATE */
 
   const [torchOn, setTorchOn] = useState(false);
-  const [contactOpen, setContactOpen] = useState(false);
-  const [activeSkill, setActiveSkill] = useState(0);
+
+  const [contactOpen, setContactOpen] =
+    useState(false);
+
+  const [activeSkill, setActiveSkill] =
+    useState(0);
 
   const activeSkillGroup = skillGroups[activeSkill];
 
-  /* CONTACT DIALOG ACTIONS */
+  /* ==================================================
+     CONTACT DIALOG ACTIONS
+  ================================================== */
 
   const openContact = useCallback(() => {
     previousFocusRef.current =
@@ -525,7 +561,9 @@ export default function Home() {
     setContactOpen(false);
   }, []);
 
-  /* MAGNETIC COLLABORATION BUTTON */
+  /* ==================================================
+     MAGNETIC COLLABORATION BUTTON
+  ================================================== */
 
   const handleCollaborateEnter = useCallback(() => {
     if (!allowsMagneticMotion()) return;
@@ -549,7 +587,9 @@ export default function Home() {
     });
 
     gsap.to(
-      stringArtRef.current?.querySelectorAll(".string-path") ?? [],
+      stringArtRef.current?.querySelectorAll(
+        ".string-path"
+      ) ?? [],
       {
         stroke: "#9c8428",
         strokeWidth: 1.75,
@@ -559,53 +599,118 @@ export default function Home() {
     );
   }, []);
 
+  /* ==================================================
+     MAGNETIC POINTER TRACKING
+
+     At most one update per animation frame.
+  ================================================== */
+
   const handleCollaborateMove = useCallback(
     (event: ReactPointerEvent<HTMLButtonElement>) => {
       if (!allowsMagneticMotion()) return;
 
-      const button = event.currentTarget;
-      const rect = button.getBoundingClientRect();
+      magneticPointerRef.current = {
+        clientX: event.clientX,
+        clientY: event.clientY,
+      };
 
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
+      if (magneticFrameRef.current !== 0) {
+        return;
+      }
 
-      const dx = (event.clientX - centerX) / (rect.width / 2);
-      const dy = (event.clientY - centerY) / (rect.height / 2);
+      magneticFrameRef.current =
+        window.requestAnimationFrame(() => {
+          magneticFrameRef.current = 0;
 
-      const x = gsap.utils.clamp(-12, 12, dx * 12);
-      const y = gsap.utils.clamp(-7, 7, dy * 7);
+          const button =
+            collaborateButtonRef.current;
 
-      gsap.to(button, {
-        x,
-        y,
-        duration: 0.35,
-        ease: "power3.out",
-        overwrite: "auto",
-      });
+          const hand =
+            handMotionRef.current;
 
-      gsap.to(handMotionRef.current, {
-        x: 10 + x * 0.32,
-        y: -6 + y * 0.28,
-        rotation: 2 + x * 0.08,
-        duration: 0.5,
-        ease: "power3.out",
-        overwrite: "auto",
-      });
+          const strings =
+            stringArtRef.current;
 
-      gsap.to(stringArtRef.current, {
-        x: 3 + x * 0.18,
-        y: y * 0.12,
-        scaleX: 1.012,
-        transformOrigin: "left center",
-        duration: 0.5,
-        ease: "power3.out",
-        overwrite: "auto",
-      });
+          if (!button || !hand || !strings) {
+            return;
+          }
+
+          const { clientX, clientY } =
+            magneticPointerRef.current;
+
+          const rect =
+            button.getBoundingClientRect();
+
+          const centerX =
+            rect.left + rect.width / 2;
+
+          const centerY =
+            rect.top + rect.height / 2;
+
+          const dx =
+            (clientX - centerX) /
+            Math.max(rect.width / 2, 1);
+
+          const dy =
+            (clientY - centerY) /
+            Math.max(rect.height / 2, 1);
+
+          const x = gsap.utils.clamp(
+            -12,
+            12,
+            dx * 12
+          );
+
+          const y = gsap.utils.clamp(
+            -7,
+            7,
+            dy * 7
+          );
+
+          gsap.to(button, {
+            x,
+            y,
+            duration: 0.35,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+
+          gsap.to(hand, {
+            x: 10 + x * 0.32,
+            y: -6 + y * 0.28,
+            rotation: 2 + x * 0.08,
+            duration: 0.5,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+
+          gsap.to(strings, {
+            x: 3 + x * 0.18,
+            y: y * 0.12,
+            scaleX: 1.012,
+            transformOrigin: "left center",
+            duration: 0.5,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+        });
     },
     []
   );
 
+  /* ==================================================
+     MAGNETIC LEAVE / RESET
+  ================================================== */
+
   const handleCollaborateLeave = useCallback(() => {
+    if (magneticFrameRef.current !== 0) {
+      window.cancelAnimationFrame(
+        magneticFrameRef.current
+      );
+
+      magneticFrameRef.current = 0;
+    }
+
     if (!allowsMagneticMotion()) return;
 
     gsap.to(collaborateButtonRef.current, {
@@ -635,7 +740,9 @@ export default function Home() {
     });
 
     gsap.to(
-      stringArtRef.current?.querySelectorAll(".string-path") ?? [],
+      stringArtRef.current?.querySelectorAll(
+        ".string-path"
+      ) ?? [],
       {
         stroke: "#24231f",
         strokeWidth: 1.3,
@@ -645,33 +752,123 @@ export default function Home() {
     );
   }, []);
 
-  /* GSAP ANIMATIONS */
+  /* ==================================================
+     GSAP ANIMATIONS — RUNTIME SAFE
+
+     HOTFIX:
+
+     template.tsx initially mounts the portfolio
+     inside a display:none wrapper.
+
+     ScrollTrigger must not initialize while the
+     page is hidden, because its measurements
+     and target positions are invalid.
+
+     On portfolio reveal the template remounts
+     the visible page, so GSAP initializes
+     normally and plays the Hero animation.
+  ================================================== */
 
   useGSAP(
     () => {
+      const root = rootRef.current;
+
+      /*
+        CRITICAL GUARD:
+
+        Do not initialize any ScrollTrigger
+        for the hidden/preloaded portfolio.
+      */
+
+      if (
+        !root ||
+        root.getClientRects().length === 0
+      ) {
+        return;
+      }
+
+      /*
+        Use real DOM elements within the
+        Home component instead of relying
+        on global string selector scopes.
+      */
+
+      const one = (selector: string) =>
+        root.querySelector<HTMLElement>(selector);
+
+      const all = (selector: string) =>
+        Array.from(
+          root.querySelectorAll<HTMLElement>(selector)
+        );
+
       const mm = gsap.matchMedia();
+
+      /* ==================================================
+         MAIN ANIMATIONS
+      ================================================== */
 
       mm.add(
         "(prefers-reduced-motion: no-preference)",
         () => {
+          /* ==========================================
+             HERO ELEMENTS
+          ========================================== */
+
+          const topbar = one(".topbar");
+          const kicker = one(".hero-kicker");
+
+          const heroLines =
+            all(".hero-line-inner");
+
+          const description =
+            one(".hero-description");
+
+          const meta =
+            all(".hero-meta span");
+
+          const frame =
+            one(".portrait-frame");
+
+          const decorations = all(
+            ".hero-side-note, .hero-index, .scroll-cue"
+          );
+
+          /* ==========================================
+             HERO ENTRANCE TIMELINE
+
+             Original timing and easing preserved.
+          ========================================== */
+
           const intro = gsap.timeline({
-            defaults: { ease: "power3.out" },
+            defaults: {
+              ease: "power3.out",
+            },
             delay: 0.1,
           });
 
-          intro
-            .from(".topbar", {
+          if (topbar) {
+            intro.from(topbar, {
               y: -24,
               autoAlpha: 0,
               duration: 0.7,
-            })
-            .from(
-              ".hero-kicker",
-              { y: 18, autoAlpha: 0, duration: 0.65 },
+            });
+          }
+
+          if (kicker) {
+            intro.from(
+              kicker,
+              {
+                y: 18,
+                autoAlpha: 0,
+                duration: 0.65,
+              },
               "-=0.25"
-            )
-            .from(
-              ".hero-line-inner",
+            );
+          }
+
+          if (heroLines.length > 0) {
+            intro.from(
+              heroLines,
               {
                 yPercent: 110,
                 rotate: 2,
@@ -681,14 +878,24 @@ export default function Home() {
                 ease: "power4.out",
               },
               "-=0.35"
-            )
-            .from(
-              ".hero-description",
-              { y: 24, autoAlpha: 0, duration: 0.8 },
+            );
+          }
+
+          if (description) {
+            intro.from(
+              description,
+              {
+                y: 24,
+                autoAlpha: 0,
+                duration: 0.8,
+              },
               "-=0.65"
-            )
-            .from(
-              ".hero-meta span",
+            );
+          }
+
+          if (meta.length > 0) {
+            intro.from(
+              meta,
               {
                 y: 14,
                 autoAlpha: 0,
@@ -696,9 +903,12 @@ export default function Home() {
                 stagger: 0.1,
               },
               "-=0.42"
-            )
-            .from(
-              ".portrait-frame",
+            );
+          }
+
+          if (frame) {
+            intro.from(
+              frame,
               {
                 y: 45,
                 scale: 0.94,
@@ -706,9 +916,12 @@ export default function Home() {
                 duration: 1.3,
               },
               "-=1.35"
-            )
-            .from(
-              ".hero-side-note, .hero-index, .scroll-cue",
+            );
+          }
+
+          if (decorations.length > 0) {
+            intro.from(
+              decorations,
               {
                 y: 12,
                 autoAlpha: 0,
@@ -717,16 +930,23 @@ export default function Home() {
               },
               "-=0.5"
             );
+          }
 
-          const reveals = gsap.utils.toArray<HTMLElement>(
-            ".reveal:not(.project-row)",
-            rootRef.current ?? undefined
+          /* ==========================================
+             SCROLL REVEALS
+          ========================================== */
+
+          const reveals = all(
+            ".reveal:not(.project-row)"
           );
 
           reveals.forEach((element) => {
-            const distance = element.classList.contains("section-label")
-              ? 20
-              : 42;
+            const distance =
+              element.classList.contains(
+                "section-label"
+              )
+                ? 20
+                : 42;
 
             gsap.fromTo(
               element,
@@ -740,6 +960,7 @@ export default function Home() {
                 duration: 0.95,
                 ease: "power3.out",
                 immediateRender: false,
+
                 scrollTrigger: {
                   trigger: element,
                   start: "top 88%",
@@ -749,48 +970,59 @@ export default function Home() {
             );
           });
 
-          gsap.utils
-            .toArray<HTMLElement>(
-              ".project-row",
-              rootRef.current ?? undefined
-            )
-            .forEach((row) => {
-              const art =
-                row.querySelector<HTMLElement>(".project-art");
+          /* ==========================================
+             PROJECT REVEALS
+          ========================================== */
 
-              const copy = row.querySelectorAll<HTMLElement>(
-                ".project-category, .project-copy h3, .project-copy > p, .project-link"
+          const projectRows =
+            all(".project-row");
+
+          projectRows.forEach((row) => {
+            const art =
+              row.querySelector<HTMLElement>(
+                ".project-art"
               );
 
-              const story = gsap.timeline({
-                scrollTrigger: {
-                  trigger: row,
-                  start: "top 86%",
-                  once: true,
+            const copy = Array.from(
+              row.querySelectorAll<HTMLElement>(
+                ".project-category, .project-copy h3, .project-copy > p, .project-link"
+              )
+            );
+
+            const story = gsap.timeline({
+              scrollTrigger: {
+                trigger: row,
+                start: "top 86%",
+                once: true,
+              },
+            });
+
+            story.from(row, {
+              y: 55,
+              autoAlpha: 0,
+              duration: 0.9,
+              ease: "power3.out",
+            });
+
+            if (art) {
+              story.fromTo(
+                art,
+                {
+                  clipPath:
+                    "inset(0 100% 0 0)",
                 },
-              });
+                {
+                  clipPath:
+                    "inset(0 0% 0 0)",
+                  duration: 1,
+                  ease: "power3.inOut",
+                  clearProps: "clipPath",
+                },
+                "-=0.65"
+              );
+            }
 
-              story.from(row, {
-                y: 55,
-                autoAlpha: 0,
-                duration: 0.9,
-                ease: "power3.out",
-              });
-
-              if (art) {
-                story.fromTo(
-                  art,
-                  { clipPath: "inset(0 100% 0 0)" },
-                  {
-                    clipPath: "inset(0 0% 0 0)",
-                    duration: 1,
-                    ease: "power3.inOut",
-                    clearProps: "clipPath",
-                  },
-                  "-=0.65"
-                );
-              }
-
+            if (copy.length > 0) {
               story.from(
                 copy,
                 {
@@ -802,181 +1034,371 @@ export default function Home() {
                 },
                 "-=0.75"
               );
-            });
+            }
+          });
 
-          const strings = gsap.utils.toArray<SVGPathElement>(
-            ".string-path",
-            rootRef.current ?? undefined
+          /* ==========================================
+             CONTACT STRING DRAWING
+
+             This was the visible runtime
+             error at line 890.
+
+             Only create the animation when
+             the contact section and SVG paths
+             actually exist.
+          ========================================== */
+
+          const contactSection =
+            one(".contact-section");
+
+          const strings = Array.from(
+            root.querySelectorAll<SVGPathElement>(
+              ".string-path"
+            )
           );
 
-          strings.forEach((path) => {
-            const length = path.getTotalLength();
+          if (
+            contactSection &&
+            strings.length > 0
+          ) {
+            strings.forEach((path) => {
+              const length =
+                path.getTotalLength();
 
-            gsap.set(path, {
-              strokeDasharray: length,
-              strokeDashoffset: length,
+              gsap.set(path, {
+                strokeDasharray: length,
+                strokeDashoffset: length,
+              });
             });
-          });
 
-          gsap.to(strings, {
-            strokeDashoffset: 0,
-            duration: 1.8,
-            stagger: 0.17,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: ".contact-section",
-              start: "top 78%",
-              once: true,
-            },
-          });
+            gsap.to(strings, {
+              strokeDashoffset: 0,
+              duration: 1.8,
+              stagger: 0.17,
+              ease: "power2.out",
+
+              scrollTrigger: {
+                trigger: contactSection,
+                start: "top 78%",
+                once: true,
+              },
+            });
+          }
         }
       );
 
-      /* Desktop portrait parallax */
+      /* ==================================================
+         DESKTOP PARALLAX
+
+         Fine pointer only.
+         Disabled for reduced motion.
+      ================================================== */
 
       mm.add(
-        "(min-width: 851px) and (prefers-reduced-motion: no-preference)",
+        "(min-width: 851px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
         () => {
-          gsap.to(".hero-visual", {
-            y: -36,
-            ease: "none",
-            scrollTrigger: {
-              trigger: ".hero",
-              start: "top top",
-              end: "bottom top",
-              scrub: 1.1,
-            },
-          });
+          /* HERO PARALLAX */
 
-          gsap.fromTo(
-            ".about-portrait-image",
-            {
-              yPercent: -4,
-              scale: 1.08,
-            },
-            {
-              yPercent: 4,
-              scale: 1.08,
+          const hero =
+            one(".hero");
+
+          const heroVisual =
+            one(".hero-visual");
+
+          if (hero && heroVisual) {
+            gsap.to(heroVisual, {
+              y: -36,
               ease: "none",
+
               scrollTrigger: {
-                trigger: ".about-portrait-media",
-                start: "top bottom",
+                trigger: hero,
+                start: "top top",
                 end: "bottom top",
-                scrub: 1,
+                scrub: 1.1,
               },
-            }
-          );
+            });
+          }
+
+          /* ABOUT PORTRAIT PARALLAX */
+
+          const aboutPortrait =
+            one(".about-portrait-image");
+
+          const aboutMedia =
+            one(".about-portrait-media");
+
+          if (
+            aboutPortrait &&
+            aboutMedia
+          ) {
+            gsap.fromTo(
+              aboutPortrait,
+              {
+                yPercent: -4,
+                scale: 1.08,
+              },
+              {
+                yPercent: 4,
+                scale: 1.08,
+                ease: "none",
+
+                scrollTrigger: {
+                  trigger: aboutMedia,
+                  start: "top bottom",
+                  end: "bottom top",
+                  scrub: 1,
+                },
+              }
+            );
+          }
         }
       );
 
-      return () => mm.revert();
+      /* GSAP MATCH MEDIA CLEANUP */
+
+      return () => {
+        mm.revert();
+      };
     },
-    { scope: rootRef }
+    {
+      scope: rootRef,
+    }
   );
 
-  /* FLASHLIGHT 2.0 */
+  /* ==================================================
+     FLASHLIGHT 2.0 — PERFORMANCE OPTIMIZED
+
+     No listener while light is off.
+     No active animation loop in hidden tabs.
+  ================================================== */
 
   useEffect(() => {
-    let targetX = window.innerWidth / 2;
-    let targetY = window.innerHeight / 2;
+    if (!torchOn) return;
+
+    let targetX =
+      window.innerWidth / 2;
+
+    let targetY =
+      window.innerHeight / 2;
+
     let currentX = targetX;
     let currentY = targetY;
+
     let frame = 0;
 
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const reducedMotion =
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
 
-    const applyPosition = (x: number, y: number) => {
-      for (const element of [
-        torchRef.current,
-        torchGlowRef.current,
-      ]) {
-        if (!element) continue;
+    const applyPosition = (
+      x: number,
+      y: number
+    ) => {
+      const xValue = `${x}px`;
+      const yValue = `${y}px`;
 
-        element.style.setProperty("--torch-x", `${x}px`);
-        element.style.setProperty("--torch-y", `${y}px`);
+      const torch =
+        torchRef.current;
+
+      const glow =
+        torchGlowRef.current;
+
+      if (torch) {
+        torch.style.setProperty(
+          "--torch-x",
+          xValue
+        );
+
+        torch.style.setProperty(
+          "--torch-y",
+          yValue
+        );
+      }
+
+      if (glow) {
+        glow.style.setProperty(
+          "--torch-x",
+          xValue
+        );
+
+        glow.style.setProperty(
+          "--torch-y",
+          yValue
+        );
       }
     };
 
     const tick = () => {
+      if (document.hidden) {
+        frame = 0;
+        return;
+      }
+
       if (reducedMotion) {
         currentX = targetX;
         currentY = targetY;
       } else {
-        currentX += (targetX - currentX) * 0.24;
-        currentY += (targetY - currentY) * 0.24;
+        currentX +=
+          (targetX - currentX) * 0.24;
+
+        currentY +=
+          (targetY - currentY) * 0.24;
       }
 
-      applyPosition(currentX, currentY);
+      applyPosition(
+        currentX,
+        currentY
+      );
 
       const stillMoving =
         Math.abs(targetX - currentX) > 0.5 ||
         Math.abs(targetY - currentY) > 0.5;
 
-      if (!reducedMotion && stillMoving) {
-        frame = window.requestAnimationFrame(tick);
+      if (
+        !reducedMotion &&
+        stillMoving
+      ) {
+        frame =
+          window.requestAnimationFrame(tick);
       } else {
         frame = 0;
       }
     };
 
-    const handlePointer = (event: PointerEvent) => {
+    const handlePointer = (
+      event: PointerEvent
+    ) => {
       targetX = event.clientX;
       targetY = event.clientY;
 
-      if (frame === 0) {
-        frame = window.requestAnimationFrame(tick);
+      if (
+        !document.hidden &&
+        frame === 0
+      ) {
+        frame =
+          window.requestAnimationFrame(tick);
       }
     };
 
-    applyPosition(currentX, currentY);
+    const handleVisibility = () => {
+      if (
+        document.hidden &&
+        frame !== 0
+      ) {
+        window.cancelAnimationFrame(frame);
+        frame = 0;
+      }
+    };
 
-    window.addEventListener("pointermove", handlePointer, {
-      passive: true,
-    });
+    applyPosition(
+      currentX,
+      currentY
+    );
 
-    window.addEventListener("pointerdown", handlePointer, {
-      passive: true,
-    });
+    window.addEventListener(
+      "pointermove",
+      handlePointer,
+      { passive: true }
+    );
+
+    window.addEventListener(
+      "pointerdown",
+      handlePointer,
+      { passive: true }
+    );
+
+    document.addEventListener(
+      "visibilitychange",
+      handleVisibility
+    );
 
     return () => {
-      window.removeEventListener("pointermove", handlePointer);
-      window.removeEventListener("pointerdown", handlePointer);
+      window.removeEventListener(
+        "pointermove",
+        handlePointer
+      );
 
-      if (frame) {
+      window.removeEventListener(
+        "pointerdown",
+        handlePointer
+      );
+
+      document.removeEventListener(
+        "visibilitychange",
+        handleVisibility
+      );
+
+      if (frame !== 0) {
         window.cancelAnimationFrame(frame);
+      }
+    };
+  }, [torchOn]);
+
+  /* ==================================================
+     MAGNETIC ANIMATION CLEANUP
+
+     Only cancel pending pointer frames.
+
+     GSAP scroll animations are already
+     reverted through useGSAP.
+
+     Avoid manually killing multiple targets
+     during the hidden page's React unmount.
+  ================================================== */
+
+  useEffect(() => {
+    return () => {
+      if (magneticFrameRef.current !== 0) {
+        window.cancelAnimationFrame(
+          magneticFrameRef.current
+        );
+
+        magneticFrameRef.current = 0;
       }
     };
   }, []);
 
-  /* CONTACT DIALOG KEYBOARD SUPPORT */
+  /* ==================================================
+     CONTACT DIALOG KEYBOARD SUPPORT
+  ================================================== */
 
   useEffect(() => {
     if (!contactOpen) return;
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const previousOverflow =
+      document.body.style.overflow;
 
-    const focusFrame = window.requestAnimationFrame(() => {
-      closeButtonRef.current?.focus();
-    });
+    document.body.style.overflow =
+      "hidden";
 
-    const handleKey = (event: KeyboardEvent) => {
+    const focusFrame =
+      window.requestAnimationFrame(() => {
+        closeButtonRef.current?.focus();
+      });
+
+    const handleKey = (
+      event: KeyboardEvent
+    ) => {
       if (event.key === "Escape") {
         event.preventDefault();
         setContactOpen(false);
         return;
       }
 
-      if (event.key !== "Tab") return;
+      if (event.key !== "Tab") {
+        return;
+      }
 
-      const dialog = dialogRef.current;
+      const dialog =
+        dialogRef.current;
+
       if (!dialog) return;
 
-      const focusable = dialog.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-      );
+      const focusable =
+        dialog.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
 
       if (focusable.length === 0) {
         event.preventDefault();
@@ -984,38 +1406,65 @@ export default function Home() {
       }
 
       const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      const active = document.activeElement;
+
+      const last =
+        focusable[focusable.length - 1];
+
+      const active =
+        document.activeElement;
 
       if (!dialog.contains(active)) {
         event.preventDefault();
         first.focus();
-      } else if (event.shiftKey && active === first) {
+      } else if (
+        event.shiftKey &&
+        active === first
+      ) {
         event.preventDefault();
         last.focus();
-      } else if (!event.shiftKey && active === last) {
+      } else if (
+        !event.shiftKey &&
+        active === last
+      ) {
         event.preventDefault();
         first.focus();
       }
     };
 
-    window.addEventListener("keydown", handleKey);
+    window.addEventListener(
+      "keydown",
+      handleKey
+    );
 
     return () => {
-      window.cancelAnimationFrame(focusFrame);
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKey);
+      window.cancelAnimationFrame(
+        focusFrame
+      );
+
+      document.body.style.overflow =
+        previousOverflow;
+
+      window.removeEventListener(
+        "keydown",
+        handleKey
+      );
+
       previousFocusRef.current?.focus();
     };
   }, [contactOpen]);
 
   /* ==================================================
-     PAGE
+     PAGE JSX
   ================================================== */
 
   return (
-    <div ref={rootRef} className="site-shell">
-      {/* NAVIGATION */}
+    <div
+      ref={rootRef}
+      className="site-shell"
+    >
+      {/* ============================================
+          NAVIGATION
+      ============================================ */}
 
       <header className="topbar">
         <a
@@ -1026,7 +1475,10 @@ export default function Home() {
           SR<span>®</span>
         </a>
 
-        <nav className="desktop-nav" aria-label="Main navigation">
+        <nav
+          className="desktop-nav"
+          aria-label="Main navigation"
+        >
           <a href="#about">ABOUT</a>
           <a href="#experience">EXPERIENCE</a>
           <a href="#education">EDUCATION</a>
@@ -1037,8 +1489,12 @@ export default function Home() {
 
         <button
           type="button"
-          className={`torch-toggle ${torchOn ? "is-active" : ""}`}
-          onClick={() => setTorchOn((value) => !value)}
+          className={`torch-toggle ${
+            torchOn ? "is-active" : ""
+          }`}
+          onClick={() =>
+            setTorchOn((value) => !value)
+          }
           aria-pressed={torchOn}
           aria-label={
             torchOn
@@ -1052,11 +1508,14 @@ export default function Home() {
       </header>
 
       <main>
-        {/* ==================================================
-           HERO — REAL BLACK SUIT PORTRAIT
-        ================================================== */}
+        {/* ============================================
+            HERO — BLACK SUIT PORTRAIT
+        ============================================ */}
 
-        <section className="hero section-pad" id="home">
+        <section
+          className="hero section-pad"
+          id="home"
+        >
           <div className="hero-copy">
             <p className="eyebrow hero-kicker">
               <span className="status-dot" />
@@ -1065,15 +1524,21 @@ export default function Home() {
 
             <h1 className="hero-title">
               <span className="hero-line">
-                <span className="hero-line-inner">SALMAN</span>
+                <span className="hero-line-inner">
+                  SALMAN
+                </span>
               </span>
 
               <span className="hero-line hero-outline-line">
-                <span className="hero-line-inner">JAHAN</span>
+                <span className="hero-line-inner">
+                  JAHAN
+                </span>
               </span>
 
               <span className="hero-line">
-                <span className="hero-line-inner accent-text">RAFI.</span>
+                <span className="hero-line-inner accent-text">
+                  RAFI.
+                </span>
               </span>
             </h1>
 
@@ -1133,17 +1598,23 @@ export default function Home() {
             </span>
           </div>
 
-          <a href="#about" className="scroll-cue">
+          <a
+            href="#about"
+            className="scroll-cue"
+          >
             <span className="scroll-cue-line" />
             SCROLL TO EXPLORE
           </a>
         </section>
 
-        {/* ==================================================
-           ABOUT — MONOCHROME CHAIR PORTRAIT
-        ================================================== */}
+        {/* ============================================
+            ABOUT — MONOCHROME PORTRAIT
+        ============================================ */}
 
-        <section className="intro-section section-pad" id="about">
+        <section
+          className="intro-section section-pad"
+          id="about"
+        >
           <div className="section-label reveal">
             <span>01 / THE PERSON</span>
             <span>ABOUT & APPROACH</span>
@@ -1155,37 +1626,52 @@ export default function Home() {
               <br />
               nature.
               <br />
-              <span className="muted-text">Technical</span>
+              <span className="muted-text">
+                Technical
+              </span>
               <br />
               by practice.
             </h2>
 
             <div className="intro-copy reveal">
-              <span className="big-asterisk" aria-hidden="true">
+              <span
+                className="big-asterisk"
+                aria-hidden="true"
+              >
                 ✳
               </span>
 
               <p>
-                I am an Information and Communication Engineering
-                graduate working across applied AI, data analytics,
-                and software quality assurance.
+                I am an Information and Communication
+                Engineering graduate working across
+                applied AI, data analytics, and software
+                quality assurance.
               </p>
 
               <p className="small-copy">
-                My experience spans AI data annotation, software
-                testing, and web development. I enjoy turning
-                technical problems into practical solutions and
-                building reliable, data-informed experiences.
+                My experience spans AI data annotation,
+                software testing, and web development.
+                I enjoy turning technical problems into
+                practical solutions and building reliable,
+                data-informed experiences.
               </p>
 
-              <a className="text-link" href="#experience">
-                EXPLORE MY EXPERIENCE <span>↘</span>
+              <a
+                className="text-link"
+                href="#experience"
+              >
+                EXPLORE MY EXPERIENCE
+                <span>↘</span>
               </a>
 
               <figure className="about-portrait-figure reveal">
                 <div className="about-portrait-topline">
-                  <span>FIG. 002 / THE HUMAN SIDE</span>
-                  <span>MONOCHROME STUDY</span>
+                  <span>
+                    FIG. 002 / THE HUMAN SIDE
+                  </span>
+                  <span>
+                    MONOCHROME STUDY
+                  </span>
                 </div>
 
                 <div className="about-portrait-media">
@@ -1212,7 +1698,10 @@ export default function Home() {
                 className="discipline-row reveal"
                 key={item.number}
               >
-                <span className="row-number">{item.number}</span>
+                <span className="row-number">
+                  {item.number}
+                </span>
+
                 <h3>{item.title}</h3>
 
                 <span className="discipline-detail">
@@ -1227,17 +1716,22 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ==================================================
-           PROFESSIONAL EXPERIENCE
-        ================================================== */}
+        {/* ============================================
+            PROFESSIONAL EXPERIENCE
+        ============================================ */}
 
         <section
           className="experience-section section-pad"
           id="experience"
         >
           <div className="section-label reveal">
-            <span>02 / PROFESSIONAL EXPERIENCE</span>
-            <span>THE JOURNEY SO FAR</span>
+            <span>
+              02 / PROFESSIONAL EXPERIENCE
+            </span>
+
+            <span>
+              THE JOURNEY SO FAR
+            </span>
           </div>
 
           <div className="experience-heading-row reveal">
@@ -1302,9 +1796,13 @@ export default function Home() {
                   </h3>
 
                   <ul className="experience-responsibilities">
-                    {experience.bullets.map((bullet) => (
-                      <li key={bullet}>{bullet}</li>
-                    ))}
+                    {experience.bullets.map(
+                      (bullet) => (
+                        <li key={bullet}>
+                          {bullet}
+                        </li>
+                      )
+                    )}
                   </ul>
                 </div>
 
@@ -1319,7 +1817,9 @@ export default function Home() {
           </div>
 
           <div className="experience-footer reveal">
-            <span>BUILT THROUGH PRACTICE.</span>
+            <span>
+              BUILT THROUGH PRACTICE.
+            </span>
 
             <a
               href="#education"
@@ -1331,9 +1831,9 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ==================================================
-           EDUCATION
-        ================================================== */}
+        {/* ============================================
+            EDUCATION
+        ============================================ */}
 
         <section
           className="education-section section-pad"
@@ -1360,9 +1860,10 @@ export default function Home() {
             </div>
 
             <p className="education-heading-note">
-              An engineering education, supported by a strong
-              science background and a continued interest in
-              technology, data, and software quality.
+              An engineering education, supported by a
+              strong science background and a continued
+              interest in technology, data, and software
+              quality.
             </p>
           </div>
 
@@ -1438,17 +1939,22 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ==================================================
-           TECHNICAL SKILLS — SKILL ATLAS
-        ================================================== */}
+        {/* ============================================
+            TECHNICAL SKILLS — SKILL ATLAS
+        ============================================ */}
 
         <section
           className="skills-section section-pad"
           id="skills"
         >
           <div className="section-label reveal">
-            <span>04 / TECHNICAL SKILLS</span>
-            <span>THE SKILL ATLAS</span>
+            <span>
+              04 / TECHNICAL SKILLS
+            </span>
+
+            <span>
+              THE SKILL ATLAS
+            </span>
           </div>
 
           <div className="skills-heading-row reveal">
@@ -1460,14 +1966,17 @@ export default function Home() {
               <h2 className="section-heading">
                 Different tools.
                 <br />
-                <span>One way of thinking.</span>
+                <span>
+                  One way of thinking.
+                </span>
               </h2>
             </div>
 
             <p className="skills-heading-note">
-              I work where intelligence, information, quality
-              and engineering meet. Select a discipline to
-              explore the technologies I use.
+              I work where intelligence, information,
+              quality and engineering meet. Select a
+              discipline to explore the technologies
+              I use.
             </p>
           </div>
 
@@ -1477,40 +1986,54 @@ export default function Home() {
               aria-label="Explore skill disciplines"
             >
               <div className="skills-index-header">
-                <span>DISCIPLINE INDEX</span>
-                <span>SELECT / EXPLORE</span>
+                <span>
+                  DISCIPLINE INDEX
+                </span>
+
+                <span>
+                  SELECT / EXPLORE
+                </span>
               </div>
 
-              {skillGroups.map((group, index) => (
-                <button
-                  key={group.id}
-                  type="button"
-                  className={`skills-index-button ${
-                    activeSkill === index ? "is-active" : ""
-                  }`}
-                  onClick={() => setActiveSkill(index)}
-                  aria-pressed={activeSkill === index}
-                  aria-controls="skills-atlas-panel"
-                >
-                  <span className="skills-index-number">
-                    {group.number}
-                  </span>
-
-                  <span className="skills-index-name">
-                    {group.title}
-                  </span>
-
-                  <span
-                    className="skills-index-arrow"
-                    aria-hidden="true"
+              {skillGroups.map(
+                (group, index) => (
+                  <button
+                    key={group.id}
+                    type="button"
+                    className={`skills-index-button ${
+                      activeSkill === index
+                        ? "is-active"
+                        : ""
+                    }`}
+                    onClick={() =>
+                      setActiveSkill(index)
+                    }
+                    aria-pressed={
+                      activeSkill === index
+                    }
+                    aria-controls="skills-atlas-panel"
                   >
-                    ↗
-                  </span>
-                </button>
-              ))}
+                    <span className="skills-index-number">
+                      {group.number}
+                    </span>
+
+                    <span className="skills-index-name">
+                      {group.title}
+                    </span>
+
+                    <span
+                      className="skills-index-arrow"
+                      aria-hidden="true"
+                    >
+                      ↗
+                    </span>
+                  </button>
+                )
+              )}
 
               <p className="skills-index-note">
-                NO PERCENTAGES. JUST THE TOOLS BEHIND THE WORK.
+                NO PERCENTAGES. JUST THE TOOLS
+                BEHIND THE WORK.
               </p>
             </div>
 
@@ -1521,18 +2044,34 @@ export default function Home() {
             >
               <div className="skills-display-topline">
                 <span>
-                  SELECTED DISCIPLINE / {activeSkillGroup.number}
+                  SELECTED DISCIPLINE /{" "}
+                  {activeSkillGroup.number}
                 </span>
-                <span>SR® TOOLKIT</span>
+
+                <span>
+                  SR® TOOLKIT
+                </span>
               </div>
 
-              <AnimatePresence mode="wait" initial={false}>
+              <AnimatePresence
+                mode="wait"
+                initial={false}
+              >
                 <motion.div
                   key={activeSkillGroup.id}
                   className="skills-display-content"
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
+                  initial={{
+                    opacity: 0,
+                    y: 16,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    y: -12,
+                  }}
                   transition={{
                     duration: 0.22,
                     ease: "easeOut",
@@ -1547,10 +2086,13 @@ export default function Home() {
                     </span>
 
                     <p className="skills-display-kicker">
-                      {activeSkillGroup.short} / WORKING KNOWLEDGE
+                      {activeSkillGroup.short}
+                      {" / WORKING KNOWLEDGE"}
                     </p>
 
-                    <h3>{activeSkillGroup.slogan}</h3>
+                    <h3>
+                      {activeSkillGroup.slogan}
+                    </h3>
 
                     <p className="skills-display-description">
                       {activeSkillGroup.description}
@@ -1565,19 +2107,26 @@ export default function Home() {
                           key={cluster.name}
                         >
                           <div className="skills-cluster-label">
-                            <span>0{index + 1}</span>
-                            <span>{cluster.name}</span>
+                            <span>
+                              0{index + 1}
+                            </span>
+
+                            <span>
+                              {cluster.name}
+                            </span>
                           </div>
 
                           <div className="skills-tag-list">
-                            {cluster.tags.map((tag) => (
-                              <span
-                                className="skills-tag"
-                                key={tag}
-                              >
-                                {tag}
-                              </span>
-                            ))}
+                            {cluster.tags.map(
+                              (tag) => (
+                                <span
+                                  className="skills-tag"
+                                  key={tag}
+                                >
+                                  {tag}
+                                </span>
+                              )
+                            )}
                           </div>
                         </div>
                       )
@@ -1587,7 +2136,10 @@ export default function Home() {
               </AnimatePresence>
 
               <div className="skills-display-footer">
-                <span>LEARN / APPLY / IMPROVE</span>
+                <span>
+                  LEARN / APPLY / IMPROVE
+                </span>
+
                 <span>∞</span>
               </div>
             </div>
@@ -1595,27 +2147,35 @@ export default function Home() {
 
           <div className="skills-footer reveal">
             <p>
-              ONE CONNECTED PRACTICE. MULTIPLE WAYS TO BUILD.
+              ONE CONNECTED PRACTICE. MULTIPLE WAYS
+              TO BUILD.
             </p>
 
             <a href="#work">
               SEE THESE SKILLS IN ACTION{" "}
-              <span aria-hidden="true">↘</span>
+              <span aria-hidden="true">
+                ↘
+              </span>
             </a>
           </div>
         </section>
 
-        {/* ==================================================
-           PROJECTS
-        ================================================== */}
+        {/* ============================================
+            PROJECTS
+        ============================================ */}
 
         <section
           className="work-section section-pad"
           id="work"
         >
           <div className="section-label reveal">
-            <span>05 / SELECTED WORK</span>
-            <span>PROJECT STORIES</span>
+            <span>
+              05 / SELECTED WORK
+            </span>
+
+            <span>
+              PROJECT STORIES
+            </span>
           </div>
 
           <div className="work-heading-row reveal">
@@ -1630,7 +2190,8 @@ export default function Home() {
             <p className="work-heading-note">
               A selection of AI, analytics, and QA work.
               <br />
-              Explore the repositories for implementation details.
+              Explore the repositories for implementation
+              details.
             </p>
           </div>
 
@@ -1659,8 +2220,13 @@ export default function Home() {
                     {project.category}
                   </span>
 
-                  <h3>{project.title}</h3>
-                  <p>{project.detail}</p>
+                  <h3>
+                    {project.title}
+                  </h3>
+
+                  <p>
+                    {project.detail}
+                  </p>
 
                   <p className="project-stack">
                     {project.stack}
@@ -1673,7 +2239,8 @@ export default function Home() {
                     rel="noopener noreferrer"
                     aria-label={`View ${project.title} repository on GitHub`}
                   >
-                    VIEW PROJECT <span>↗</span>
+                    VIEW PROJECT
+                    <span>↗</span>
                   </a>
                 </div>
 
@@ -1691,17 +2258,22 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ==================================================
-           CERTIFICATES
-        ================================================== */}
+        {/* ============================================
+            CERTIFICATES
+        ============================================ */}
 
         <section
           className="certificate-section section-pad"
           id="certificates"
         >
           <div className="section-label reveal">
-            <span>06 / CONTINUOUS LEARNING</span>
-            <span>PROFESSIONAL CREDENTIALS</span>
+            <span>
+              06 / CONTINUOUS LEARNING
+            </span>
+
+            <span>
+              PROFESSIONAL CREDENTIALS
+            </span>
           </div>
 
           <div className="certificate-heading-row reveal">
@@ -1717,7 +2289,8 @@ export default function Home() {
               <p className="work-heading-note">
                 Learning through practice.
                 <br />
-                Building knowledge across AI, data, and quality.
+                Building knowledge across AI, data,
+                and quality.
               </p>
 
               <a
@@ -1728,82 +2301,105 @@ export default function Home() {
                 aria-label="Explore Salman Rafi's GitHub profile"
               >
                 EXPLORE GITHUB
-                <span aria-hidden="true">↗</span>
+                <span aria-hidden="true">
+                  ↗
+                </span>
               </a>
             </div>
           </div>
 
           <div className="certificate-list">
-            {certificates.map((certificate) => (
-              <article
-                className="certificate-row reveal"
-                key={certificate.number}
-              >
-                <span className="certificate-number">
-                  {certificate.number}
-                </span>
+            {certificates.map(
+              (certificate) => (
+                <article
+                  className="certificate-row reveal"
+                  key={certificate.number}
+                >
+                  <span className="certificate-number">
+                    {certificate.number}
+                  </span>
 
-                <div className="certificate-main">
-                  <h3>{certificate.title}</h3>
+                  <div className="certificate-main">
+                    <h3>
+                      {certificate.title}
+                    </h3>
 
-                  <p className="certificate-issuer">
-                    {certificate.issuer}
-                  </p>
-                </div>
+                    <p className="certificate-issuer">
+                      {certificate.issuer}
+                    </p>
+                  </div>
 
-                <div className="certificate-meta">
-                  <time>{certificate.date}</time>
-                </div>
+                  <div className="certificate-meta">
+                    <time>
+                      {certificate.date}
+                    </time>
+                  </div>
 
-                <div className="certificate-actions">
-                  <a
-                    className="certificate-action certificate-action-primary"
-                    href={certificate.file}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`View ${certificate.title} certificate`}
-                  >
-                    VIEW CERTIFICATE
-                    <span aria-hidden="true">↗</span>
-                  </a>
+                  <div className="certificate-actions">
+                    <a
+                      className="certificate-action certificate-action-primary"
+                      href={certificate.file}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`View ${certificate.title} certificate`}
+                    >
+                      VIEW CERTIFICATE
+                      <span aria-hidden="true">
+                        ↗
+                      </span>
+                    </a>
 
-                  <a
-                    className="certificate-action"
-                    href={certificate.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={
-                      certificate.githubUrl === GITHUB_PROFILE
-                        ? "Open Salman Rafi's GitHub profile"
-                        : `Open ${certificate.title} repository on GitHub`
-                    }
-                  >
-                    {certificate.githubUrl === GITHUB_PROFILE
-                      ? "GITHUB PROFILE"
-                      : "GITHUB REPOSITORY"}
+                    <a
+                      className="certificate-action"
+                      href={certificate.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={
+                        certificate.githubUrl ===
+                        GITHUB_PROFILE
+                          ? "Open Salman Rafi's GitHub profile"
+                          : `Open ${certificate.title} repository on GitHub`
+                      }
+                    >
+                      {certificate.githubUrl ===
+                      GITHUB_PROFILE
+                        ? "GITHUB PROFILE"
+                        : "GITHUB REPOSITORY"}
 
-                    <span aria-hidden="true">↗</span>
-                  </a>
-                </div>
-              </article>
-            ))}
+                      <span aria-hidden="true">
+                        ↗
+                      </span>
+                    </a>
+                  </div>
+                </article>
+              )
+            )}
           </div>
 
           <p className="certificate-note">
             Original certificates open separately.
-            Related repositories are linked where available.
+            Related repositories are linked where
+            available.
           </p>
         </section>
 
-        {/* ==================================================
-           CONTACT
-        ================================================== */}
+        {/* ============================================
+            CONTACT
+        ============================================ */}
 
-        <section className="contact-section" id="contact">
+        <section
+          className="contact-section"
+          id="contact"
+        >
           <div className="contact-inner section-pad">
             <div className="section-label reveal">
-              <span>07 / THE NEXT CHAPTER</span>
-              <span>OPEN TO CONVERSATION</span>
+              <span>
+                07 / THE NEXT CHAPTER
+              </span>
+
+              <span>
+                OPEN TO CONVERSATION
+              </span>
             </div>
 
             <div className="contact-title-wrap reveal">
@@ -1816,7 +2412,9 @@ export default function Home() {
                 <br />
                 MAKE
                 <br />
-                <span>IT MATTER.</span>
+                <span>
+                  IT MATTER.
+                </span>
               </h2>
             </div>
 
@@ -1832,10 +2430,12 @@ export default function Home() {
                   className="string-path"
                   d="M90 240 C180 160 270 270 385 190 S560 90 740 145"
                 />
+
                 <path
                   className="string-path"
                   d="M110 250 C215 200 285 280 400 205 S570 120 745 158"
                 />
+
                 <path
                   className="string-path"
                   d="M125 260 C225 225 300 280 415 220 S585 145 750 170"
@@ -1855,10 +2455,18 @@ export default function Home() {
                 ref={collaborateButtonRef}
                 type="button"
                 className="collaborate-button"
-                onPointerEnter={handleCollaborateEnter}
-                onPointerMove={handleCollaborateMove}
-                onPointerLeave={handleCollaborateLeave}
-                onPointerCancel={handleCollaborateLeave}
+                onPointerEnter={
+                  handleCollaborateEnter
+                }
+                onPointerMove={
+                  handleCollaborateMove
+                }
+                onPointerLeave={
+                  handleCollaborateLeave
+                }
+                onPointerCancel={
+                  handleCollaborateLeave
+                }
                 onClick={openContact}
                 aria-haspopup="dialog"
                 aria-expanded={contactOpen}
@@ -1877,7 +2485,9 @@ export default function Home() {
             </div>
 
             <div className="contact-bottom">
-              <span>AI / DATA / QUALITY</span>
+              <span>
+                AI / DATA / QUALITY
+              </span>
 
               <a href="#home">
                 BACK TO TOP ↑
@@ -1891,14 +2501,23 @@ export default function Home() {
         </section>
       </main>
 
-      {/* FOOTER */}
+      {/* ============================================
+          FOOTER
+      ============================================ */}
 
       <footer className="site-footer">
-        <span>SR® — SALMAN JAHAN RAFI</span>
-        <span>INDEPENDENT PORTFOLIO · 2026</span>
+        <span>
+          SR® — SALMAN JAHAN RAFI
+        </span>
+
+        <span>
+          INDEPENDENT PORTFOLIO · 2026
+        </span>
       </footer>
 
-      {/* FLASHLIGHT */}
+      {/* ============================================
+          FLASHLIGHT
+      ============================================ */}
 
       <div
         ref={torchRef}
@@ -1916,16 +2535,26 @@ export default function Home() {
         aria-hidden="true"
       />
 
-      {/* CONTACT DIALOG */}
+      {/* ============================================
+          CONTACT DIALOG
+      ============================================ */}
 
       <AnimatePresence>
         {contactOpen && (
           <motion.div
             className="contact-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            exit={{
+              opacity: 0,
+            }}
+            transition={{
+              duration: 0.25,
+            }}
             onClick={closeContact}
           >
             <motion.div
@@ -1954,10 +2583,14 @@ export default function Home() {
                 damping: 25,
                 stiffness: 240,
               }}
-              onClick={(event) => event.stopPropagation()}
+              onClick={(event) =>
+                event.stopPropagation()
+              }
             >
               <div className="dialog-topline">
-                <span>START A CONVERSATION</span>
+                <span>
+                  START A CONVERSATION
+                </span>
 
                 <button
                   ref={closeButtonRef}
@@ -1975,13 +2608,15 @@ export default function Home() {
                 <br />
                 STARTS WITH
                 <br />
-                <span>A CONVERSATION.</span>
+                <span>
+                  A CONVERSATION.
+                </span>
               </h2>
 
               <p>
-                Interested in AI, data analytics, or quality
-                engineering? Have a project or problem in mind?
-                Let&apos;s connect.
+                Interested in AI, data analytics, or
+                quality engineering? Have a project
+                or problem in mind? Let&apos;s connect.
               </p>
 
               <div className="contact-link-list">
@@ -2007,7 +2642,9 @@ export default function Home() {
                       {item.value}
                     </span>
 
-                    <span aria-hidden="true">↗</span>
+                    <span aria-hidden="true">
+                      ↗
+                    </span>
                   </a>
                 ))}
               </div>
@@ -2018,7 +2655,10 @@ export default function Home() {
                 onClick={closeContact}
               >
                 BACK TO THE PORTFOLIO
-                <span aria-hidden="true">↗</span>
+
+                <span aria-hidden="true">
+                  ↗
+                </span>
               </button>
             </motion.div>
           </motion.div>

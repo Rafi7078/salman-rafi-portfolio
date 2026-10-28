@@ -14,6 +14,7 @@ import type {
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import "./cinematic-intro.css";
+import "./phase-7a-responsive.css";
 
 gsap.registerPlugin(useGSAP);
 
@@ -22,7 +23,6 @@ gsap.registerPlugin(useGSAP);
 ================================================ */
 
 const HOVER_RELEASE_DISTANCE = 95;
-
 const ROPE_DRAG_RELEASE_DISTANCE = 60;
 
 const burstWords = [
@@ -118,10 +118,8 @@ function CinematicIntro({
   });
 
   const [isReady, setIsReady] = useState(false);
-  const [isHovering, setIsHovering] =
-    useState(false);
-  const [isDragging, setIsDragging] =
-    useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   /* ================================================
      SHARED HELPERS
@@ -169,10 +167,6 @@ function CinematicIntro({
 
   /* ================================================
      DYNAMIC ROPE SHAPES
-
-     The rope endpoints move with the button.
-     Visible ropes and invisible drag zones
-     always use the same path geometry.
   ================================================ */
 
   const drawRopes = useCallback(
@@ -182,8 +176,7 @@ function CinematicIntro({
 
       if (!root || !stage) return;
 
-      const stageRect =
-        stage.getBoundingClientRect();
+      const stageRect = stage.getBoundingClientRect();
 
       const scaleX =
         1200 / Math.max(stageRect.width, 1);
@@ -240,9 +233,6 @@ function CinematicIntro({
 
   /* ================================================
      MAGNETIC MOTION
-
-     One animation source controls the button,
-     hand and strings together.
   ================================================ */
 
   const paintPull = useCallback(() => {
@@ -317,8 +307,7 @@ function CinematicIntro({
   /* ================================================
      RELEASE + WORD BURST
 
-     Called ONLY by click, drag, hover-pull
-     or Skip Intro. Never by page load.
+     Runs only after user interaction.
   ================================================ */
 
   const triggerRelease = useCallback(() => {
@@ -377,7 +366,7 @@ function CinematicIntro({
 
     releaseTimelineRef.current = timeline;
 
-    /* A SMALL PRE-PULL FOR DIRECT CLICKS */
+    /* SMALL PRE-PULL FOR DIRECT CLICKS */
 
     if (currentPullX < 25) {
       timeline
@@ -445,9 +434,11 @@ function CinematicIntro({
         y: 0,
         duration: 0.55,
         ease: "power3.out",
+
         onUpdate: () => {
           drawRopes(recoil.x, recoil.y);
         },
+
         onComplete: () => {
           motionRef.current.x = 0;
           motionRef.current.y = 0;
@@ -525,7 +516,13 @@ function CinematicIntro({
         },
         "<"
       )
+
+      /* Reveal the fresh portfolio mount */
+
       .call(revealPortfolio)
+
+      /* Move intro out of the viewport */
+
       .to(
         root,
         {
@@ -545,9 +542,6 @@ function CinematicIntro({
 
   /* ================================================
      MAGNETIC HOVER START
-
-     Just entering causes a subtle pull.
-     It does NOT immediately open the page.
   ================================================ */
 
   const handleHoverEnter = useCallback(
@@ -569,8 +563,6 @@ function CinematicIntro({
       };
 
       setIsHovering(true);
-
-      /* Small automatic magnetic attraction */
 
       movePull(12, 0, 0.32);
       highlightRopes(true);
@@ -635,10 +627,6 @@ function CinematicIntro({
 
   /* ================================================
      POINTER MOVE
-
-     A. Dragging: move with the cursor.
-     B. Hover armed: follow the cursor right.
-        A deliberate 95px pull triggers release.
   ================================================ */
 
   const handlePointerMove = useCallback(
@@ -673,7 +661,6 @@ function CinematicIntro({
         motionRef.current.y = dy;
 
         paintPull();
-
         return;
       }
 
@@ -695,11 +682,6 @@ function CinematicIntro({
       const movementY =
         event.clientY - hover.startY;
 
-      /*
-        Return to idle when the pointer
-        moves left or too far vertically.
-      */
-
       if (
         movementX < -35 ||
         Math.abs(movementY) > 120
@@ -720,24 +702,11 @@ function CinematicIntro({
         movementY
       );
 
-      /*
-        Magnetic attraction follows the
-        cursor, moving button + hand + rope.
-      */
-
       movePull(
         12 + dx,
         dy,
         0.18
       );
-
-      /*
-        The cursor itself can PULL the button
-        without pressing any mouse button.
-
-        Just hovering is not enough.
-        Move intentionally to the right.
-      */
 
       if (movementX >= HOVER_RELEASE_DISTANCE) {
         triggerRelease();
@@ -754,10 +723,6 @@ function CinematicIntro({
 
   /* ================================================
      POINTER UP
-
-     Button tap = enter.
-     Enough rope drag = enter.
-     Small rope drag = reset.
   ================================================ */
 
   const handlePointerUp = useCallback(
@@ -815,7 +780,6 @@ function CinematicIntro({
       }
 
       dragRef.current = null;
-
       resetPull();
     },
     [resetPull]
@@ -836,8 +800,6 @@ function CinematicIntro({
 
   /* ================================================
      SKIP INTRO
-
-     This is a separate manual action.
   ================================================ */
 
   const skipIntro = useCallback(() => {
@@ -902,11 +864,9 @@ function CinematicIntro({
   }, []);
 
   /* ================================================
-     AUTOMATIC ENTRANCE — ONLY THIS PART AUTO
+     AUTOMATIC ENTRANCE ONLY
 
-     After this timeline finishes:
-     phase becomes "ready"
-     and waits indefinitely for interaction.
+     Once complete, wait for user interaction.
   ================================================ */
 
   useGSAP(
@@ -942,7 +902,7 @@ function CinematicIntro({
 
       phaseRef.current = "entering";
 
-      /* FIRST PAINT PROTECTION */
+      /* FIRST-PAINT PROTECTION */
 
       gsap.set(top, {
         autoAlpha: 0,
@@ -993,7 +953,7 @@ function CinematicIntro({
         });
       });
 
-      /* ACCESSIBILITY: NO ANIMATION */
+      /* REDUCED MOTION */
 
       if (isReducedMotion()) {
         gsap.set(
@@ -1048,7 +1008,6 @@ function CinematicIntro({
           y: 0,
           duration: 0.42,
         })
-
         .to(
           headline,
           {
@@ -1058,7 +1017,6 @@ function CinematicIntro({
           },
           "-=0.16"
         )
-
         .to(
           eyebrow,
           {
@@ -1068,7 +1026,6 @@ function CinematicIntro({
           },
           "-=0.43"
         )
-
         .to(
           hand,
           {
@@ -1078,7 +1035,6 @@ function CinematicIntro({
           },
           "-=0.42"
         )
-
         .to(
           pill,
           {
@@ -1089,7 +1045,6 @@ function CinematicIntro({
           },
           "-=0.53"
         )
-
         .to(
           ropes,
           {
@@ -1103,7 +1058,7 @@ function CinematicIntro({
 
       entrance.play(0);
 
-      /* NO AUTO-RELEASE HERE */
+      /* NO AUTO-RELEASE */
 
       return () => {
         entranceTimelineRef.current = null;
@@ -1115,7 +1070,7 @@ function CinematicIntro({
   );
 
   /* ================================================
-     JSX
+     INTRO JSX
   ================================================ */
 
   return (
@@ -1125,7 +1080,7 @@ function CinematicIntro({
       aria-label="Interactive portfolio introduction"
     >
       <div className="sr-intro__page">
-        {/* TOPBAR */}
+        {/* TOP BAR */}
 
         <div className="sr-intro__top">
           <span className="sr-intro__brand">
@@ -1241,7 +1196,7 @@ function CinematicIntro({
                 />
 
                 <path
-                  d="M174 135c28-17 49-40 75-52 11-5 20-4 31-2l96 21c13 3 16 16 9 23-5 5-12 5-18 4l-81-12 85 32c13 5 14 18 4 24-5 3-11 3-16 1l-85-24 73 42c11 7 10 19-2 23-6 2-12 0-16-3l-82-40 46 42c9 8 7 21-4 24-6 1-11-1-16-5l-82-70c-8-6-15-8-21-5-10 5-7 17-2 29l20 34c7 13-7 22-17 14-16-12-39-41-48-57-13-23-9-48 31-73Z"
+                  d="M174 135c28-17 49-40 75-52 11-5 20-4 31-2l96 21c13 3 16 16 9 23-5 5-12 5-18 4l-81-12 85 32c13 5 14 18 4 24-5 3-11 3-16 1l-85-24 73 42c11 7 10 19-2 23-6 2-12 0-16 1l-82-40 46 42c9 8 7 21-4 24-6 1-11-1-16-5l-82-70c-8-6-15-8-21-5-10 5-7 17-2 29l20 34c7 13-7 22-17 14-16-12-39-41-48-57-13-23-9-48 31-73Z"
                   fill="#eeece5"
                   stroke="#191917"
                   strokeWidth="2.4"
@@ -1311,8 +1266,7 @@ function CinematicIntro({
                 </span>
 
                 <span className="sr-intro__pill-subtitle">
-                  LET&apos;S BUILD SOMETHING
-                  MEANINGFUL
+                  LET&apos;S BUILD SOMETHING MEANINGFUL
                 </span>
 
                 <span
@@ -1382,10 +1336,14 @@ function CinematicIntro({
 }
 
 /* ================================================
-   NEXT.JS TEMPLATE
+   NEXT.JS TEMPLATE — INSTANT NAVIGATION FIX
 
-   ORIGINAL PORTFOLIO ONLY MOUNTS
-   AFTER AN INTENTIONAL USER ACTION.
+   Always render the page segment for Next.js.
+
+   Hide it during the intro.
+
+   On reveal, use a new key so the actual
+   portfolio and its GSAP animations remount.
 ================================================ */
 
 export default function Template({
@@ -1393,15 +1351,11 @@ export default function Template({
 }: {
   children: ReactNode;
 }) {
-  const [
-    portfolioVisible,
-    setPortfolioVisible,
-  ] = useState(false);
+  const [portfolioVisible, setPortfolioVisible] =
+    useState(false);
 
-  const [
-    introVisible,
-    setIntroVisible,
-  ] = useState(true);
+  const [introVisible, setIntroVisible] =
+    useState(true);
 
   const revealPortfolio = useCallback(() => {
     setPortfolioVisible(true);
@@ -1414,15 +1368,34 @@ export default function Template({
 
   return (
     <>
-      {portfolioVisible && (
-        <div
-          className="sr-intro__portfolio"
-          aria-hidden={introVisible}
-          inert={introVisible}
-        >
-          {children}
-        </div>
-      )}
+      {/* 
+        FIX:
+        The route's children must exist in the
+        initial React render.
+
+        Initially hidden, but not conditionally
+        omitted from the component tree.
+      */}
+
+      <div
+        key={
+          portfolioVisible
+            ? "portfolio-active"
+            : "portfolio-preload"
+        }
+        className="sr-intro__portfolio"
+        style={
+          portfolioVisible
+            ? undefined
+            : { display: "none" }
+        }
+        aria-hidden={introVisible}
+        inert={introVisible}
+      >
+        {children}
+      </div>
+
+      {/* Intro stays visible until interaction */}
 
       {introVisible && (
         <CinematicIntro
