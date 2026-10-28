@@ -1,6 +1,7 @@
 
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import { AnimatePresence, motion } from "motion/react";
@@ -12,9 +13,9 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const GITHUB_PROFILE = "https://github.com/Rafi7078";
 
-/* ========================================
-   ABOUT DISCIPLINES
-======================================== */
+/* ==================================================
+   ABOUT
+================================================== */
 
 const disciplines = [
   {
@@ -37,10 +38,9 @@ const disciplines = [
   },
 ];
 
-/* ========================================
+/* ==================================================
    PROFESSIONAL EXPERIENCE
-   Source: Salman_Rafi_D_S_CV2.pdf
-======================================== */
+================================================== */
 
 const experiences = [
   {
@@ -82,10 +82,9 @@ const experiences = [
   },
 ];
 
-/* ========================================
+/* ==================================================
    EDUCATION
-   Source: Salman_Rafi_D_S_CV2.pdf
-======================================== */
+================================================== */
 
 const education = [
   {
@@ -114,9 +113,169 @@ const education = [
   },
 ];
 
-/* ========================================
+/* ==================================================
+   TECHNICAL SKILLS — SKILL ATLAS
+================================================== */
+
+const skillGroups = [
+  {
+    number: "01",
+    id: "ai",
+    short: "AI / ML",
+    title: "Artificial Intelligence",
+    slogan: "Make intelligence useful.",
+    symbol: "AI",
+    description:
+      "Machine learning, retrieval, vector search and applied LLM workflows — from experiments to working intelligent applications.",
+    clusters: [
+      {
+        name: "MACHINE LEARNING",
+        tags: [
+          "Scikit-learn",
+          "SVM",
+          "K-Means",
+          "Logistic Regression",
+          "Linear Regression",
+          "XGBoost",
+          "CNN",
+          "NLP",
+        ],
+      },
+      {
+        name: "GENERATIVE AI & RETRIEVAL",
+        tags: [
+          "RAG",
+          "LLM Integration",
+          "Gemini API",
+          "Ollama",
+          "ChromaDB",
+          "pgvector",
+          "Prompt Engineering",
+        ],
+      },
+    ],
+  },
+  {
+    number: "02",
+    id: "data",
+    short: "DATA / BI",
+    title: "Data & Analytics",
+    slogan: "Turn complexity into clarity.",
+    symbol: "BI",
+    description:
+      "Cleaning, exploring and communicating data through analytical workflows, dashboards and decision-ready insights.",
+    clusters: [
+      {
+        name: "LANGUAGES & ANALYSIS",
+        tags: [
+          "Python",
+          "R",
+          "SQL",
+          "Pandas",
+          "NumPy",
+          "Exploratory Data Analysis",
+          "MySQL",
+        ],
+      },
+      {
+        name: "VISUALIZATION & REPORTING",
+        tags: [
+          "Power BI",
+          "Matplotlib",
+          "Seaborn",
+          "Microsoft Excel",
+          "PivotTables",
+          "KPI Dashboards",
+        ],
+      },
+    ],
+  },
+  {
+    number: "03",
+    id: "quality",
+    short: "QA / TEST",
+    title: "Quality Engineering",
+    slogan: "Build confidence into software.",
+    symbol: "QA",
+    description:
+      "An approach that connects thoughtful manual testing, repeatable automation and reliable API validation.",
+    clusters: [
+      {
+        name: "TESTING & QA PRACTICES",
+        tags: [
+          "Manual Testing",
+          "Functional Testing",
+          "UI Testing",
+          "Regression Testing",
+          "E2E Testing",
+          "Test Case Design",
+          "Requirement Analysis",
+          "Defect Reporting",
+          "Bug Tracking",
+        ],
+      },
+      {
+        name: "AUTOMATION & COLLABORATION",
+        tags: [
+          "Playwright",
+          "TypeScript",
+          "Cypress",
+          "Selenium",
+          "Postman",
+          "Newman",
+          "REST API Testing",
+          "API Authentication Testing",
+          "Jira",
+          "Trello",
+          "GitHub Actions",
+        ],
+      },
+    ],
+  },
+  {
+    number: "04",
+    id: "dev",
+    short: "BUILD / SHIP",
+    title: "Development & Tools",
+    slogan: "Connect the moving parts.",
+    symbol: "DEV",
+    description:
+      "Programming, APIs, web foundations and the tooling behind practical end-to-end delivery.",
+    clusters: [
+      {
+        name: "LANGUAGES & WEB",
+        tags: [
+          "TypeScript",
+          "JavaScript",
+          "Java",
+          "C",
+          "HTML",
+          "CSS",
+          "PHP",
+          "WordPress",
+        ],
+      },
+      {
+        name: "BACKEND & WORKFLOW",
+        tags: [
+          "FastAPI",
+          "REST APIs",
+          "SQLAlchemy",
+          "MySQL",
+          "Git",
+          "Google Colab",
+          "Jupyter Notebook",
+          "MS Word",
+          "PowerPoint",
+        ],
+      },
+    ],
+  },
+];
+
+/* ==================================================
    PROJECTS
-======================================== */
+================================================== */
 
 const projects = [
   {
@@ -163,8 +322,7 @@ const projects = [
     stack: "Python · Pandas · Matplotlib · Seaborn",
     accent: "project-yellow",
     symbol: "DATA",
-    href:
-      "https://github.com/Rafi7078/telecom-customer-churn-analysis",
+    href: "https://github.com/Rafi7078/telecom-customer-churn-analysis",
   },
   {
     number: "05",
@@ -172,12 +330,10 @@ const projects = [
     title: "Online Course Engagement",
     detail:
       "An analytics project studying learner engagement, participation duration, and course completion using data analysis and machine-learning tools.",
-    stack:
-      "Python · Pandas · NumPy · Scikit-learn · Visualization",
+    stack: "Python · Pandas · NumPy · Scikit-learn · Visualization",
     accent: "project-ivory",
     symbol: "EDA",
-    href:
-      "https://github.com/Rafi7078/Online-Course-Engagement-Analysis",
+    href: "https://github.com/Rafi7078/Online-Course-Engagement-Analysis",
   },
   {
     number: "06",
@@ -185,12 +341,10 @@ const projects = [
     title: "VerifyREST",
     detail:
       "A REST API automation framework covering authentication, CRUD workflows, response validation, data integrity, update and deletion behavior, and response-time checks.",
-    stack:
-      "Postman · JavaScript · Newman · npm · GitHub Actions",
+    stack: "Postman · JavaScript · Newman · npm · GitHub Actions",
     accent: "project-blue",
     symbol: "API",
-    href:
-      "https://github.com/Rafi7078/verifyrest-automation-framework",
+    href: "https://github.com/Rafi7078/verifyrest-automation-framework",
   },
   {
     number: "07",
@@ -201,8 +355,7 @@ const projects = [
     stack: "Playwright · TypeScript · Page Object Model",
     accent: "project-yellow",
     symbol: "QA",
-    href:
-      "https://github.com/Rafi7078/ecommerce-playwright-automation",
+    href: "https://github.com/Rafi7078/ecommerce-playwright-automation",
   },
   {
     number: "08",
@@ -213,14 +366,13 @@ const projects = [
     stack: "Cypress · JavaScript · End-to-End Testing",
     accent: "project-ivory",
     symbol: "{ }",
-    href:
-      "https://github.com/Rafi7078/End-to-End-Testing-with-Cypress",
+    href: "https://github.com/Rafi7078/End-to-End-Testing-with-Cypress",
   },
 ];
 
-/* ========================================
+/* ==================================================
    CERTIFICATES
-======================================== */
+================================================== */
 
 const certificates = [
   {
@@ -273,8 +425,7 @@ const certificates = [
     issuer: "Passport to Earning Bangladesh",
     date: "15 JUL 2026",
     file: "/certificates/excel-essentials-workplace-productivity.pdf",
-    githubUrl:
-      "https://github.com/Rafi7078/Excel-Productivity-Certificates",
+    githubUrl: "https://github.com/Rafi7078/Excel-Productivity-Certificates",
   },
 ];
 
@@ -296,15 +447,15 @@ const contactLinks = [
   },
 ];
 
-/* ========================================
-   INTERACTION HELPERS
-======================================== */
+/* ==================================================
+   HELPERS
+================================================== */
 
 function allowsMagneticMotion() {
   return (
     typeof window !== "undefined" &&
     window.matchMedia(
-      "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
+      "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)"
     ).matches
   );
 }
@@ -329,7 +480,6 @@ function HandIllustration() {
         <path d="M106 169 L114 193" />
         <path d="M133 160 L139 183" />
       </g>
-
       <g stroke="currentColor" strokeWidth="1" opacity=".35">
         <path d="M202 64 L265 27" />
         <path d="M215 80 L281 57" />
@@ -339,26 +489,28 @@ function HandIllustration() {
   );
 }
 
-/* ========================================
-   MAIN PORTFOLIO
-======================================== */
+/* ==================================================
+   HOME
+================================================== */
 
 export default function Home() {
   const rootRef = useRef<HTMLDivElement>(null);
-
   const torchRef = useRef<HTMLDivElement>(null);
   const torchGlowRef = useRef<HTMLDivElement>(null);
-
   const collaborateButtonRef = useRef<HTMLButtonElement>(null);
   const handMotionRef = useRef<HTMLDivElement>(null);
   const stringArtRef = useRef<SVGSVGElement>(null);
-
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
 
   const [torchOn, setTorchOn] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
+  const [activeSkill, setActiveSkill] = useState(0);
+
+  const activeSkillGroup = skillGroups[activeSkill];
+
+  /* CONTACT DIALOG ACTIONS */
 
   const openContact = useCallback(() => {
     previousFocusRef.current =
@@ -373,9 +525,7 @@ export default function Home() {
     setContactOpen(false);
   }, []);
 
-  /* ========================================
-     MAGNETIC COLLABORATE BUTTON
-  ======================================== */
+  /* MAGNETIC COLLABORATION BUTTON */
 
   const handleCollaborateEnter = useCallback(() => {
     if (!allowsMagneticMotion()) return;
@@ -405,7 +555,7 @@ export default function Home() {
         strokeWidth: 1.75,
         duration: 0.4,
         overwrite: "auto",
-      },
+      }
     );
   }, []);
 
@@ -419,11 +569,8 @@ export default function Home() {
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
 
-      const dx =
-        (event.clientX - centerX) / (rect.width / 2);
-
-      const dy =
-        (event.clientY - centerY) / (rect.height / 2);
+      const dx = (event.clientX - centerX) / (rect.width / 2);
+      const dy = (event.clientY - centerY) / (rect.height / 2);
 
       const x = gsap.utils.clamp(-12, 12, dx * 12);
       const y = gsap.utils.clamp(-7, 7, dy * 7);
@@ -455,7 +602,7 @@ export default function Home() {
         overwrite: "auto",
       });
     },
-    [],
+    []
   );
 
   const handleCollaborateLeave = useCallback(() => {
@@ -494,13 +641,11 @@ export default function Home() {
         strokeWidth: 1.3,
         duration: 0.5,
         overwrite: "auto",
-      },
+      }
     );
   }, []);
 
-  /* ========================================
-     GSAP CINEMATIC SCROLL ANIMATIONS
-  ======================================== */
+  /* GSAP ANIMATIONS */
 
   useGSAP(
     () => {
@@ -522,12 +667,8 @@ export default function Home() {
             })
             .from(
               ".hero-kicker",
-              {
-                y: 18,
-                autoAlpha: 0,
-                duration: 0.65,
-              },
-              "-=0.25",
+              { y: 18, autoAlpha: 0, duration: 0.65 },
+              "-=0.25"
             )
             .from(
               ".hero-line-inner",
@@ -539,16 +680,12 @@ export default function Home() {
                 stagger: 0.13,
                 ease: "power4.out",
               },
-              "-=0.35",
+              "-=0.35"
             )
             .from(
               ".hero-description",
-              {
-                y: 24,
-                autoAlpha: 0,
-                duration: 0.8,
-              },
-              "-=0.65",
+              { y: 24, autoAlpha: 0, duration: 0.8 },
+              "-=0.65"
             )
             .from(
               ".hero-meta span",
@@ -558,7 +695,7 @@ export default function Home() {
                 duration: 0.55,
                 stagger: 0.1,
               },
-              "-=0.42",
+              "-=0.42"
             )
             .from(
               ".portrait-frame",
@@ -568,7 +705,7 @@ export default function Home() {
                 autoAlpha: 0,
                 duration: 1.3,
               },
-              "-=1.35",
+              "-=1.35"
             )
             .from(
               ".hero-side-note, .hero-index, .scroll-cue",
@@ -578,19 +715,16 @@ export default function Home() {
                 duration: 0.7,
                 stagger: 0.12,
               },
-              "-=0.5",
+              "-=0.5"
             );
 
-          // Includes experience and education timeline rows.
           const reveals = gsap.utils.toArray<HTMLElement>(
             ".reveal:not(.project-row)",
-            rootRef.current ?? undefined,
+            rootRef.current ?? undefined
           );
 
           reveals.forEach((element) => {
-            const distance = element.classList.contains(
-              "section-label",
-            )
+            const distance = element.classList.contains("section-label")
               ? 20
               : 42;
 
@@ -611,21 +745,21 @@ export default function Home() {
                   start: "top 88%",
                   once: true,
                 },
-              },
+              }
             );
           });
 
           gsap.utils
             .toArray<HTMLElement>(
               ".project-row",
-              rootRef.current ?? undefined,
+              rootRef.current ?? undefined
             )
             .forEach((row) => {
               const art =
                 row.querySelector<HTMLElement>(".project-art");
 
               const copy = row.querySelectorAll<HTMLElement>(
-                ".project-category, .project-copy h3, .project-copy > p, .project-link",
+                ".project-category, .project-copy h3, .project-copy > p, .project-link"
               );
 
               const story = gsap.timeline({
@@ -646,16 +780,14 @@ export default function Home() {
               if (art) {
                 story.fromTo(
                   art,
-                  {
-                    clipPath: "inset(0 100% 0 0)",
-                  },
+                  { clipPath: "inset(0 100% 0 0)" },
                   {
                     clipPath: "inset(0 0% 0 0)",
                     duration: 1,
                     ease: "power3.inOut",
                     clearProps: "clipPath",
                   },
-                  "-=0.65",
+                  "-=0.65"
                 );
               }
 
@@ -668,13 +800,13 @@ export default function Home() {
                   stagger: 0.075,
                   ease: "power2.out",
                 },
-                "-=0.75",
+                "-=0.75"
               );
             });
 
           const strings = gsap.utils.toArray<SVGPathElement>(
             ".string-path",
-            rootRef.current ?? undefined,
+            rootRef.current ?? undefined
           );
 
           strings.forEach((path) => {
@@ -697,8 +829,10 @@ export default function Home() {
               once: true,
             },
           });
-        },
+        }
       );
+
+      /* Desktop portrait parallax */
 
       mm.add(
         "(min-width: 851px) and (prefers-reduced-motion: no-preference)",
@@ -713,29 +847,44 @@ export default function Home() {
               scrub: 1.1,
             },
           });
-        },
+
+          gsap.fromTo(
+            ".about-portrait-image",
+            {
+              yPercent: -4,
+              scale: 1.08,
+            },
+            {
+              yPercent: 4,
+              scale: 1.08,
+              ease: "none",
+              scrollTrigger: {
+                trigger: ".about-portrait-media",
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1,
+              },
+            }
+          );
+        }
       );
 
       return () => mm.revert();
     },
-    { scope: rootRef },
+    { scope: rootRef }
   );
 
-  /* ========================================
-     FLASHLIGHT 2.0
-  ======================================== */
+  /* FLASHLIGHT 2.0 */
 
   useEffect(() => {
     let targetX = window.innerWidth / 2;
     let targetY = window.innerHeight / 2;
-
     let currentX = targetX;
     let currentY = targetY;
-
     let frame = 0;
 
     const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
+      "(prefers-reduced-motion: reduce)"
     ).matches;
 
     const applyPosition = (x: number, y: number) => {
@@ -801,9 +950,7 @@ export default function Home() {
     };
   }, []);
 
-  /* ========================================
-     CONTACT DIALOG ACCESSIBILITY
-  ======================================== */
+  /* CONTACT DIALOG KEYBOARD SUPPORT */
 
   useEffect(() => {
     if (!contactOpen) return;
@@ -828,7 +975,7 @@ export default function Home() {
       if (!dialog) return;
 
       const focusable = dialog.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
       );
 
       if (focusable.length === 0) {
@@ -862,9 +1009,14 @@ export default function Home() {
     };
   }, [contactOpen]);
 
+  /* ==================================================
+     PAGE
+  ================================================== */
+
   return (
     <div ref={rootRef} className="site-shell">
       {/* NAVIGATION */}
+
       <header className="topbar">
         <a
           className="wordmark"
@@ -874,22 +1026,18 @@ export default function Home() {
           SR<span>®</span>
         </a>
 
-        <nav
-          className="desktop-nav"
-          aria-label="Main navigation"
-        >
+        <nav className="desktop-nav" aria-label="Main navigation">
           <a href="#about">ABOUT</a>
           <a href="#experience">EXPERIENCE</a>
           <a href="#education">EDUCATION</a>
+          <a href="#skills">SKILLS</a>
           <a href="#work">WORK</a>
           <a href="#certificates">CERTIFICATES</a>
         </nav>
 
         <button
           type="button"
-          className={`torch-toggle ${
-            torchOn ? "is-active" : ""
-          }`}
+          className={`torch-toggle ${torchOn ? "is-active" : ""}`}
           onClick={() => setTorchOn((value) => !value)}
           aria-pressed={torchOn}
           aria-label={
@@ -904,7 +1052,10 @@ export default function Home() {
       </header>
 
       <main>
-        {/* HERO */}
+        {/* ==================================================
+           HERO — REAL BLACK SUIT PORTRAIT
+        ================================================== */}
+
         <section className="hero section-pad" id="home">
           <div className="hero-copy">
             <p className="eyebrow hero-kicker">
@@ -914,21 +1065,15 @@ export default function Home() {
 
             <h1 className="hero-title">
               <span className="hero-line">
-                <span className="hero-line-inner">
-                  SALMAN
-                </span>
+                <span className="hero-line-inner">SALMAN</span>
               </span>
 
               <span className="hero-line hero-outline-line">
-                <span className="hero-line-inner">
-                  JAHAN
-                </span>
+                <span className="hero-line-inner">JAHAN</span>
               </span>
 
               <span className="hero-line">
-                <span className="hero-line-inner accent-text">
-                  RAFI.
-                </span>
+                <span className="hero-line-inner accent-text">RAFI.</span>
               </span>
             </h1>
 
@@ -952,12 +1097,20 @@ export default function Home() {
                 <span>THE BUILDER</span>
               </div>
 
-              <div
-                className="portrait-art"
-                aria-label="Personal monogram"
-              >
-                <div className="portrait-grid" />
-                <div className="portrait-monogram">SR</div>
+              <div className="portrait-art">
+                <Image
+                  src="/images/hero-portrait.png"
+                  alt="Salman Jahan Rafi wearing a black suit in a dark studio portrait"
+                  fill
+                  priority
+                  sizes="(max-width: 900px) 90vw, (max-width: 1300px) 38vw, 470px"
+                  className="portrait-image"
+                />
+
+                <div
+                  className="portrait-grid"
+                  aria-hidden="true"
+                />
 
                 <span className="portrait-caption">
                   SALMAN JAHAN RAFI
@@ -986,11 +1139,11 @@ export default function Home() {
           </a>
         </section>
 
-        {/* ABOUT */}
-        <section
-          className="intro-section section-pad"
-          id="about"
-        >
+        {/* ==================================================
+           ABOUT — MONOCHROME CHAIR PORTRAIT
+        ================================================== */}
+
+        <section className="intro-section section-pad" id="about">
           <div className="section-label reveal">
             <span>01 / THE PERSON</span>
             <span>ABOUT & APPROACH</span>
@@ -1008,30 +1161,48 @@ export default function Home() {
             </h2>
 
             <div className="intro-copy reveal">
-              <span
-                className="big-asterisk"
-                aria-hidden="true"
-              >
+              <span className="big-asterisk" aria-hidden="true">
                 ✳
               </span>
 
               <p>
-                I am an Information and Communication
-                Engineering graduate working across applied AI,
-                data analytics, and software quality assurance.
+                I am an Information and Communication Engineering
+                graduate working across applied AI, data analytics,
+                and software quality assurance.
               </p>
 
               <p className="small-copy">
-                My experience spans AI data annotation,
-                software testing, and web development.
-                I enjoy turning technical problems into
-                practical solutions and building reliable,
-                data-informed experiences.
+                My experience spans AI data annotation, software
+                testing, and web development. I enjoy turning
+                technical problems into practical solutions and
+                building reliable, data-informed experiences.
               </p>
 
               <a className="text-link" href="#experience">
                 EXPLORE MY EXPERIENCE <span>↘</span>
               </a>
+
+              <figure className="about-portrait-figure reveal">
+                <div className="about-portrait-topline">
+                  <span>FIG. 002 / THE HUMAN SIDE</span>
+                  <span>MONOCHROME STUDY</span>
+                </div>
+
+                <div className="about-portrait-media">
+                  <Image
+                    src="/images/about-portrait.png"
+                    alt="Salman Jahan Rafi seated in a monochrome studio portrait"
+                    fill
+                    sizes="(max-width: 900px) 90vw, 340px"
+                    className="about-portrait-image"
+                  />
+                </div>
+
+                <figcaption className="about-portrait-caption">
+                  <span>BEYOND THE CODE.</span>
+                  <span>ALWAYS CURIOUS ↗</span>
+                </figcaption>
+              </figure>
             </div>
           </div>
 
@@ -1041,10 +1212,7 @@ export default function Home() {
                 className="discipline-row reveal"
                 key={item.number}
               >
-                <span className="row-number">
-                  {item.number}
-                </span>
-
+                <span className="row-number">{item.number}</span>
                 <h3>{item.title}</h3>
 
                 <span className="discipline-detail">
@@ -1059,7 +1227,10 @@ export default function Home() {
           </div>
         </section>
 
-        {/* PROFESSIONAL EXPERIENCE */}
+        {/* ==================================================
+           PROFESSIONAL EXPERIENCE
+        ================================================== */}
+
         <section
           className="experience-section section-pad"
           id="experience"
@@ -1154,12 +1325,16 @@ export default function Home() {
               href="#education"
               className="experience-next-link"
             >
-              EXPLORE EDUCATION <span aria-hidden="true">↘</span>
+              EXPLORE EDUCATION
+              <span aria-hidden="true">↘</span>
             </a>
           </div>
         </section>
 
-        {/* EDUCATION */}
+        {/* ==================================================
+           EDUCATION
+        ================================================== */}
+
         <section
           className="education-section section-pad"
           id="education"
@@ -1249,25 +1424,197 @@ export default function Home() {
           </div>
 
           <div className="education-footer reveal">
-            <span>FOUNDATIONS FOR WHAT COMES NEXT.</span>
+            <span>
+              FOUNDATIONS FOR WHAT COMES NEXT.
+            </span>
 
             <a
-              href="#work"
+              href="#skills"
               className="education-next-link"
             >
-              EXPLORE PROJECTS
+              EXPLORE SKILLS
               <span aria-hidden="true">↘</span>
             </a>
           </div>
         </section>
 
-        {/* SELECTED WORK */}
+        {/* ==================================================
+           TECHNICAL SKILLS — SKILL ATLAS
+        ================================================== */}
+
+        <section
+          className="skills-section section-pad"
+          id="skills"
+        >
+          <div className="section-label reveal">
+            <span>04 / TECHNICAL SKILLS</span>
+            <span>THE SKILL ATLAS</span>
+          </div>
+
+          <div className="skills-heading-row reveal">
+            <div>
+              <p className="skills-eyebrow">
+                ONE CONNECTED TOOLKIT / FOUR DISCIPLINES
+              </p>
+
+              <h2 className="section-heading">
+                Different tools.
+                <br />
+                <span>One way of thinking.</span>
+              </h2>
+            </div>
+
+            <p className="skills-heading-note">
+              I work where intelligence, information, quality
+              and engineering meet. Select a discipline to
+              explore the technologies I use.
+            </p>
+          </div>
+
+          <div className="skills-atlas reveal">
+            <div
+              className="skills-index"
+              aria-label="Explore skill disciplines"
+            >
+              <div className="skills-index-header">
+                <span>DISCIPLINE INDEX</span>
+                <span>SELECT / EXPLORE</span>
+              </div>
+
+              {skillGroups.map((group, index) => (
+                <button
+                  key={group.id}
+                  type="button"
+                  className={`skills-index-button ${
+                    activeSkill === index ? "is-active" : ""
+                  }`}
+                  onClick={() => setActiveSkill(index)}
+                  aria-pressed={activeSkill === index}
+                  aria-controls="skills-atlas-panel"
+                >
+                  <span className="skills-index-number">
+                    {group.number}
+                  </span>
+
+                  <span className="skills-index-name">
+                    {group.title}
+                  </span>
+
+                  <span
+                    className="skills-index-arrow"
+                    aria-hidden="true"
+                  >
+                    ↗
+                  </span>
+                </button>
+              ))}
+
+              <p className="skills-index-note">
+                NO PERCENTAGES. JUST THE TOOLS BEHIND THE WORK.
+              </p>
+            </div>
+
+            <div
+              className="skills-display"
+              id="skills-atlas-panel"
+              aria-label="Selected technical skills"
+            >
+              <div className="skills-display-topline">
+                <span>
+                  SELECTED DISCIPLINE / {activeSkillGroup.number}
+                </span>
+                <span>SR® TOOLKIT</span>
+              </div>
+
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={activeSkillGroup.id}
+                  className="skills-display-content"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{
+                    duration: 0.22,
+                    ease: "easeOut",
+                  }}
+                >
+                  <div className="skills-display-intro">
+                    <span
+                      className="skills-display-symbol"
+                      aria-hidden="true"
+                    >
+                      {activeSkillGroup.symbol}
+                    </span>
+
+                    <p className="skills-display-kicker">
+                      {activeSkillGroup.short} / WORKING KNOWLEDGE
+                    </p>
+
+                    <h3>{activeSkillGroup.slogan}</h3>
+
+                    <p className="skills-display-description">
+                      {activeSkillGroup.description}
+                    </p>
+                  </div>
+
+                  <div className="skills-clusters">
+                    {activeSkillGroup.clusters.map(
+                      (cluster, index) => (
+                        <div
+                          className="skills-cluster"
+                          key={cluster.name}
+                        >
+                          <div className="skills-cluster-label">
+                            <span>0{index + 1}</span>
+                            <span>{cluster.name}</span>
+                          </div>
+
+                          <div className="skills-tag-list">
+                            {cluster.tags.map((tag) => (
+                              <span
+                                className="skills-tag"
+                                key={tag}
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )
+                    )}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              <div className="skills-display-footer">
+                <span>LEARN / APPLY / IMPROVE</span>
+                <span>∞</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="skills-footer reveal">
+            <p>
+              ONE CONNECTED PRACTICE. MULTIPLE WAYS TO BUILD.
+            </p>
+
+            <a href="#work">
+              SEE THESE SKILLS IN ACTION{" "}
+              <span aria-hidden="true">↘</span>
+            </a>
+          </div>
+        </section>
+
+        {/* ==================================================
+           PROJECTS
+        ================================================== */}
+
         <section
           className="work-section section-pad"
           id="work"
         >
           <div className="section-label reveal">
-            <span>04 / SELECTED WORK</span>
+            <span>05 / SELECTED WORK</span>
             <span>PROJECT STORIES</span>
           </div>
 
@@ -1313,7 +1660,6 @@ export default function Home() {
                   </span>
 
                   <h3>{project.title}</h3>
-
                   <p>{project.detail}</p>
 
                   <p className="project-stack">
@@ -1345,13 +1691,16 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CERTIFICATES */}
+        {/* ==================================================
+           CERTIFICATES
+        ================================================== */}
+
         <section
           className="certificate-section section-pad"
           id="certificates"
         >
           <div className="section-label reveal">
-            <span>05 / CONTINUOUS LEARNING</span>
+            <span>06 / CONTINUOUS LEARNING</span>
             <span>PROFESSIONAL CREDENTIALS</span>
           </div>
 
@@ -1432,6 +1781,7 @@ export default function Home() {
                     {certificate.githubUrl === GITHUB_PROFILE
                       ? "GITHUB PROFILE"
                       : "GITHUB REPOSITORY"}
+
                     <span aria-hidden="true">↗</span>
                   </a>
                 </div>
@@ -1445,11 +1795,14 @@ export default function Home() {
           </p>
         </section>
 
-        {/* CONTACT */}
+        {/* ==================================================
+           CONTACT
+        ================================================== */}
+
         <section className="contact-section" id="contact">
           <div className="contact-inner section-pad">
             <div className="section-label reveal">
-              <span>06 / THE NEXT CHAPTER</span>
+              <span>07 / THE NEXT CHAPTER</span>
               <span>OPEN TO CONVERSATION</span>
             </div>
 
@@ -1479,12 +1832,10 @@ export default function Home() {
                   className="string-path"
                   d="M90 240 C180 160 270 270 385 190 S560 90 740 145"
                 />
-
                 <path
                   className="string-path"
                   d="M110 250 C215 200 285 280 400 205 S570 120 745 158"
                 />
-
                 <path
                   className="string-path"
                   d="M125 260 C225 225 300 280 415 220 S585 145 750 170"
@@ -1527,20 +1878,28 @@ export default function Home() {
 
             <div className="contact-bottom">
               <span>AI / DATA / QUALITY</span>
-              <a href="#home">BACK TO TOP ↑</a>
-              <span>DESIGNED TO KEEP EXPLORING.</span>
+
+              <a href="#home">
+                BACK TO TOP ↑
+              </a>
+
+              <span>
+                DESIGNED TO KEEP EXPLORING.
+              </span>
             </div>
           </div>
         </section>
       </main>
 
       {/* FOOTER */}
+
       <footer className="site-footer">
         <span>SR® — SALMAN JAHAN RAFI</span>
         <span>INDEPENDENT PORTFOLIO · 2026</span>
       </footer>
 
-      {/* FLASHLIGHT 2.0 */}
+      {/* FLASHLIGHT */}
+
       <div
         ref={torchRef}
         className={`torch-overlay ${
@@ -1558,6 +1917,7 @@ export default function Home() {
       />
 
       {/* CONTACT DIALOG */}
+
       <AnimatePresence>
         {contactOpen && (
           <motion.div
